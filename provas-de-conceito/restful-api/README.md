@@ -12,7 +12,8 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 ## Referências de Estudos
 
-- [Swagger Template][ref-1] - Template de referência do swagger com uma documentação de exemplo de uma API restful.
+[Swagger Template][ref-1]
+Template de referência do swagger com uma documentação de exemplo de uma API restful.
 
 
 [tec-1]: https://docs.microsoft.com/en-us/aspnet/core/
