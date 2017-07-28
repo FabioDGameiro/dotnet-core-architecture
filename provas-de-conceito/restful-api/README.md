@@ -19,3 +19,4 @@ Template de referência do swagger com uma documentação de exemplo de uma API 
 [tec-1]: https://docs.microsoft.com/en-us/aspnet/core/
 
 [ref-1]: https://github.com/adnan-kamili/swagger-response-template
+
