@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,6 @@ namespace Domain.Empresas.Repository
         Empresa RetornarPorId(Guid id);
         bool Atualizar(Empresa entidade);
         bool Remover(Guid id);
-        List<Empresa> Listar();
+        PartialResult<Empresa> Listar(int page = 1, int limit = 10);
     }
 }

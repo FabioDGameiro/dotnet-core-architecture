@@ -1,4 +1,5 @@
-﻿using Domain.Empresas;
+﻿using Domain.Base;
+using Domain.Empresas;
 using Domain.Empresas.Repository;
 using System;
 using System.Collections.Generic;
@@ -72,9 +73,20 @@ namespace Infra.Data.Repositories
             }
         }
 
-        public List<Empresa> Listar()
+        public PartialResult<Empresa> Listar(int page = 1, int limit = 10)
         {
-            return _empresasList;
+            var partialResult = new PartialResult<Empresa>()
+            {
+                Count = _empresasList.Count(),
+                Page = page,
+                Limit = limit,
+
+                Data = _empresasList
+                .Skip((page - 1) * limit)
+                .Take(limit)
+            };
+
+            return partialResult;
         }
 
         public bool Cadastrar(Empresa entidade)

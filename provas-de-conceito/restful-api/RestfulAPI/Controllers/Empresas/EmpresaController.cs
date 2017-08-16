@@ -1,10 +1,12 @@
 using AutoMapper;
 using Domain.Empresas;
 using Domain.Empresas.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestfulAPI.Controllers.Base;
 using RestfulAPI.Models.Empresa;
 using System;
+using System.Collections.Generic;
 
 namespace RestfulAPI.Controllers.Empresas
 {
@@ -20,12 +22,18 @@ namespace RestfulAPI.Controllers.Empresas
             _mapper = mapper;
         }
 
+        // TODO: colocar no padrão rest
         [HttpGet]
-        [Route("")]
         public IActionResult Get(EmpresaFilterModel filter)
         {
-            var entitesList = _empresaRepository.Listar();
-            var modelsList = _mapper.Map<EmpresaItemModel>(entitesList);
+            var partialResult = _empresaRepository.Listar();
+            if (partialResult.Data == null) return NotFound(new { message = "Itens não encontrados" });
+
+            var modelsList = _mapper.Map<IEnumerable<EmpresaItemModel>>(partialResult.Data);
+
+            Response.Headers.Add("Pagination-Count", partialResult.Count.ToString());
+            Response.Headers.Add("Pagination-Page", partialResult.Page.ToString());
+            Response.Headers.Add("Pagination-Limit", partialResult.Limit.ToString());
 
             return Ok(modelsList);
         }
@@ -34,27 +42,102 @@ namespace RestfulAPI.Controllers.Empresas
         [Route("{id:guid}")]
         public IActionResult Get(Guid id)
         {
-            return Ok();
+            var entity = _empresaRepository.RetornarPorId(id);
+            if (entity == null) return NotFound(new { message = "Item não encontrado" });
+
+            var model = _mapper.Map<EmpresaModel>(_empresaRepository.RetornarPorId(id));
+            return Ok(model);
         }
 
         [HttpPost]
-        [Route("")]
-        public IActionResult Post(EmpresaModel model)
+        public IActionResult Post([FromBody]EmpresaModel model)
         {
-            _empresaRepository.Cadastrar(new Empresa { NomeFantasia = "Teste" });
-            return Ok();
+            try
+            {
+                model.Id = Guid.NewGuid();
+
+                var entity = Mapper.Map<Empresa>(model);
+
+                #region Validações
+
+                var errorsList = new List<object>();
+                if (String.IsNullOrWhiteSpace(entity.RazaoSocial))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Razão Social" });
+
+                if (String.IsNullOrWhiteSpace(entity.SocioProprietario))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Sócio Proprietário" });
+
+                if (String.IsNullOrWhiteSpace(entity.Cnpj))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "CNPJ" });
+
+                if (entity.Cnpj?.Length != 14)
+                    errorsList.Add(new { code = 35, message = "Não está em um formato válido", field = "CNPJ" });
+
+                #endregion
+
+                if (errorsList.Count > 0)
+                    return BadRequest(new { message = "Sua requisição possui erros de validação", errors = errorsList });
+
+                var result = _empresaRepository.Cadastrar(entity);
+                var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{model.Id}";
+
+                return Created(locationUri, new { message = "Item criado com sucesso" });
+            }
+            catch (Exception)
+            {
+                // TODO: logar exception
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno no servidor. Favor contatar o suporte técnico." });
+            }
         }
 
         [HttpPut]
-        [Route("")]
-        public IActionResult Put(EmpresaModel model)
+        [Route("{id:guid}")]
+        public IActionResult Put(Guid id, [FromBody]EmpresaModel model)
         {
-            return Ok();
+            try
+            {
+                model.Id = id;
+
+                var entity = _empresaRepository.RetornarPorId(model.Id);
+                if (entity == null) return NotFound(new { message = "Item não encontrado" });
+
+                entity = Mapper.Map<Empresa>(model);
+
+                #region Validações
+
+                var errorsList = new List<object>();
+                if (String.IsNullOrWhiteSpace(entity.RazaoSocial))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Razão Social" });
+
+                if (String.IsNullOrWhiteSpace(entity.SocioProprietario))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Sócio Proprietário" });
+
+                if (String.IsNullOrWhiteSpace(entity.Cnpj))
+                    errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "CNPJ" });
+
+                if (entity.Cnpj?.Length != 14)
+                    errorsList.Add(new { code = 35, message = "Não está em um formato válido", field = "CNPJ" });
+
+                #endregion
+
+                if (errorsList.Count > 0)
+                    return BadRequest(new { message = "Sua requisição possui erros de validação", errors = errorsList });
+
+                _empresaRepository.Atualizar(entity);
+
+                return Ok(new { message = "Item atualizado com sucesso" });
+            }
+            catch (Exception)
+            {
+                // TODO: logar exception
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno no servidor. Favor contatar o suporte técnico." });
+            }
         }
 
         // TODO: ver como funciona esse método PATCH
         [HttpPut]
-        [Route("")]
         public IActionResult Patch()
         {
             return Ok();
@@ -64,7 +147,21 @@ namespace RestfulAPI.Controllers.Empresas
         [Route("{id:guid}")]
         public IActionResult Delete(Guid id)
         {
-            return Ok();
+            try
+            {
+                var entity = _empresaRepository.RetornarPorId(id);
+                if (entity == null) return NotFound(new { message = "Item não encontrado" });
+
+                _empresaRepository.Remover(id);
+
+                return Ok(new { message = "Item removido com sucesso" });
+            }
+            catch (Exception)
+            {
+                // TODO: logar exception
+
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Ocorreu um erro interno no servidor. Favor contatar o suporte técnico." });
+            }
         }
     }
 }

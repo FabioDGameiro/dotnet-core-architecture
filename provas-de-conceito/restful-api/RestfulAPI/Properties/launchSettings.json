@@ -17,12 +17,11 @@
     },
     "RestfulAPI": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:53064"
+      "applicationUrl": "http://localhost:2000"
     }
   }
 }
