@@ -1,3 +1,5 @@
+using AutoMapper;
+using Domain.Empresas;
 using Domain.Empresas.Repository;
 using Microsoft.AspNetCore.Mvc;
 using RestfulAPI.Controllers.Base;
@@ -9,13 +11,23 @@ namespace RestfulAPI.Controllers.Empresas
     [Route("api/empresas")]
     public class EmpresaController : BaseController
     {
-        private static readonly EmpresaRepository _empresaRepository = new EmpresaRepository();
+        private readonly IEmpresaRepository _empresaRepository;
+        private readonly IMapper _mapper;
+
+        public EmpresaController(IEmpresaRepository empresaRepository, IMapper mapper)
+        {
+            _empresaRepository = empresaRepository;
+            _mapper = mapper;
+        }
 
         [HttpGet]
         [Route("")]
         public IActionResult Get(EmpresaFilterModel filter)
         {
-            return Ok(_empresaRepository.Listar());
+            var entitesList = _empresaRepository.Listar();
+            var modelsList = _mapper.Map<EmpresaItemModel>(entitesList);
+
+            return Ok(modelsList);
         }
 
         [HttpGet]
@@ -29,6 +41,7 @@ namespace RestfulAPI.Controllers.Empresas
         [Route("")]
         public IActionResult Post(EmpresaModel model)
         {
+            _empresaRepository.Cadastrar(new Empresa { NomeFantasia = "Teste" });
             return Ok();
         }
 

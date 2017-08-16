@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using RestfulAPI.AutoMapper.Profiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +11,7 @@ namespace RestfulAPI.AutoMapper
     {
         public static MapperConfiguration RegisterMappings()
         {
-            return new MapperConfiguration(profile => { profile.AddProfile(new CompanyProfile()); });
+            return new MapperConfiguration(profile => { profile.AddProfile(new EmpresaProfile()); });
         }
     }
 }

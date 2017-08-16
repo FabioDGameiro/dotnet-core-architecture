@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ namespace RestfulAPI
         {
             services.AddMvc();
             services.AddAutoMapper();
+
+            InjectorBootstrapper.RegisterServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
