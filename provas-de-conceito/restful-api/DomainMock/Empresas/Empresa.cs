@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DomainMock.Empresas
+namespace Domain.Empresas
 {
     public class Empresa
     {

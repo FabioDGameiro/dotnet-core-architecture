@@ -1,4 +1,4 @@
-using DomainMock.Empresas.Repository;
+using Domain.Empresas.Repository;
 using Microsoft.AspNetCore.Mvc;
 using RestfulAPI.Controllers.Base;
 using RestfulAPI.Models.Empresa;

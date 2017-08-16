@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Domain.Empresas;
+using Domain.Empresas.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DomainMock.Empresas.Repository
+namespace Infra.Data.Repositories
 {
-    public class EmpresaRepository
+    public class EmpresaRepository : IEmpresaRepository
     {
         public static List<Empresa> _empresasList = new List<Empresa>();
 
