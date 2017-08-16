@@ -25,7 +25,11 @@ namespace RestfulAPI.Controllers.Empresas
         [HttpGet]
         public IActionResult Get(EmpresaFilterModel filter)
         {
-            var partialResult = _empresaRepository.Listar();
+            var partialResult = _empresaRepository.Listar(x =>
+                (x.RazaoSocial.ToLower() == filter.RazaoSocial?.ToLower() || filter.RazaoSocial == null) &&
+                (x.Ramo.ToLower() == filter.Ramo?.ToLower() || filter.Ramo == null)
+            );
+
             if (partialResult.Data == null) return NotFound(new { message = "Itens não encontrados" });
 
             var modelsList = _mapper.Map<IEnumerable<EmpresaItemModel>>(partialResult.Data);
