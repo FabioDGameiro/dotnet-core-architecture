@@ -73,19 +73,19 @@ namespace Infra.Data.Repositories
             }
         }
 
-        public PartialResult<Empresa> Listar(int page = 1, int limit = 10)
+        public PartialResult<Empresa> Listar(Func<Empresa, bool> predicate = null, int page = 1, int limit = 10, bool metaonly = false)
         {
-            var partialResult = new PartialResult<Empresa>()
-            {
-                Count = _empresasList.Count(),
-                Page = page,
-                Limit = limit,
+            var partialResult = new PartialResult<Empresa>(page, limit);
+            IEnumerable<Empresa> empresasList = _empresasList;
 
-                Data = _empresasList
-                .Skip((page - 1) * limit)
-                .Take(limit)
-            };
+            if (predicate != null)
+                empresasList = empresasList.Where(predicate);
 
+            partialResult.Count = empresasList.Count();
+
+            if (metaonly) return partialResult;
+
+            partialResult.Data = empresasList.Skip((page - 1) * limit).Take(limit);
             return partialResult;
         }
 

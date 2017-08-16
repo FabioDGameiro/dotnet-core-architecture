@@ -22,7 +22,6 @@ namespace RestfulAPI.Controllers.Empresas
             _mapper = mapper;
         }
 
-        // TODO: colocar no padrão rest
         [HttpGet]
         public IActionResult Get(EmpresaFilterModel filter)
         {
@@ -61,6 +60,7 @@ namespace RestfulAPI.Controllers.Empresas
                 #region Validações
 
                 var errorsList = new List<object>();
+
                 if (String.IsNullOrWhiteSpace(entity.RazaoSocial))
                     errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Razão Social" });
 
@@ -71,7 +71,10 @@ namespace RestfulAPI.Controllers.Empresas
                     errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "CNPJ" });
 
                 if (entity.Cnpj?.Length != 14)
-                    errorsList.Add(new { code = 35, message = "Não está em um formato válido", field = "CNPJ" });
+                    errorsList.Add(new { code = 35, message = "Formato inválido", field = "CNPJ" });
+
+                if (_empresaRepository.Listar(predicate: x => x.Cnpj == entity.Cnpj, metaonly: true).Count > 0)
+                    errorsList.Add(new { code = 40, message = "Valor duplicado", field = "CNPJ" });
 
                 #endregion
 
@@ -107,6 +110,7 @@ namespace RestfulAPI.Controllers.Empresas
                 #region Validações
 
                 var errorsList = new List<object>();
+
                 if (String.IsNullOrWhiteSpace(entity.RazaoSocial))
                     errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "Razão Social" });
 
@@ -117,7 +121,10 @@ namespace RestfulAPI.Controllers.Empresas
                     errorsList.Add(new { code = 34, message = "Campo é obrigatório", field = "CNPJ" });
 
                 if (entity.Cnpj?.Length != 14)
-                    errorsList.Add(new { code = 35, message = "Não está em um formato válido", field = "CNPJ" });
+                    errorsList.Add(new { code = 35, message = "Formato inválido", field = "CNPJ" });
+
+                if (_empresaRepository.Listar(predicate: x => x.Cnpj == entity.Cnpj && x.Id != entity.Id, metaonly: true).Count > 0)
+                    errorsList.Add(new { code = 40, message = "Valor duplicado", field = "CNPJ" });
 
                 #endregion
 
