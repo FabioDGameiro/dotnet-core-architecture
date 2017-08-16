@@ -73,7 +73,8 @@ namespace Infra.Data.Repositories
             }
         }
 
-        public PartialResult<Empresa> Listar(Func<Empresa, bool> predicate = null, int page = 1, int limit = 10, bool metaonly = false)
+        public PartialResult<Empresa> Listar(
+            Func<Empresa, bool> predicate = null, int page = 1, int limit = 10, bool metaonly = false)
         {
             var partialResult = new PartialResult<Empresa>(page, limit);
             IEnumerable<Empresa> empresasList = _empresasList;
