@@ -1,22 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using DomainMock.Empresas.Repository;
 using Microsoft.AspNetCore.Mvc;
 using RestfulAPI.Controllers.Base;
 using RestfulAPI.Models.Empresa;
+using System;
 
 namespace RestfulAPI.Controllers.Empresas
 {
     [Route("api/empresas")]
     public class EmpresaController : BaseController
     {
+        private static readonly EmpresaRepository _empresaRepository = new EmpresaRepository();
+
         [HttpGet]
         [Route("")]
         public IActionResult Get(EmpresaFilterModel filter)
         {
-            return Ok();
+            return Ok(_empresaRepository.Listar());
         }
 
         [HttpGet]

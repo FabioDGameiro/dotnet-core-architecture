@@ -23,5 +23,8 @@
     <Folder Include="Controllers\Empresas\" />
     <Folder Include="Controllers\Base\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainMock\DomainMock.csproj" />
+  </ItemGroup>
 
 </Project>
