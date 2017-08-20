@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.DependencyInjection;
-using Domain.Empresas.Repository;
-using Infra.Data.Repositories;
 using AutoMapper;
+using Domain.Usuarios.Repository;
+using Infra.Data.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.IoC
 {
@@ -17,7 +15,7 @@ namespace Infra.IoC
             services.AddScoped<IMapper>(m => new Mapper(m.GetRequiredService<IConfigurationProvider>(), m.GetService));
 
             // Repositories
-            services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace RestfulAPI.AutoMapper
     {
         public static MapperConfiguration RegisterMappings()
         {
-            return new MapperConfiguration(profile => { profile.AddProfile(new EmpresaProfile()); });
+            return new MapperConfiguration(profile => { profile.AddProfile(new UsuarioProfile()); });
         }
     }
 }
