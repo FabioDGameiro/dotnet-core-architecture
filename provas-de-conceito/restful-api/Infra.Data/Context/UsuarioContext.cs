@@ -31,6 +31,7 @@ namespace Infra.Data.Context
             modelBuilder.Entity<UsuarioEndereco>().HasKey(x => x.Id);
             modelBuilder.Entity<UsuarioEndereco>().Property(x => x.Endereco).IsRequired().HasColumnType("varchar(100)");
             modelBuilder.Entity<UsuarioEndereco>().Property(x => x.Estado).IsRequired().HasColumnType("varchar(2)");
+            modelBuilder.Entity<UsuarioEndereco>().Property(x => x.Tipo).IsRequired();
         }
     }
 }

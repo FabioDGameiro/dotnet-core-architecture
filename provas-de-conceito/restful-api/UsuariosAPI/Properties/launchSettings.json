@@ -15,13 +15,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "RestfulAPI": {
+    "UsuariosAPI": {
       "commandName": "Project",
       "launchUrl": "api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:2000"
+      "applicationUrl": "http://localhost:2000/"
     }
   }
 }
