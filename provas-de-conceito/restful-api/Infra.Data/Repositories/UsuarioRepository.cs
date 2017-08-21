@@ -1,36 +1,51 @@
 ﻿using System;
-using Domain.Base;
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Infra.Data.Context;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Infra.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public bool Cadastrar(Usuario entidade)
+        private readonly UsuariosContext _context;
+
+        public UsuarioRepository(UsuariosContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public void Cadastrar(Usuario usuario)
+        {
+            usuario.Id = Guid.NewGuid();
+            _context.Usuarios.Add(usuario);
         }
 
         public Usuario RetornarPorId(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Usuarios.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Atualizar(Usuario entidade)
+        public void Atualizar(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _context.Usuarios.Update(usuario);
         }
 
-        public bool Remover(Guid id)
+        public void Remover(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _context.Usuarios.Remove(usuario);
         }
 
-        public PartialResult<Usuario> Listar(UsuarioParameters parameters)
+        public IEnumerable<Usuario> Listar(UsuarioParameters parametros)
         {
-            throw new NotImplementedException();
+            return _context.Usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome).ToList();
+        }
+
+        public bool Save()
+        {
+            return _context.SaveChanges() > 0;
         }
     }
 }

@@ -1,15 +1,16 @@
 ﻿using System;
-using Domain.Base;
 using Domain.Usuarios.Parameters;
+using System.Collections.Generic;
 
 namespace Domain.Usuarios.Repository
 {
     public interface IUsuarioRepository
     {
-        bool Cadastrar(Usuario entidade);
+        void Cadastrar(Usuario usuario);
         Usuario RetornarPorId(Guid id);
-        bool Atualizar(Usuario entidade);
-        bool Remover(Guid id);
-        PartialResult<Usuario> Listar(UsuarioParameters parameters);
+        void Atualizar(Usuario usuario);
+        void Remover(Usuario usuario);
+        IEnumerable<Usuario> Listar(UsuarioParameters parametros);
+        bool Save();
     }
 }

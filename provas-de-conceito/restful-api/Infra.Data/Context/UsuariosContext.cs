@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data.Context
 {
-    public class UsuarioContext : DbContext
+    public class UsuariosContext : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<UsuarioEndereco> UsuariosEnderecos { get; set; }
 
-        public UsuarioContext(DbContextOptions<UsuarioContext> options)
+        public UsuariosContext(DbContextOptions<UsuariosContext> options)
             :base (options)
         {
             Database.Migrate();

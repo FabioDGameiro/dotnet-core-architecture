@@ -6,9 +6,9 @@ using Domain.Usuarios.Endereco;
 
 namespace Infra.Data.Context
 {
-    public static class UsuarioContextExtensions
+    public static class UsuariosContextExtensions
     {
-        public static void EnsureSeedDataForContext(this UsuarioContext context)
+        public static void EnsureSeedDataForContext(this UsuariosContext context)
         {
             context.Usuarios.RemoveRange(context.Usuarios);
             context.SaveChanges();

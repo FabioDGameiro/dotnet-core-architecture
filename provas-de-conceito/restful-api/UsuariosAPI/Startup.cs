@@ -29,11 +29,11 @@ namespace UsuariosAPI
             services.AddMvc();
             services.AddAutoMapper();
 
-            services.AddDbContext<UsuarioContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
+            services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UsuarioContext usuarioContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UsuariosContext usuarioContext)
         {
             if (env.IsDevelopment())
             {

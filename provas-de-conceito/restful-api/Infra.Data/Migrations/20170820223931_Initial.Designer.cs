@@ -12,7 +12,7 @@ using System;
 
 namespace Infra.Data.Migrations
 {
-    [DbContext(typeof(UsuarioContext))]
+    [DbContext(typeof(UsuariosContext))]
     [Migration("20170820223931_Initial")]
     partial class Initial
     {

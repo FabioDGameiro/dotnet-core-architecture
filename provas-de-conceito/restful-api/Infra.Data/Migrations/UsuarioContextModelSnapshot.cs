@@ -12,7 +12,7 @@ using System;
 
 namespace Infra.Data.Migrations
 {
-    [DbContext(typeof(UsuarioContext))]
+    [DbContext(typeof(UsuariosContext))]
     partial class UsuarioContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
