@@ -25,6 +25,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // GET ALL
+
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
@@ -35,6 +36,15 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // GET BY ID
+
+        [HttpGet("{id:guid}")]
+        public IActionResult Get(Guid id)
+        {
+            var usuario = _repository.RetornarPorId(id);
+            var usuarioModel = _mapper.Map<UsuarioGetModel>(usuario);
+
+            return Ok(usuarioModel);
+        }
 
         // POST
 

@@ -29,6 +29,11 @@ namespace UsuariosAPI
             services.AddMvc();
             services.AddAutoMapper();
 
+            services.ConfigureApplicationCookie(configure => {
+                configure.Cookie.Domain = "bunda";
+                });
+
+
             services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
         }
@@ -41,7 +46,6 @@ namespace UsuariosAPI
             }
 
             usuarioContext.EnsureSeedDataForContext();
-
             app.UseMvc();
         }
     }
