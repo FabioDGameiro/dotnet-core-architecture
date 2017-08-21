@@ -12,6 +12,7 @@ using AutoMapper;
 using Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Infra.IoC;
+using Microsoft.AspNetCore.Http;
 
 namespace UsuariosAPI
 {
@@ -43,6 +44,17 @@ namespace UsuariosAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler(appBuilder => 
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("An unexpect error happened. Try again later.");
+                    });
+                });
             }
 
             usuarioContext.EnsureSeedDataForContext();

@@ -5,12 +5,15 @@ using Domain.Usuarios.Repository;
 using Infra.Data.Context;
 using System.Linq;
 using System.Collections.Generic;
+using Domain.Usuarios.Endereco;
 
 namespace Infra.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
         private readonly UsuariosContext _context;
+
+        // Usuario
 
         public UsuarioRepository(UsuariosContext context)
         {
@@ -23,9 +26,9 @@ namespace Infra.Data.Repositories
             _context.Usuarios.Add(usuario);
         }
 
-        public Usuario RetornarPorId(Guid id)
+        public Usuario RetornarPorId(Guid usuarioId)
         {
-            return _context.Usuarios.FirstOrDefault(x => x.Id == id);
+            return _context.Usuarios.FirstOrDefault(x => x.Id == usuarioId);
         }
 
         public void Atualizar(Usuario usuario)
@@ -40,12 +43,36 @@ namespace Infra.Data.Repositories
 
         public IEnumerable<Usuario> Listar(UsuarioParameters parametros)
         {
-            return _context.Usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome).ToList();
+            return _context.Usuarios
+                .OrderBy(x => x.Nome)
+                .ThenBy(x => x.Sobrenome)
+                .ToList();
+        }
+
+        public bool UsuarioExists(Guid usuarioId)
+        {
+            return _context.Usuarios.Any(x => x.Id == usuarioId);
+        }
+
+        // Endereco
+
+        public IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId)
+        {
+            return _context.UsuariosEnderecos
+                .Where(x => x.UsuarioId == usuarioId)
+                .OrderBy(x => x.Estado)
+                .ToList();
+        }
+
+        public UsuarioEndereco RetornarEnderecoPorId(Guid usuarioId, Guid enderecoId)
+        {
+            return _context.UsuariosEnderecos.FirstOrDefault(x => x.UsuarioId == usuarioId && x.Id == usuarioId);
         }
 
         public bool Save()
         {
             return _context.SaveChanges() > 0;
         }
+
     }
 }

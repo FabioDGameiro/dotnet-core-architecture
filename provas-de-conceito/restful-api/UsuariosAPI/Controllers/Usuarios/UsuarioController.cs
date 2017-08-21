@@ -29,20 +29,27 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
+            // 1. Retorna usuarios do repositório
             var usuarios = _repository.Listar(parametros);
-            var usuariosModels = _mapper.Map<IEnumerable<UsuarioGetModel>>(usuarios);
 
+            // 2. Mapeia para a model com os dados formatados e retorna 200 - OK
+            var usuariosModels = _mapper.Map<IEnumerable<UsuarioGetModel>>(usuarios);
             return Ok(usuariosModels);
         }
 
         // GET BY ID
 
-        [HttpGet("{id:guid}")]
-        public IActionResult Get(Guid id)
+        [HttpGet("{usuarioId:guid}")]
+        public IActionResult Get(Guid usuarioId)
         {
-            var usuario = _repository.RetornarPorId(id);
-            var usuarioModel = _mapper.Map<UsuarioGetModel>(usuario);
+            // 1. Retorna usuario do repositório
+            var usuario = _repository.RetornarPorId(usuarioId);
 
+            // 2. Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
+            if (usuario == null) return NotFound();
+
+            // 3. Mapeia para a model com os dados formatados e retorna 200 - OK
+            var usuarioModel = _mapper.Map<UsuarioGetModel>(usuario);
             return Ok(usuarioModel);
         }
 
