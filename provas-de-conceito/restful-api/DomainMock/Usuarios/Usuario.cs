@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Domain.Usuarios.Endereco;
+using System;
 using System.Collections.Generic;
-using Domain.Usuarios.Endereco;
 
 namespace Domain.Usuarios
 {

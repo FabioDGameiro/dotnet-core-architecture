@@ -1,8 +1,5 @@
 ﻿using Domain.Usuarios;
 using Domain.Usuarios.Endereco;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infra.Helpers
 {
@@ -14,8 +11,10 @@ namespace Infra.Helpers
             {
                 case SexoType.Masculino:
                     return "M";
+
                 case SexoType.Feminino:
                     return "F";
+
                 default:
                     return string.Empty;
             }
@@ -30,8 +29,10 @@ namespace Infra.Helpers
             {
                 case EnderecoType.Residencial:
                     return "Residêncial";
+
                 case EnderecoType.Comercial:
                     return "Comercial";
+
                 default:
                     return string.Empty;
             }

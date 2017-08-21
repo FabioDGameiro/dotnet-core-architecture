@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Usuarios;
+﻿using Domain.Usuarios;
 using Domain.Usuarios.Endereco;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +10,7 @@ namespace Infra.Data.Context
         public DbSet<UsuarioEndereco> UsuariosEnderecos { get; set; }
 
         public UsuariosContext(DbContextOptions<UsuariosContext> options)
-            :base (options)
+            : base(options)
         {
             Database.Migrate();
         }

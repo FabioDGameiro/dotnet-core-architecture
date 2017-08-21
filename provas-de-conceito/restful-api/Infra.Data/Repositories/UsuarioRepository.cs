@@ -1,11 +1,11 @@
-﻿using System;
-using Domain.Usuarios;
+﻿using Domain.Usuarios;
+using Domain.Usuarios.Endereco;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Infra.Data.Context;
-using System.Linq;
+using System;
 using System.Collections.Generic;
-using Domain.Usuarios.Endereco;
+using System.Linq;
 
 namespace Infra.Data.Repositories
 {
@@ -73,6 +73,5 @@ namespace Infra.Data.Repositories
         {
             return _context.SaveChanges() > 0;
         }
-
     }
 }

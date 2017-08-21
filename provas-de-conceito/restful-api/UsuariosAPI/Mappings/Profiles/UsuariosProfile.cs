@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using Domain.Usuarios;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UsuariosAPI.Models.Usuarios;
-using Infra.Helpers;
 using Domain.Usuarios.Endereco;
+using Infra.Helpers;
+using UsuariosAPI.Models.Usuarios;
 using UsuariosAPI.Models.Usuarios.Endereco;
 
 namespace UsuariosAPI.Mappings.Profiles
@@ -29,9 +25,7 @@ namespace UsuariosAPI.Mappings.Profiles
                 // Formatando o Tipo do endereçoa partir do enum EnderecoType
                 .ForMember(t => t.Tipo, opt => opt.MapFrom(s => s.Tipo.GetDescription()));
 
-
             // Model -> Entity
-
         }
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using UsuariosAPI.Controllers.Base;
-using Domain.Usuarios.Repository;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Usuarios.Parameters;
+using Domain.Usuarios.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using UsuariosAPI.Controllers.Base;
 using UsuariosAPI.Models.Usuarios.Endereco;
 
 namespace UsuariosAPI.Controllers.Usuarios.Enderecos

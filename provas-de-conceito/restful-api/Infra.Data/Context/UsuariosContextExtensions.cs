@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Usuarios;
+﻿using Domain.Usuarios;
 using Domain.Usuarios.Endereco;
+using System;
+using System.Collections.Generic;
 
 namespace Infra.Data.Context
 {
@@ -59,6 +58,60 @@ namespace Infra.Data.Context
                             Tipo = EnderecoType.Residencial
                         }
                     }
+                },
+                new Usuario
+                {
+                    Id = new Guid("8f1ff6e5-ed57-4ec1-b01b-7fe6c6624d70"),
+                    DataNascimento = new DateTime(1985, 3, 1),
+                    Email = "iran@email.com",
+                    Nome = "Iran",
+                    Sobrenome = "Carvalho",
+                    Sexo = SexoType.Masculino,
+                    Enderecos = new List<UsuarioEndereco>
+                    {
+                        new UsuarioEndereco
+                        {
+                            Id = new Guid("67c8ccc5-de65-4c71-abaa-36c1b225f025"),
+                            Endereco = "Rua José Pinheiro, 323",
+                            Estado = "SP",
+                            Tipo = EnderecoType.Residencial
+                        },
+                        new UsuarioEndereco
+                        {
+                            Id = new Guid("22a43f85-da68-4a35-850e-020b7597525a"),
+                            Endereco = "Av. Brasil, 48512",
+                            Estado = "RJ",
+                            Tipo = EnderecoType.Comercial
+                        }
+                    }
+                },
+                new Usuario
+                {
+                    Id = new Guid("69abf241-efc7-4e48-8b1a-250e9ca3a47c"),
+                    DataNascimento = new DateTime(1989, 12, 23),
+                    Email = "pamela@email.com",
+                    Nome = "Pamela",
+                    Sobrenome = "Consuelo",
+                    Sexo = SexoType.Feminino,
+                    Enderecos = new List<UsuarioEndereco>
+                    {
+                        new UsuarioEndereco
+                        {
+                            Id = new Guid("c9f946f1-39ef-41b7-a3d6-7bc1cabde805"),
+                            Endereco = "Av. Emilio Esteves, 957",
+                            Estado = "SP",
+                            Tipo = EnderecoType.Residencial
+                        }
+                    }
+                },
+                new Usuario
+                {
+                    Id = new Guid("b689073a-2963-49ee-b529-9f68228176a2"),
+                    DataNascimento = new DateTime(1988, 3, 3),
+                    Email = "luana@email.com",
+                    Nome = "Luana",
+                    Sobrenome = "Martins",
+                    Sexo = SexoType.Feminino
                 }
             };
 

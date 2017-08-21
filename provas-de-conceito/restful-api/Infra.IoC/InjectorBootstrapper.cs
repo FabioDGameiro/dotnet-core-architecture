@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Usuarios.Repository;
 using Infra.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;

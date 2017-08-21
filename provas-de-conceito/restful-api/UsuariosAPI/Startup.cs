@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Infra.Data.Context;
+using Infra.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using AutoMapper;
-using Infra.Data.Context;
-using Microsoft.EntityFrameworkCore;
-using Infra.IoC;
-using Microsoft.AspNetCore.Http;
 
 namespace UsuariosAPI
 {
@@ -30,11 +24,6 @@ namespace UsuariosAPI
             services.AddMvc();
             services.AddAutoMapper();
 
-            services.ConfigureApplicationCookie(configure => {
-                configure.Cookie.Domain = "bunda";
-                });
-
-
             services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
         }
@@ -47,8 +36,10 @@ namespace UsuariosAPI
             }
             else
             {
-                app.UseExceptionHandler(appBuilder => 
+                app.UseExceptionHandler(appBuilder =>
                 {
+                    // Garante que em ambiente de produção, toda vez que a aplicação der erro,
+                    // irá exibir o status 500 com a mensagem "An unexpect error happened. Try again later."
                     appBuilder.Run(async context =>
                     {
                         context.Response.StatusCode = 500;
@@ -57,7 +48,9 @@ namespace UsuariosAPI
                 });
             }
 
+            // Reseta o seed do banco de dados a cada vez que a aplicação é iniciada
             usuarioContext.EnsureSeedDataForContext();
+
             app.UseMvc();
         }
     }
