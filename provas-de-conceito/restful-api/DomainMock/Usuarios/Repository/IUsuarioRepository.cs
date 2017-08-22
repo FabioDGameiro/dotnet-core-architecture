@@ -8,20 +8,16 @@ namespace Domain.Usuarios.Repository
     public interface IUsuarioRepository
     {
         void Cadastrar(Usuario usuario);
-
         Usuario RetornarPorId(Guid usuarioId);
-
         void Atualizar(Usuario usuario);
-
         void Remover(Usuario usuario);
-
         IEnumerable<Usuario> Listar(UsuarioParameters parametros);
-
         bool UsuarioExists(Guid usuarioId);
 
         IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId);
-
         UsuarioEndereco RetornarEnderecoPorId(Guid usuarioId, Guid enderecoId);
+        void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco);
+
 
         bool Save();
     }

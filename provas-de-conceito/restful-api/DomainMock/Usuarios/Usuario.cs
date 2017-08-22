@@ -13,7 +13,7 @@ namespace Domain.Usuarios
         public DateTime DataNascimento { get; set; }
         public SexoType? Sexo { get; set; }
 
-        public ICollection<UsuarioEndereco> Enderecos { get; set; }
+        public ICollection<UsuarioEndereco> Enderecos { get; set; } = new List<UsuarioEndereco>();
     }
 
     public enum SexoType

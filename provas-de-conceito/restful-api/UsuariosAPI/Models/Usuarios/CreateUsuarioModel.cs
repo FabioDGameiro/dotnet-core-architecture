@@ -15,6 +15,6 @@ namespace UsuariosAPI.Models.Usuarios
         public DateTime DataNascimento { get; set; }
         public SexoType? Sexo { get; set; }
 
-        public IEnumerable<CreateUsuarioEnderecoModel> Enderecos { get; set; }
+        public ICollection<CreateUsuarioEnderecoModel> Enderecos { get; set; } = new List<CreateUsuarioEnderecoModel>();
     }
 }

@@ -23,6 +23,15 @@ namespace Infra.Data.Repositories
         public void Cadastrar(Usuario usuario)
         {
             usuario.Id = Guid.NewGuid();
+
+            if (usuario.Enderecos.Any())
+            {
+                foreach (var endereco in usuario.Enderecos)
+                {
+                    endereco.Id = Guid.NewGuid();
+                }
+            }
+
             _context.Usuarios.Add(usuario);
         }
 
@@ -69,9 +78,21 @@ namespace Infra.Data.Repositories
             return _context.UsuariosEnderecos.FirstOrDefault(x => x.UsuarioId == usuarioId && x.Id == enderecoId);
         }
 
+        public void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco)
+        {
+            var usuario = RetornarPorId(usuarioId);
+
+            if (usuario == null)
+                throw new Exception("Usuario não encontrado");
+
+            endereco.Id = Guid.NewGuid();
+            usuario.Enderecos.Add(endereco);
+        }
+
         public bool Save()
         {
             return _context.SaveChanges() > 0;
         }
+
     }
 }

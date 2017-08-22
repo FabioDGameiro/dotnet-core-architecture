@@ -52,9 +52,10 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // POST
+        // TODO: criar um teste para cadastrar usuario com endereço
 
         [HttpPost]
-        public IActionResult Post([FromBody]CreateUsuarioModel usuarioModel)
+        public IActionResult Post([FromBody] CreateUsuarioModel usuarioModel)
         {
             // Checa se o a model foi preenchida corretamente
             if (usuarioModel == null) return BadRequest();
@@ -65,12 +66,21 @@ namespace UsuariosAPI.Controllers.Usuarios
             // Adiciona ao repositório
             _repository.Cadastrar(usuarioEntity);
 
+            // Persiste os dados no banco de dados
             if (!_repository.Save())
             {
+                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao salvar usuário");
             }
 
-            return Created()
+            // Cria a URI do local de onde o recurso foi criado
+            var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{usuarioEntity.Id}";
+
+            // Mapeia a entidade criada para a model de retorno para a confirmação de criação
+            var usuarioCriadoModel = _mapper.Map<GetUsuarioModel>(usuarioEntity);
+
+            // Retorna um Status Code 201 - Created At com o recurso criado
+            return Created(locationUri, usuarioCriadoModel);
         }
 
         // PUT
