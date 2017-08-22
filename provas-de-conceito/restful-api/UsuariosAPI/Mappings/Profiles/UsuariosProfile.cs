@@ -13,7 +13,7 @@ namespace UsuariosAPI.Mappings.Profiles
         {
             // Entity -> Model
 
-            CreateMap<Usuario, UsuarioGetModel>()
+            CreateMap<Usuario, GetUsuarioModel>()
                 // Formatando o Nome Completo do Usuário a partir das propriedades Nome e Sobrenome
                 .ForMember(t => t.NomeCompleto, opt => opt.MapFrom(s => $"{s.Nome} {s.Sobrenome}"))
                 // Formatando a Idade do usuário a partir da sua Data de Nascimento
@@ -21,11 +21,16 @@ namespace UsuariosAPI.Mappings.Profiles
                 // Formatando o Sexo do usuário a partir do enum SexoType
                 .ForMember(t => t.Sexo, opt => opt.MapFrom(s => (s.Sexo.HasValue) ? s.Sexo.Value.GetDescription() : null));
 
-            CreateMap<UsuarioEndereco, UsuarioEnderecoGetModel>()
+            CreateMap<UsuarioEndereco, GetUsuarioEnderecoModel>()
                 // Formatando o Tipo do endereçoa partir do enum EnderecoType
                 .ForMember(t => t.Tipo, opt => opt.MapFrom(s => s.Tipo.GetDescription()));
 
             // Model -> Entity
+
+            CreateMap<CreateUsuarioModel, Usuario>();
+            CreateMap<CreateUsuarioEnderecoModel, UsuarioEndereco>();
+
+
         }
     }
 }

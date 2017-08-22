@@ -10,7 +10,7 @@ namespace UsuariosAPI.Models.Usuarios
     // Outro exemplo é o "Sexo" do usuário, que pode ser formatado, a partir do enum SexoType da entidade.
     //
 
-    public class UsuarioGetModel
+    public class GetUsuarioModel
     {
         public Guid Id { get; set; }
         public string NomeCompleto { get; set; }

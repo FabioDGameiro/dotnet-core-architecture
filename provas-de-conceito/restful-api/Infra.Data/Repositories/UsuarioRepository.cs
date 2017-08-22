@@ -66,7 +66,7 @@ namespace Infra.Data.Repositories
 
         public UsuarioEndereco RetornarEnderecoPorId(Guid usuarioId, Guid enderecoId)
         {
-            return _context.UsuariosEnderecos.FirstOrDefault(x => x.UsuarioId == usuarioId && x.Id == usuarioId);
+            return _context.UsuariosEnderecos.FirstOrDefault(x => x.UsuarioId == usuarioId && x.Id == enderecoId);
         }
 
         public bool Save()

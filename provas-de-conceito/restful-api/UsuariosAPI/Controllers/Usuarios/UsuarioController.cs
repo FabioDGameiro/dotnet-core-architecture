@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -26,11 +27,11 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
-            // 1. Retorna usuarios do repositório
+            // Retorna usuarios do repositório
             var usuarios = _repository.Listar(parametros);
 
-            // 2. Mapeia para a model com os dados formatados e retorna 200 - OK
-            var usuariosModels = _mapper.Map<IEnumerable<UsuarioGetModel>>(usuarios);
+            // Mapeia para a model com os dados formatados e retorna 200 - OK
+            var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuarios);
             return Ok(usuariosModels);
         }
 
@@ -39,18 +40,38 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpGet("{usuarioId:guid}")]
         public IActionResult Get(Guid usuarioId)
         {
-            // 1. Retorna usuario do repositório
+            // Retorna usuario do repositório
             var usuario = _repository.RetornarPorId(usuarioId);
 
-            // 2. Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
+            // Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
             if (usuario == null) return NotFound();
 
-            // 3. Mapeia para a model com os dados formatados e retorna 200 - OK
-            var usuarioModel = _mapper.Map<UsuarioGetModel>(usuario);
+            // Mapeia para a model com os dados formatados e retorna 200 - OK
+            var usuarioModel = _mapper.Map<GetUsuarioModel>(usuario);
             return Ok(usuarioModel);
         }
 
         // POST
+
+        [HttpPost]
+        public IActionResult Post([FromBody]CreateUsuarioModel usuarioModel)
+        {
+            // Checa se o a model foi preenchida corretamente
+            if (usuarioModel == null) return BadRequest();
+
+            // Mapeia a model para a entidade
+            var usuarioEntity = _mapper.Map<Usuario>(usuarioModel);
+
+            // Adiciona ao repositório
+            _repository.Cadastrar(usuarioEntity);
+
+            if (!_repository.Save())
+            {
+                throw new Exception("Ocorreu um erro inesperado ao salvar usuário");
+            }
+
+            return Created()
+        }
 
         // PUT
 

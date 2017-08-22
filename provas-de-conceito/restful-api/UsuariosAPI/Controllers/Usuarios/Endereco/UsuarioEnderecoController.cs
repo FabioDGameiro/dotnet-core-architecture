@@ -33,7 +33,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             var enderecos = _repository.ListarEnderecosPorUsuario(usuarioId);
 
             // 3. Mapeia para a model com os dados formatados e retorna 200 - OK
-            var enderecosModels = _mapper.Map<IEnumerable<UsuarioEnderecoGetModel>>(enderecos);
+            var enderecosModels = _mapper.Map<IEnumerable<GetUsuarioEnderecoModel>>(enderecos);
             return Ok(enderecosModels);
         }
 
@@ -52,7 +52,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             if (endereco == null) return NotFound();
 
             // 4. Mapeia para a model com os dados formatados e retorna 200 - OK
-            var enderecoModel = _mapper.Map<UsuarioEnderecoGetModel>(endereco);
+            var enderecoModel = _mapper.Map<GetUsuarioEnderecoModel>(endereco);
             return Ok(enderecoModel);
         }
 

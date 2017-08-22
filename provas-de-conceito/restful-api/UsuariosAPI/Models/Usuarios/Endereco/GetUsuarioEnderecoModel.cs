@@ -2,7 +2,7 @@
 
 namespace UsuariosAPI.Models.Usuarios.Endereco
 {
-    public class UsuarioEnderecoGetModel
+    public class GetUsuarioEnderecoModel
     {
         public Guid Id { get; set; }
         public string Endereco { get; set; }

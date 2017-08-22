@@ -21,7 +21,14 @@ namespace UsuariosAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                // Configura a aplicação para retornar um Status Code 406 - NOT ACCEPTABLE
+                // para outros formatos de respostas diferentes dos aceitados.
+                // Obs.: por padrão o único aceitável é (application/json)
+                options.ReturnHttpNotAcceptable = true;
+            });
+
             services.AddAutoMapper();
 
             services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
