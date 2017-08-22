@@ -20,7 +20,7 @@ namespace Infra.Data.Repositories
             _context = context;
         }
 
-        public void Cadastrar(Usuario usuario)
+        public void CadastrarUsuario(Usuario usuario)
         {
             usuario.Id = Guid.NewGuid();
 
@@ -35,22 +35,22 @@ namespace Infra.Data.Repositories
             _context.Usuarios.Add(usuario);
         }
 
-        public Usuario RetornarPorId(Guid usuarioId)
+        public Usuario RetornaUsuario(Guid usuarioId)
         {
             return _context.Usuarios.FirstOrDefault(x => x.Id == usuarioId);
         }
 
-        public void Atualizar(Usuario usuario)
+        public void AtualizaUsuario(Usuario usuario)
         {
             _context.Usuarios.Update(usuario);
         }
 
-        public void Remover(Usuario usuario)
+        public void RemoveUsuario(Usuario usuario)
         {
             _context.Usuarios.Remove(usuario);
         }
 
-        public IEnumerable<Usuario> Listar(UsuarioParameters parametros)
+        public IEnumerable<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
             return _context.Usuarios
                 .OrderBy(x => x.Nome)
@@ -81,20 +81,30 @@ namespace Infra.Data.Repositories
                 .ToList();
         }
 
-        public UsuarioEndereco RetornarEnderecoPorId(Guid usuarioId, Guid enderecoId)
+        public UsuarioEndereco RetornarEndereco(Guid usuarioId, Guid enderecoId)
         {
             return _context.UsuariosEnderecos.FirstOrDefault(x => x.UsuarioId == usuarioId && x.Id == enderecoId);
         }
 
         public void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco)
         {
-            var usuario = RetornarPorId(usuarioId);
+            var usuario = RetornaUsuario(usuarioId);
 
             if (usuario == null)
                 throw new Exception("Usuario não encontrado");
 
             endereco.Id = Guid.NewGuid();
             usuario.Enderecos.Add(endereco);
+        }
+
+        public void RemoveEndereco(UsuarioEndereco endereco)
+        {
+            _context.UsuariosEnderecos.Remove(endereco);
+        }
+
+        public bool EnderecoExists(Guid usuarioId, Guid enderecoId)
+        {
+            return _context.UsuariosEnderecos.Any(x => x.UsuarioId == usuarioId && x.Id == enderecoId);
         }
 
         public bool Save()

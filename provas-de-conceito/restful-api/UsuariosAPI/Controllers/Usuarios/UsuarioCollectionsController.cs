@@ -25,6 +25,8 @@ namespace UsuariosAPI.Controllers.Usuarios
             _mapper = mapper;
         }
 
+        // POST
+
         [HttpPost]
         public IActionResult Create([FromBody] IEnumerable<CreateUsuarioModel> usuariosCollections)
         {
@@ -34,7 +36,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             foreach (var usuario in usuariosEntities)
             {
-                _repository.Cadastrar(usuario);
+                _repository.CadastrarUsuario(usuario);
             }
 
             if (!_repository.Save())
@@ -49,6 +51,8 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             return Created(locationUri, usuariosModels);
         }
+
+        // GET BY IDs
 
         [HttpGet("({ids})")]
         public IActionResult Get([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
