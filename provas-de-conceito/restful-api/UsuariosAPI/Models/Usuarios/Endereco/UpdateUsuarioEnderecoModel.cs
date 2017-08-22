@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UsuariosAPI.Models.Usuarios.Endereco
 {
-    public class UpdateUsuarioEnderecoModel
+    public class CreateUsuarioEnderecoModel
     {
         public string Endereco { get; set; }
         public string Estado { get; set; }

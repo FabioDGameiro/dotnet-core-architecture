@@ -107,6 +107,11 @@ namespace Infra.Data.Repositories
             return _context.UsuariosEnderecos.Any(x => x.UsuarioId == usuarioId && x.Id == enderecoId);
         }
 
+        public void AtualizaUsuarioEndereco(UsuarioEndereco usuario)
+        {
+            _context.UsuariosEnderecos.Update(usuario);
+        }
+
         public bool Save()
         {
             return _context.SaveChanges() > 0;

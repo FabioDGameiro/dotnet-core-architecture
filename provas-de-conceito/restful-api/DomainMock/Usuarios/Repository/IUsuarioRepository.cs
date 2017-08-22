@@ -20,6 +20,7 @@ namespace Domain.Usuarios.Repository
         void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco);
         void RemoveEndereco(UsuarioEndereco endereco);
         bool EnderecoExists(Guid usuarioId, Guid enderecoId);
+        void AtualizaUsuarioEndereco(UsuarioEndereco usuario);
 
         bool Save();
     }

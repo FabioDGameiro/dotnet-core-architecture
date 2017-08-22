@@ -29,6 +29,7 @@ namespace UsuariosAPI.Mappings.Profiles
 
             CreateMap<CreateUsuarioModel, Usuario>();
             CreateMap<CreateUsuarioEnderecoModel, UsuarioEndereco>();
+            CreateMap<UpdateUsuarioEnderecoModel, UsuarioEndereco>();
 
 
         }

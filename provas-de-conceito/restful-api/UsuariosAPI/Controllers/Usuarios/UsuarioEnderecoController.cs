@@ -108,6 +108,30 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
 
         // PUT
 
+        [HttpPut("{enderecoId:guid}")]
+        public IActionResult Put(Guid usuarioId, Guid enderecoId, [FromBody] UpdateUsuarioEnderecoModel enderecoModel)
+        {
+            if (enderecoModel == null) return BadRequest();
+
+            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+
+            var enderecoEntity = _repository.RetornarEndereco(usuarioId, enderecoId);
+            if (enderecoEntity == null) return NotFound();
+
+            _mapper.Map(enderecoModel, enderecoEntity);
+
+            _repository.AtualizaUsuarioEndereco(enderecoEntity);
+
+            // Persiste os dados no banco de dados
+            if (!_repository.Save())
+            {
+                // Joga uma exceção se der algum erro ao salvar
+                throw new Exception("Ocorreu um erro inesperado ao atualizar endereço do usuário");
+            }
+
+            return NoContent();
+        }
+
         // PATCH
 
         // DELETE
