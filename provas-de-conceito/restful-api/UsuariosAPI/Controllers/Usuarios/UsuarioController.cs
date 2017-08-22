@@ -2,6 +2,7 @@
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,13 @@ namespace UsuariosAPI.Controllers.Usuarios
             _mapper = mapper;
         }
 
-        // GET ALL
+        // GET
 
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
             // Retorna usuarios do repositório
-            var usuarios = _repository.Listar(parametros);
+            var usuarios = _repository.RetornaUsuarios(parametros);
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuarios);
@@ -41,7 +42,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         public IActionResult Get(Guid usuarioId)
         {
             // Retorna usuario do repositório
-            var usuario = _repository.RetornarPorId(usuarioId);
+            var usuario = _repository.RetornaUsuario(usuarioId);
 
             // Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
             if (usuario == null) return NotFound();
@@ -52,7 +53,6 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // POST
-        // TODO: criar um teste para cadastrar usuario com endereço
 
         [HttpPost]
         public IActionResult Post([FromBody] CreateUsuarioModel usuarioModel)
@@ -64,7 +64,7 @@ namespace UsuariosAPI.Controllers.Usuarios
             var usuarioEntity = _mapper.Map<Usuario>(usuarioModel);
 
             // Adiciona ao repositório
-            _repository.Cadastrar(usuarioEntity);
+            _repository.CadastrarUsuario(usuarioEntity);
 
             // Persiste os dados no banco de dados
             if (!_repository.Save())
@@ -83,9 +83,47 @@ namespace UsuariosAPI.Controllers.Usuarios
             return Created(locationUri, usuarioCriadoModel);
         }
 
+        // POST BY ID
+
+        [HttpPost("{usuarioId:guid}")]
+        public IActionResult Post(Guid usuarioId)
+        {
+            if(_repository.UsuarioExists(usuarioId))
+            {
+                return new StatusCodeResult(StatusCodes.Status409Conflict);
+            }
+
+            return NotFound();
+        }
+
         // PUT
 
         // DELETE
+
+        [HttpDelete("{usuarioId:guid}")]
+        public IActionResult Delete(Guid usuarioId)
+        {
+            // Checa se o usuário existe (retorna 404 - NOT FOUND se não existir)
+            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+
+            // Retorna usuario pelo repositório
+            var usuario = _repository.RetornaUsuario(usuarioId);
+
+            // Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
+            if (usuario == null) return NotFound();
+
+            // Remove entidade do repositorio
+            _repository.RemoveUsuario(usuario);
+
+            // Persiste os dados no banco de dados
+            if (!_repository.Save())
+            {
+                // Joga uma exceção se der algum erro ao salvar
+                throw new Exception("Ocorreu um erro inesperado ao salvar endereço do usuário");
+            }
+
+            return NoContent();
+        }
 
         // OPTIONS
     }

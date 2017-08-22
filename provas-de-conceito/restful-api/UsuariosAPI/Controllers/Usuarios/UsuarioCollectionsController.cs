@@ -34,7 +34,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             foreach (var usuario in usuariosEntities)
             {
-                _repository.Cadastrar(usuario);
+                _repository.CadastrarUsuario(usuario);
             }
 
             if (!_repository.Save())

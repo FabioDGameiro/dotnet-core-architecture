@@ -7,17 +7,18 @@ namespace Domain.Usuarios.Repository
 {
     public interface IUsuarioRepository
     {
-        void Cadastrar(Usuario usuario);
-        Usuario RetornarPorId(Guid usuarioId);
-        void Atualizar(Usuario usuario);
-        void Remover(Usuario usuario);
-        IEnumerable<Usuario> Listar(UsuarioParameters parametros);
+        void CadastrarUsuario(Usuario usuario);
+        Usuario RetornaUsuario(Guid usuarioId);
+        void AtualizaUsuario(Usuario usuario);
+        void RemoveUsuario(Usuario usuario);
+        IEnumerable<Usuario> RetornaUsuarios(UsuarioParameters parametros);
         IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids);
         bool UsuarioExists(Guid usuarioId);
 
         IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId);
-        UsuarioEndereco RetornarEnderecoPorId(Guid usuarioId, Guid enderecoId);
+        UsuarioEndereco RetornarEndereco(Guid usuarioId, Guid enderecoId);
         void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco);
+        void RemoveEndereco(UsuarioEndereco endereco);
 
 
         bool Save();

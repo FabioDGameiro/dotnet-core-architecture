@@ -48,7 +48,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
 
             // Retorna endereço do usuário pelo repositório
-            var endereco = _repository.RetornarEnderecoPorId(usuarioId, enderecoId);
+            var endereco = _repository.RetornarEndereco(usuarioId, enderecoId);
 
             // Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
             if (endereco == null) return NotFound();
@@ -95,6 +95,31 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         // PUT
 
         // DELETE
+
+        [HttpDelete("{enderecoId:guid}")]
+        public IActionResult Delete(Guid usuarioId, Guid enderecoId)
+        {
+            // Checa se o usuário existe (retorna 404 - NOT FOUND se não existir)
+            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+
+            // Retorna endereço do usuário pelo repositório
+            var endereco = _repository.RetornarEndereco(usuarioId, enderecoId);
+
+            // Checa se o recurso existe (retorna 404 - NOT FOUND se não existir)
+            if (endereco == null) return NotFound();
+
+            // Remove entidade do repositorio
+            _repository.RemoveEndereco(endereco);
+
+            // Persiste os dados no banco de dados
+            if (!_repository.Save())
+            {
+                // Joga uma exceção se der algum erro ao salvar
+                throw new Exception("Ocorreu um erro inesperado ao salvar endereço do usuário");
+            }
+
+            return NoContent();
+        }
 
         // OPTIONS
     }
