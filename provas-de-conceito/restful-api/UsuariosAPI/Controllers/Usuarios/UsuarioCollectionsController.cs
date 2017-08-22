@@ -2,9 +2,11 @@
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Library.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UsuariosAPI.Controllers.Base;
 using UsuariosAPI.Models.Usuarios;
 
@@ -40,10 +42,26 @@ namespace UsuariosAPI.Controllers.Usuarios
                 throw new Exception("Ocorreu um erro inesperado ao salvar usuário");
             }
 
-            // TODO: trazer os locations das coleções
-            //var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{usuarioEntity.Id}";
+            var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosEntities);
 
-            return Ok();
+            var createdIds = string.Join(",", usuariosModels.Select(x => x.Id));
+            var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/({createdIds})";
+
+            return Created(locationUri, usuariosModels);
+        }
+
+        [HttpGet("({ids})")]
+        public IActionResult Get([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+        {
+            if (ids == null) return BadRequest();
+
+            var usuariosEntities = _repository.RetornaUsuarios(ids);
+
+            if (ids.Count() != usuariosEntities.Count()) return NotFound();
+
+            var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosEntities);
+
+            return Ok(usuariosModels);
         }
     }
 }

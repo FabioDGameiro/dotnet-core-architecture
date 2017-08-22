@@ -12,6 +12,7 @@ namespace Domain.Usuarios.Repository
         void Atualizar(Usuario usuario);
         void Remover(Usuario usuario);
         IEnumerable<Usuario> Listar(UsuarioParameters parametros);
+        IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids);
         bool UsuarioExists(Guid usuarioId);
 
         IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId);
@@ -20,5 +21,6 @@ namespace Domain.Usuarios.Repository
 
 
         bool Save();
+        
     }
 }

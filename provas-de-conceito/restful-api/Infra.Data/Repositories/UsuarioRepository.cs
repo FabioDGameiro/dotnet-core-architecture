@@ -58,6 +58,14 @@ namespace Infra.Data.Repositories
                 .ToList();
         }
 
+        public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
+        {
+            return _context.Usuarios.Where(a => ids.Contains(a.Id))
+                .OrderBy(x => x.Nome)
+                .ThenBy(x => x.Sobrenome)
+                .ToList();
+        }
+
         public bool UsuarioExists(Guid usuarioId)
         {
             return _context.Usuarios.Any(x => x.Id == usuarioId);
