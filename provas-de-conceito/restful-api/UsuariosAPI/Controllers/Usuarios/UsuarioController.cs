@@ -98,6 +98,28 @@ namespace UsuariosAPI.Controllers.Usuarios
 
         // PUT
 
+        [HttpPut("{usuarioId:guid}")]
+        public IActionResult Put(Guid usuarioId, [FromBody] UpdateUsuarioModel usuarioModel)
+        {
+            if (usuarioModel == null) return BadRequest();
+
+            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+
+            var usuarioEntity = _repository.RetornaUsuario(usuarioId);
+            if (usuarioEntity == null) return NotFound();
+
+            _mapper.Map(usuarioModel, usuarioEntity);
+
+            _repository.AtualizaUsuario(usuarioEntity);
+
+            if (!_repository.Save())
+            {
+                throw new Exception("Ocorreu um erro inesperado ao atualizar o usuário");
+            }
+
+            return NoContent();
+        }
+
         // PATCH
 
         // DELETE

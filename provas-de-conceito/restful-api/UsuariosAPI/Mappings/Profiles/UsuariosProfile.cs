@@ -28,10 +28,10 @@ namespace UsuariosAPI.Mappings.Profiles
             // Model -> Entity
 
             CreateMap<CreateUsuarioModel, Usuario>();
+            CreateMap<UpdateUsuarioModel, Usuario>();
+
             CreateMap<CreateUsuarioEnderecoModel, UsuarioEndereco>();
             CreateMap<UpdateUsuarioEnderecoModel, UsuarioEndereco>();
-
-
         }
     }
 }
