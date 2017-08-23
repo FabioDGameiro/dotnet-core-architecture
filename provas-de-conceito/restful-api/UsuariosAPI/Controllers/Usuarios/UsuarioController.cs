@@ -3,6 +3,7 @@ using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -121,6 +122,35 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // PATCH
+
+        [HttpPatch("{usuarioId:guid}")]
+        public IActionResult Patch(Guid usuarioId, [FromBody] JsonPatchDocument<UpdateUsuarioModel> patchUsuarioModel)
+        {
+            if (patchUsuarioModel == null) return BadRequest();
+
+            var usuarioEntity = _repository.RetornaUsuario(usuarioId);
+            if (usuarioEntity == null) return NotFound();
+
+            // mapeia entidade para uma model que será atualizada
+            var usuarioToPatch = _mapper.Map<UpdateUsuarioModel>(usuarioEntity);
+
+            patchUsuarioModel.ApplyTo(usuarioToPatch);
+
+            // TODO: executar validações aqui
+
+            // atualiza a entidade com a model atualizada 
+            _mapper.Map(usuarioToPatch, usuarioEntity);
+
+            // atualiza entidade no repositório
+            _repository.AtualizaUsuario(usuarioEntity);
+
+            if (!_repository.Save())
+            {
+                throw new Exception("Ocorreu um erro inesperado ao atualizar o usuário");
+            }
+
+            return NoContent();
+        }
 
         // DELETE
 
