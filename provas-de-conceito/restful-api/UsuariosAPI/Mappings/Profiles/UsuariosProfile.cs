@@ -21,8 +21,12 @@ namespace UsuariosAPI.Mappings.Profiles
                 // Formatando o Sexo do usuário a partir do enum SexoType
                 .ForMember(t => t.Sexo, opt => opt.MapFrom(s => (s.Sexo.HasValue) ? s.Sexo.Value.GetDescription() : null));
 
+            CreateMap<Usuario, UpdateUsuarioModel>();
+            CreateMap<UsuarioEndereco, UpdateUsuarioEnderecoModel>();
+
             CreateMap<UsuarioEndereco, GetUsuarioEnderecoModel>()
                 // Formatando o Tipo do endereçoa partir do enum EnderecoType
+                .ForMember(t => t.Endereco, opt => opt.MapFrom(s => s.ToString()))
                 .ForMember(t => t.Tipo, opt => opt.MapFrom(s => s.Tipo.GetDescription()));
 
             // Model -> Entity

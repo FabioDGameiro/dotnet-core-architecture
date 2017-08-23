@@ -8,7 +8,9 @@ namespace UsuariosAPI.Models.Usuarios.Endereco
 {
     public class CreateUsuarioEnderecoModel
     {
-        public string Endereco { get; set; }
+        public string Logradouro { get; set; }
+        public string Numero { get; set; }
+        public string Complemento { get; set; }
         public string Estado { get; set; }
         public EnderecoType Tipo { get; set; }
     }

@@ -3,6 +3,7 @@ using Domain.Usuarios.Endereco;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -122,10 +123,8 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
 
             _repository.AtualizaUsuarioEndereco(enderecoEntity);
 
-            // Persiste os dados no banco de dados
             if (!_repository.Save())
             {
-                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao atualizar endereço do usuário");
             }
 
@@ -133,6 +132,36 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         }
 
         // PATCH
+        [HttpPatch("{enderecoId:guid}")]
+        public IActionResult Patch(Guid usuarioId, Guid enderecoId, [FromBody] JsonPatchDocument<UpdateUsuarioEnderecoModel> patchEnderecoModel)
+        {
+            if (patchEnderecoModel == null) return BadRequest();
+
+            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+
+            var enderecoEntity = _repository.RetornarEndereco(usuarioId, enderecoId);
+            if (enderecoEntity == null) return NotFound();
+
+            // mapeia entidade para uma model que será atualizada
+            var enderecoToPatch = _mapper.Map<UpdateUsuarioEnderecoModel>(enderecoEntity);
+
+            patchEnderecoModel.ApplyTo(enderecoToPatch);
+
+            // TODO: executar validações aqui
+
+            // atualiza a entidade com a model atualizada 
+            _mapper.Map(enderecoToPatch, enderecoEntity);
+
+            // atualiza entidade no repositório
+            _repository.AtualizaUsuarioEndereco(enderecoEntity);
+
+            if (!_repository.Save())
+            {
+                throw new Exception("Ocorreu um erro inesperado ao atualizar endereço do usuário");
+            }
+
+            return NoContent();
+        }
 
         // DELETE
 

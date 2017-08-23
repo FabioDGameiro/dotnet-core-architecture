@@ -27,14 +27,18 @@ namespace Infra.Data.Context
                         new UsuarioEndereco
                         {
                             Id = new Guid("c4ebe549-cc93-439a-8003-45024edacd2d"),
-                            Endereco = "Rua Jose Morais, 763",
+                            Logradouro = "Rua Jose Morais",
+                            Numero = "763",
+                            Complemento = "AP 759",
                             Estado = "SP",
                             Tipo = EnderecoType.Residencial
                         },
                         new UsuarioEndereco
                         {
                             Id = new Guid("b829b507-fc13-440f-b503-ff0ddd8075ee"),
-                            Endereco = "Rua Jardim Morais, 12",
+                            Logradouro = "Rua Jardim Morais",
+                            Numero = "12",
+                            Complemento = "10º Andar - Ramal 2",
                             Estado = "SP",
                             Tipo = EnderecoType.Comercial
                         }
@@ -53,7 +57,8 @@ namespace Infra.Data.Context
                         new UsuarioEndereco
                         {
                             Id = new Guid("55509a74-41ee-412e-8af9-70ce65c8ba03"),
-                            Endereco = "Rua Maria das Dores, 9827",
+                            Logradouro = "Rua Maria das Dores",
+                            Numero = "9827",
                             Estado = "RJ",
                             Tipo = EnderecoType.Residencial
                         }
@@ -72,14 +77,17 @@ namespace Infra.Data.Context
                         new UsuarioEndereco
                         {
                             Id = new Guid("67c8ccc5-de65-4c71-abaa-36c1b225f025"),
-                            Endereco = "Rua José Pinheiro, 323",
+                            Logradouro = "Rua José Pinheiro",
+                            Numero = "763",
                             Estado = "SP",
                             Tipo = EnderecoType.Residencial
                         },
                         new UsuarioEndereco
                         {
                             Id = new Guid("22a43f85-da68-4a35-850e-020b7597525a"),
-                            Endereco = "Av. Brasil, 48512",
+                            Logradouro = "Av. Brasil",
+                            Numero = "48512",
+                            Complemento = "Ramal 239",
                             Estado = "RJ",
                             Tipo = EnderecoType.Comercial
                         }
@@ -98,7 +106,9 @@ namespace Infra.Data.Context
                         new UsuarioEndereco
                         {
                             Id = new Guid("c9f946f1-39ef-41b7-a3d6-7bc1cabde805"),
-                            Endereco = "Av. Emilio Esteves, 957",
+                            Logradouro = "Av. Emilio Esteves",
+                            Numero = "957",
+                            Complemento = "Casa 3",
                             Estado = "SP",
                             Tipo = EnderecoType.Residencial
                         }
