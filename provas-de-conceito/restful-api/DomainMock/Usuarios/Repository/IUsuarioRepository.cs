@@ -1,4 +1,5 @@
-﻿using Domain.Usuarios.Endereco;
+﻿using Domain.Base;
+using Domain.Usuarios.Endereco;
 using Domain.Usuarios.Parameters;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Domain.Usuarios.Repository
         Usuario RetornaUsuario(Guid usuarioId);
         void AtualizaUsuario(Usuario usuario);
         void RemoveUsuario(Usuario usuario);
-        IEnumerable<Usuario> RetornaUsuarios(UsuarioParameters parametros);
+        IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros);
         IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids);
         bool UsuarioExists(Guid usuarioId);
         bool EmailExists(string email, Guid usuarioExceptionId = default(Guid));

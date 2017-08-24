@@ -31,10 +31,22 @@ namespace UsuariosAPI.Controllers.Usuarios
         public IActionResult Get(UsuarioParameters parametros)
         {
             // Retorna usuarios do repositório
-            var usuarios = _repository.RetornaUsuarios(parametros);
+            var usuariosPagedList = _repository.RetornaUsuarios(parametros);
+
+            // Gera os metadados da paginação e adiciona ao cabeçalho
+            var paginationMetadata = new
+            {
+                totalCount = usuariosPagedList.TotalCount,
+                pageSize = usuariosPagedList.PageSize,
+                currentPage = usuariosPagedList.CurrentPage,
+                totalPages = usuariosPagedList.TotalPages
+            };
+
+            Response.Headers.Add("Pagination",
+                Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
-            var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuarios);
+            var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosPagedList);
             return Ok(usuariosModels);
         }
 

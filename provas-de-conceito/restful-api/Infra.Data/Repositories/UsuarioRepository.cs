@@ -1,8 +1,10 @@
-﻿using Domain.Usuarios;
+﻿using Domain.Base;
+using Domain.Usuarios;
 using Domain.Usuarios.Endereco;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Infra.Data.Context;
+using Infra.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,12 +52,32 @@ namespace Infra.Data.Repositories
             _context.Usuarios.Remove(usuario);
         }
 
-        public IEnumerable<Usuario> RetornaUsuarios(UsuarioParameters parametros)
+        public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
-            return _context.Usuarios
+            var usuariosQuery = _context.Usuarios
                 .OrderBy(x => x.Nome)
                 .ThenBy(x => x.Sobrenome)
-                .ToList();
+                .AsQueryable();
+
+            if (parametros.Sexo.HasValue)
+                usuariosQuery = usuariosQuery.Where(x => x.Sexo == parametros.Sexo);
+
+            if (!string.IsNullOrWhiteSpace(parametros.Email))
+                usuariosQuery = usuariosQuery.Where(x => x.Email.ToLowerInvariant() == parametros.Email.ToLowerInvariant());
+
+            if (parametros.HasQuery)
+            {
+                usuariosQuery = usuariosQuery.Where(x => 
+                    x.Nome.ToLowerInvariant().Contains(parametros.Query) ||
+                    x.Sobrenome.ToLowerInvariant().Contains(parametros.Query) ||
+                    x.Email.ToLowerInvariant().Contains(parametros.Query)
+                    );
+            }
+
+            return PagedList<Usuario>.Create(
+                usuariosQuery,
+                parametros.Page,
+                parametros.PageSize);
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
@@ -73,7 +95,7 @@ namespace Infra.Data.Repositories
 
         public bool EmailExists(string email, Guid usuarioExceptionId = default(Guid))
         {
-            return _context.Usuarios.Any(x=>x.Email == email && x.Id != usuarioExceptionId);
+            return _context.Usuarios.Any(x => x.Email == email && x.Id != usuarioExceptionId);
         }
 
         // Endereco

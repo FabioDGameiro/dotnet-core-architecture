@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.0 (2017-08-24)
+
+- Implementação da paginação na listagem de usuários
+- Implementação de filtros e busca na listagem de usuários
+
 ## 0.5.0 (2017-08-22)
 
 - Implementação das validações das models, nos métodos POST, PUT e PATCH
