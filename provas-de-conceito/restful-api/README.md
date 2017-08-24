@@ -8,7 +8,7 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 ## Tecnologias de Desenvolvimento
 
-- [ASP.NET Core][tec-1]
+- [ASP.NET Core 2.0][tec-1]
 
 ## Referências de Estudos
 
