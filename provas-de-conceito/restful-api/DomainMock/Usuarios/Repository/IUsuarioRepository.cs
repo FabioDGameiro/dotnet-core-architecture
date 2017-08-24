@@ -14,6 +14,7 @@ namespace Domain.Usuarios.Repository
         IEnumerable<Usuario> RetornaUsuarios(UsuarioParameters parametros);
         IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids);
         bool UsuarioExists(Guid usuarioId);
+        bool EmailExists(string email, Guid usuarioExceptionId = default(Guid));
 
         IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId);
         UsuarioEndereco RetornarEndereco(Guid usuarioId, Guid enderecoId);

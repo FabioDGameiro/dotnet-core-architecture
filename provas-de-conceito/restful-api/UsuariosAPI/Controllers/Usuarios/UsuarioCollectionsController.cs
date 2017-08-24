@@ -2,6 +2,7 @@
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Infra.Helpers;
 using Library.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,6 +32,15 @@ namespace UsuariosAPI.Controllers.Usuarios
         public IActionResult Create([FromBody] IEnumerable<CreateUsuarioModel> usuariosCollections)
         {
             if (usuariosCollections == null) return BadRequest();
+
+            for (int i = 0; i < usuariosCollections.Count(); i++)
+            {
+                // Valida email duplicado
+                if (_repository.EmailExists(usuariosCollections.ElementAt(i).Email))
+                    ModelState.AddModelError($"[{i}].Email", "O e-mail informado já está sendo utilizado");
+            }
+
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             var usuariosEntities = _mapper.Map<IEnumerable<Usuario>>(usuariosCollections);
 

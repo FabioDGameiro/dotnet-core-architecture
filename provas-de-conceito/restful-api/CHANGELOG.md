@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 0.5.0 (2017-08-22)
+
+- Implementação das validações das models, nos métodos POST, PUT e PATCH
+
+## 0.4.0 (2017-08-22)
+
+- Implementação dos métodos POST, PUT, PATCH
+-  e DELETE
+
 ## 0.3.0 (2017-08-21)
 
 - Configura a aplicação para retornar um Status Code **406 - NOT ACCEPTABLE** para outros formatos de respostas diferentes dos aceitados.

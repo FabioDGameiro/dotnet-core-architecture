@@ -71,6 +71,11 @@ namespace Infra.Data.Repositories
             return _context.Usuarios.Any(x => x.Id == usuarioId);
         }
 
+        public bool EmailExists(string email, Guid usuarioExceptionId = default(Guid))
+        {
+            return _context.Usuarios.Any(x=>x.Email == email && x.Id != usuarioExceptionId);
+        }
+
         // Endereco
 
         public IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId)
@@ -116,6 +121,5 @@ namespace Infra.Data.Repositories
         {
             return _context.SaveChanges() > 0;
         }
-
     }
 }

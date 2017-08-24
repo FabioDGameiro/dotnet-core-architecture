@@ -62,6 +62,10 @@ namespace UsuariosAPI.Controllers.Usuarios
             // Checa se o a model foi preenchida corretamente
             if (usuarioModel == null) return BadRequest();
 
+            // Valida email duplicado
+            if (_repository.EmailExists(usuarioModel.Email))
+                ModelState.AddModelError("Email", "O e-mail informado já está sendo utilizado");
+
             // checa se a model está inválida, (retorna 422 - UnprocessableEntity se inválida)
             if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
@@ -108,6 +112,10 @@ namespace UsuariosAPI.Controllers.Usuarios
         {
             if (usuarioModel == null) return BadRequest();
 
+            // Valida email duplicado
+            if (_repository.EmailExists(usuarioModel.Email, usuarioId))
+                ModelState.AddModelError("Email", "O e-mail informado já está sendo utilizado");
+
             if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
@@ -141,6 +149,10 @@ namespace UsuariosAPI.Controllers.Usuarios
             var usuarioToPatch = _mapper.Map<UpdateUsuarioModel>(usuarioEntity);
 
             patchUsuarioModel.ApplyTo(usuarioToPatch, ModelState);
+
+            // Valida email duplicado
+            if (_repository.EmailExists(usuarioToPatch.Email, usuarioId))
+                ModelState.AddModelError("Email", "O e-mail informado já está sendo utilizado");
 
             // tenta revalidar a model, depois de aplicar as novas alterações
             TryValidateModel(usuarioToPatch);
