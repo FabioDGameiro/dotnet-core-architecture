@@ -12,6 +12,7 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 ## Referências de Estudos
 
+- [Building a RESTful API with ASP.NET Core][ref-7] - (Mais Recomendado) Curso completo de como se criar uma API restful por Kevin Dockx, um MVP da microsoft.
 - [Restful API Best Practices][ref-5] - 10 boas práticas utilizadas em uma API restful.
 - [Best Practices for Designing a Pragmatic RESTful API][ref-6] - Artigo mais completo sobre boas práticas para fazer uma API restful.
 - [Swagger Template][ref-1] - Template de referência do swagger com uma documentação de exemplo de uma API restful.
@@ -27,4 +28,5 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 [ref-4]: https://github.com/zalando/restful-api-guidelines/blob/master/README.md
 [ref-5]: https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/
 [ref-6]: http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+[ref-7]: https://www.pluralsight.com/courses/asp-dot-net-core-restful-api-building
 
