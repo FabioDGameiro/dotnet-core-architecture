@@ -30,3 +30,9 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 [ref-6]: http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 [ref-7]: https://www.pluralsight.com/courses/asp-dot-net-core-restful-api-building
 
+## Referências de APIs Restful Populares
+
+- [Github API](https://developer.github.com/)
+- [Twitter APIs](https://dev.twitter.com/docs)
+- [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro)
+- [Google Directions API](https://developers.google.com/maps/documentation/directions/start)
