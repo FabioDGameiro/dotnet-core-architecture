@@ -13,7 +13,7 @@ using System;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(UsuariosContext))]
-    [Migration("20170823144320_Initial")]
+    [Migration("20170824011117_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,10 +59,9 @@ namespace Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataNascimento");
+                    b.Property<DateTime?>("DataNascimento");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("Nome")
@@ -72,7 +71,6 @@ namespace Infra.Data.Migrations
                     b.Property<int?>("Sexo");
 
                     b.Property<string>("Sobrenome")
-                        .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");

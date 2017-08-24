@@ -2,6 +2,7 @@
 using Domain.Usuarios.Endereco;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Infra.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -63,16 +64,19 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         // POST
 
         [HttpPost]
-        public IActionResult Post(Guid usuarioId, [FromBody] CreateUsuarioEnderecoModel usuarioEnderecoModel)
+        public IActionResult Post(Guid usuarioId, [FromBody] CreateUsuarioEnderecoModel enderecoModel)
         {
             // Checa se o a model foi preenchida corretamente
-            if (usuarioEnderecoModel == null) return BadRequest();
+            if (enderecoModel == null) return BadRequest();
+
+            // Checa se a model está inválida, (retorna 422 - UnprocessableEntity se inválida)
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             // Checa se o usuário existe (retorna 404 - NOT FOUND se não existir)
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
 
             // Mapeia a model para a entidade
-            var usuarioEnderecoEntity = _mapper.Map<UsuarioEndereco>(usuarioEnderecoModel);
+            var usuarioEnderecoEntity = _mapper.Map<UsuarioEndereco>(enderecoModel);
 
             // Adiciona ao repositório
             _repository.CadastrarEnderecoPorUsuario(usuarioId, usuarioEnderecoEntity);
@@ -114,6 +118,8 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         {
             if (enderecoModel == null) return BadRequest();
 
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
+
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
 
             var enderecoEntity = _repository.RetornarEndereco(usuarioId, enderecoId);
@@ -132,6 +138,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         }
 
         // PATCH
+
         [HttpPatch("{enderecoId:guid}")]
         public IActionResult Patch(Guid usuarioId, Guid enderecoId, [FromBody] JsonPatchDocument<UpdateUsuarioEnderecoModel> patchEnderecoModel)
         {
@@ -145,9 +152,13 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             // mapeia entidade para uma model que será atualizada
             var enderecoToPatch = _mapper.Map<UpdateUsuarioEnderecoModel>(enderecoEntity);
 
-            patchEnderecoModel.ApplyTo(enderecoToPatch);
+            patchEnderecoModel.ApplyTo(enderecoToPatch, ModelState);
 
-            // TODO: executar validações aqui
+            // tenta revalidar a model, depois de aplicar as novas alterações
+            TryValidateModel(enderecoToPatch);
+
+            // checa se a model está inválida, (retorna 422 - UnprocessableEntity se inválida)
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             // atualiza a entidade com a model atualizada 
             _mapper.Map(enderecoToPatch, enderecoEntity);

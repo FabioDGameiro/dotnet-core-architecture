@@ -10,7 +10,7 @@ namespace Domain.Usuarios
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Email { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento { get; set; }
         public SexoType? Sexo { get; set; }
 
         public ICollection<UsuarioEndereco> Enderecos { get; set; } = new List<UsuarioEndereco>();

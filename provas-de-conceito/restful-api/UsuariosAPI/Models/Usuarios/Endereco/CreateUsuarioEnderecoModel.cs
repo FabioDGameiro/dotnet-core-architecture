@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace UsuariosAPI.Models.Usuarios.Endereco
 {
-    public class UpdateUsuarioEnderecoModel
+    public class CreateUsuarioEnderecoModel : BaseUsuarioEnderecoModel
     {
-        public string Logradouro { get; set; }
-        public string Numero { get; set; }
-        public string Complemento { get; set; }
-        public string Estado { get; set; }
-        public EnderecoType Tipo { get; set; }
     }
 }

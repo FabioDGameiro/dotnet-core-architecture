@@ -18,7 +18,7 @@ namespace UsuariosAPI.Mappings.Profiles
 
         private void UsuarioMappings()
         {
-            // Entity -> Model
+            // ENTITY TO MODEL
 
             CreateMap<Usuario, GetUsuarioModel>()
 
@@ -26,14 +26,14 @@ namespace UsuariosAPI.Mappings.Profiles
                 .ForMember(t => t.NomeCompleto, opt => opt.MapFrom(s => $"{s.Nome} {s.Sobrenome}"))
 
                 // Formatando a Idade do usuário a partir da sua Data de Nascimento
-                .ForMember(t => t.Idade, opt => opt.MapFrom(s => s.DataNascimento.GetCurrentAge()))
+                .ForMember(t => t.Idade, opt => opt.MapFrom(s => (s.DataNascimento.HasValue) ? s.DataNascimento.Value.GetCurrentAge().ToString() : null))
 
                 // Formatando o Sexo do usuário a partir do enum SexoType
                 .ForMember(t => t.Sexo, opt => opt.MapFrom(s => (s.Sexo.HasValue) ? s.Sexo.Value.GetDescription() : null));
 
             CreateMap<Usuario, UpdateUsuarioModel>();
 
-            // Model -> Entity
+            // MODEL TO ENTITY
 
             CreateMap<CreateUsuarioModel, Usuario>();
             CreateMap<UpdateUsuarioModel, Usuario>();
@@ -41,7 +41,7 @@ namespace UsuariosAPI.Mappings.Profiles
 
         private void UsuarioEnderecoMappings()
         {
-            // Entity -> Model
+            // ENTITY TO MODEL
 
             CreateMap<UsuarioEndereco, GetUsuarioEnderecoModel>()
 
@@ -54,7 +54,7 @@ namespace UsuariosAPI.Mappings.Profiles
 
             CreateMap<UsuarioEndereco, UpdateUsuarioEnderecoModel>();
 
-            // Model -> Entity
+            // MODEL TO ENTITY
 
             CreateMap<CreateUsuarioEnderecoModel, UsuarioEndereco>();
             CreateMap<UpdateUsuarioEnderecoModel, UsuarioEndereco>();

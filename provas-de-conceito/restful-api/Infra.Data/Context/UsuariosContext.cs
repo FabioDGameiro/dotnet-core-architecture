@@ -21,9 +21,9 @@ namespace Infra.Data.Context
 
             modelBuilder.Entity<Usuario>().HasKey(x => x.Id);
             modelBuilder.Entity<Usuario>().Property(x => x.Nome).IsRequired().HasColumnType("varchar(20)");
-            modelBuilder.Entity<Usuario>().Property(x => x.Sobrenome).IsRequired().HasColumnType("varchar(30)");
-            modelBuilder.Entity<Usuario>().Property(x => x.Email).IsRequired().HasColumnType("varchar(30)");
-            modelBuilder.Entity<Usuario>().Property(x => x.DataNascimento).IsRequired();
+            modelBuilder.Entity<Usuario>().Property(x => x.Sobrenome).HasColumnType("varchar(30)");
+            modelBuilder.Entity<Usuario>().Property(x => x.Email).HasColumnType("varchar(30)");
+            modelBuilder.Entity<Usuario>().Property(x => x.DataNascimento);
 
             modelBuilder.Entity<UsuarioEndereco>().HasKey(x => x.Id);
             modelBuilder.Entity<UsuarioEndereco>().Property(x => x.Logradouro).IsRequired().HasColumnType("varchar(100)");

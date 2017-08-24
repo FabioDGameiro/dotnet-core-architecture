@@ -58,10 +58,9 @@ namespace Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataNascimento");
+                    b.Property<DateTime?>("DataNascimento");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("Nome")
@@ -71,7 +70,6 @@ namespace Infra.Data.Migrations
                     b.Property<int?>("Sexo");
 
                     b.Property<string>("Sobrenome")
-                        .IsRequired()
                         .HasColumnType("varchar(30)");
 
                     b.HasKey("Id");

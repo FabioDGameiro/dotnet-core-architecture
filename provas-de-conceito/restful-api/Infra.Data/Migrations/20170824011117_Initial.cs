@@ -13,11 +13,11 @@ namespace Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Email = table.Column<string>(type: "varchar(30)", nullable: false),
+                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Email = table.Column<string>(type: "varchar(30)", nullable: true),
                     Nome = table.Column<string>(type: "varchar(20)", nullable: false),
                     Sexo = table.Column<int>(type: "int", nullable: true),
-                    Sobrenome = table.Column<string>(type: "varchar(30)", nullable: false)
+                    Sobrenome = table.Column<string>(type: "varchar(30)", nullable: true)
                 },
                 constraints: table =>
                 {

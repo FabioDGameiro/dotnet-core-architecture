@@ -15,7 +15,7 @@ namespace UsuariosAPI.Models.Usuarios
         public Guid Id { get; set; }
         public string NomeCompleto { get; set; }
         public string Email { get; set; }
-        public int Idade { get; set; }
+        public string Idade { get; set; }
         public string Sexo { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Infra.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,9 @@ namespace UsuariosAPI.Controllers.Usuarios
             // Checa se o a model foi preenchida corretamente
             if (usuarioModel == null) return BadRequest();
 
+            // checa se a model está inválida, (retorna 422 - UnprocessableEntity se inválida)
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
+
             // Mapeia a model para a entidade
             var usuarioEntity = _mapper.Map<Usuario>(usuarioModel);
 
@@ -89,7 +93,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpPost("{usuarioId:guid}")]
         public IActionResult Post(Guid usuarioId)
         {
-            if(_repository.UsuarioExists(usuarioId))
+            if (_repository.UsuarioExists(usuarioId))
             {
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
             }
@@ -103,6 +107,8 @@ namespace UsuariosAPI.Controllers.Usuarios
         public IActionResult Put(Guid usuarioId, [FromBody] UpdateUsuarioModel usuarioModel)
         {
             if (usuarioModel == null) return BadRequest();
+
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
 
@@ -134,9 +140,13 @@ namespace UsuariosAPI.Controllers.Usuarios
             // mapeia entidade para uma model que será atualizada
             var usuarioToPatch = _mapper.Map<UpdateUsuarioModel>(usuarioEntity);
 
-            patchUsuarioModel.ApplyTo(usuarioToPatch);
+            patchUsuarioModel.ApplyTo(usuarioToPatch, ModelState);
 
-            // TODO: executar validações aqui
+            // tenta revalidar a model, depois de aplicar as novas alterações
+            TryValidateModel(usuarioToPatch);
+
+            // checa se a model está inválida, (retorna 422 - UnprocessableEntity se inválida)
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             // atualiza a entidade com a model atualizada 
             _mapper.Map(usuarioToPatch, usuarioEntity);
