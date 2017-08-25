@@ -88,6 +88,7 @@ namespace Infra.Data.Repositories
         // TODO: Implementar multipla ordenação
         private IQueryable<Usuario> AplicaOrdenacao(IQueryable<Usuario> usuarios, string orderBy)
         {
+            var orderQuery = usuarios.OrderBy(x => 0);
             var ordersArray = orderBy.Split(',');
 
             foreach (var order in ordersArray)
@@ -95,36 +96,36 @@ namespace Infra.Data.Repositories
                 switch (order)
                 {
                     case "nome":
-                        usuarios = usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        orderQuery = orderQuery.ThenBy(x => x.Nome).ThenBy(x => x.Sobrenome);
                         break;
 
                     case "nome-desc":
-                        usuarios = usuarios.OrderByDescending(x => x.Nome).ThenByDescending(x => x.Sobrenome);
+                        orderQuery = orderQuery.ThenByDescending(x => x.Nome).ThenByDescending(x => x.Sobrenome);
                         break;
 
                     case "idade":
-                        usuarios = usuarios.OrderBy(x => x.DataNascimento);
+                        orderQuery = orderQuery.ThenByDescending(x => x.DataNascimento);
                         break;
 
                     case "idade-desc":
-                        usuarios = usuarios.OrderByDescending(x => x.DataNascimento);
+                        orderQuery = orderQuery.ThenBy(x => x.DataNascimento);
                         break;
 
                     case "sexo":
-                        usuarios = usuarios.OrderBy(x => x.Sexo);
+                        orderQuery = orderQuery.ThenBy(x => x.Sexo);
                         break;
 
                     case "sexo-desc":
-                        usuarios = usuarios.OrderByDescending(x => x.Sexo);
+                        orderQuery = orderQuery.ThenByDescending(x => x.Sexo);
                         break;
 
                     default:
-                        usuarios = usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        orderQuery = orderQuery.ThenBy(x => x.Nome).ThenBy(x => x.Sobrenome);
                         break;
                 }
             }
-
-            return usuarios.AsQueryable();
+            
+            return orderQuery.AsQueryable();
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
