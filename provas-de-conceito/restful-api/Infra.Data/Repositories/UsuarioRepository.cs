@@ -16,13 +16,12 @@ namespace Infra.Data.Repositories
     {
         private readonly UsuariosContext _context;
 
-        // Usuario
-
-        public UsuarioRepository(
-            UsuariosContext context)
+        public UsuarioRepository(UsuariosContext context)
         {
             _context = context;
         }
+
+        // Usuario
 
         public void CadastrarUsuario(Usuario usuario)
         {
@@ -88,10 +87,13 @@ namespace Infra.Data.Repositories
         // TODO: Implementar multipla ordenação
         private IQueryable<Usuario> AplicaOrdenacao(IQueryable<Usuario> usuarios, string orderBy)
         {
-            var orderQuery = usuarios.OrderBy(x => 0);
-            var ordersArray = orderBy.Split(',');
+            // Caso não houver nenhuma ordenação no parametro
+            // aplica a ordenação padrão
+            if (string.IsNullOrWhiteSpace(orderBy))
+                return usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
 
-            foreach (var order in ordersArray)
+            var orderQuery = usuarios.OrderBy(x => 0);
+            foreach (var order in orderBy.Split(','))
             {
                 switch (order)
                 {
@@ -124,7 +126,7 @@ namespace Infra.Data.Repositories
                         break;
                 }
             }
-            
+
             return orderQuery.AsQueryable();
         }
 
