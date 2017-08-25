@@ -55,7 +55,7 @@ namespace Infra.Data.Repositories
 
         public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
-            var usuariosQuery = AplicaOrdenacao(_context.Usuarios.AsQueryable(), parametros.OrderBy);
+            var usuariosQuery = AplicaOrdenacaoUsuarios(_context.Usuarios.AsQueryable(), parametros.OrderBy);
 
             // filtro por sexo
 
@@ -84,8 +84,25 @@ namespace Infra.Data.Repositories
                 parametros.PageSize);
         }
 
-        // TODO: Implementar multipla ordenação
-        private IQueryable<Usuario> AplicaOrdenacao(IQueryable<Usuario> usuarios, string orderBy)
+        public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
+        {
+            return _context.Usuarios.Where(a => ids.Contains(a.Id))
+                .OrderBy(x => x.Nome)
+                .ThenBy(x => x.Sobrenome)
+                .ToList();
+        }
+
+        public bool UsuarioExists(Guid usuarioId)
+        {
+            return _context.Usuarios.Any(x => x.Id == usuarioId);
+        }
+
+        public bool EmailExists(string email, Guid usuarioExceptionId = default(Guid))
+        {
+            return _context.Usuarios.Any(x => x.Email == email && x.Id != usuarioExceptionId);
+        }
+
+        private IQueryable<Usuario> AplicaOrdenacaoUsuarios(IQueryable<Usuario> usuarios, string orderBy)
         {
             // Caso não houver nenhuma ordenação no parametro
             // aplica a ordenação padrão
@@ -128,24 +145,6 @@ namespace Infra.Data.Repositories
             }
 
             return orderQuery.AsQueryable();
-        }
-
-        public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
-        {
-            return _context.Usuarios.Where(a => ids.Contains(a.Id))
-                .OrderBy(x => x.Nome)
-                .ThenBy(x => x.Sobrenome)
-                .ToList();
-        }
-
-        public bool UsuarioExists(Guid usuarioId)
-        {
-            return _context.Usuarios.Any(x => x.Id == usuarioId);
-        }
-
-        public bool EmailExists(string email, Guid usuarioExceptionId = default(Guid))
-        {
-            return _context.Usuarios.Any(x => x.Email == email && x.Id != usuarioExceptionId);
         }
 
         // Endereco
