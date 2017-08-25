@@ -149,6 +149,24 @@ namespace Infra.Data.Context
                     Nome = "Rose",
                     Sobrenome = "Santos",
                     Sexo = SexoType.Feminino,
+                },
+                new Usuario
+                {
+                    Id = new Guid("1184d5fb-6c44-49ed-843c-f9ac82415c14"),
+                    DataNascimento = new DateTime(1980, 5, 2),
+                    Email = "alan@email.com",
+                    Nome = "Alan",
+                    Sobrenome = "Algusto",
+                    Sexo = SexoType.Masculino,
+                },
+                new Usuario
+                {
+                    Id = new Guid("f0902e0c-c9aa-4b07-bba9-e62e148782db"),
+                    DataNascimento = new DateTime(1980, 5, 2),
+                    Email = "alan@email.com",
+                    Nome = "Alan",
+                    Sobrenome = "Santos",
+                    Sexo = SexoType.Masculino,
                 }
             };
 

@@ -8,7 +8,6 @@ namespace Domain.Base
     {
         const int maxPageSize = 25;
         private int _pageSize = 10;
-        private string _query;
 
         public int Page { get; set; } = 1;
 
@@ -18,6 +17,7 @@ namespace Domain.Base
             set { _pageSize = (value > maxPageSize) ? maxPageSize : value; }
         }
 
+        private string _query;
         public string Query
         {
             get { return _query; }
@@ -25,5 +25,12 @@ namespace Domain.Base
         }
 
         public bool HasQuery => !string.IsNullOrWhiteSpace(_query);
+
+        private string _orderBy;
+        public string OrderBy
+        {
+            get { return _orderBy; }
+            set { _orderBy = value.Trim().ToLowerInvariant(); }
+        }
     }
 }

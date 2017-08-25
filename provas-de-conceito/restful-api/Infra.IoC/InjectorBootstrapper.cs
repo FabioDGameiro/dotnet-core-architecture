@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Usuarios.Repository;
 using Infra.Data.Repositories;
+using Infra.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.IoC

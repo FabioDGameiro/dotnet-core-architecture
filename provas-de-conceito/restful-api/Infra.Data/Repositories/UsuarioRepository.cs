@@ -8,6 +8,7 @@ using Infra.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data.Repositories
 {
@@ -17,7 +18,8 @@ namespace Infra.Data.Repositories
 
         // Usuario
 
-        public UsuarioRepository(UsuariosContext context)
+        public UsuarioRepository(
+            UsuariosContext context)
         {
             _context = context;
         }
@@ -54,20 +56,23 @@ namespace Infra.Data.Repositories
 
         public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
-            var usuariosQuery = _context.Usuarios
-                .OrderBy(x => x.Nome)
-                .ThenBy(x => x.Sobrenome)
-                .AsQueryable();
+            var usuariosQuery = AplicaOrdenacao(_context.Usuarios.AsQueryable(), parametros.OrderBy);
+
+            // filtro por sexo
 
             if (parametros.Sexo.HasValue)
                 usuariosQuery = usuariosQuery.Where(x => x.Sexo == parametros.Sexo);
 
+            // filtro por e-mail
+
             if (!string.IsNullOrWhiteSpace(parametros.Email))
                 usuariosQuery = usuariosQuery.Where(x => x.Email.ToLowerInvariant() == parametros.Email.ToLowerInvariant());
 
+            // busca por nome, sobrenome ou e-mail
+
             if (parametros.HasQuery)
             {
-                usuariosQuery = usuariosQuery.Where(x => 
+                usuariosQuery = usuariosQuery.Where(x =>
                     x.Nome.ToLowerInvariant().Contains(parametros.Query) ||
                     x.Sobrenome.ToLowerInvariant().Contains(parametros.Query) ||
                     x.Email.ToLowerInvariant().Contains(parametros.Query)
@@ -78,6 +83,48 @@ namespace Infra.Data.Repositories
                 usuariosQuery,
                 parametros.Page,
                 parametros.PageSize);
+        }
+
+        // TODO: Implementar multipla ordenação
+        private IQueryable<Usuario> AplicaOrdenacao(IQueryable<Usuario> usuarios, string orderBy)
+        {
+            var ordersArray = orderBy.Split(',');
+
+            foreach (var order in ordersArray)
+            {
+                switch (order)
+                {
+                    case "nome":
+                        usuarios = usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        break;
+
+                    case "nome-desc":
+                        usuarios = usuarios.OrderByDescending(x => x.Nome).ThenByDescending(x => x.Sobrenome);
+                        break;
+
+                    case "idade":
+                        usuarios = usuarios.OrderBy(x => x.DataNascimento);
+                        break;
+
+                    case "idade-desc":
+                        usuarios = usuarios.OrderByDescending(x => x.DataNascimento);
+                        break;
+
+                    case "sexo":
+                        usuarios = usuarios.OrderBy(x => x.Sexo);
+                        break;
+
+                    case "sexo-desc":
+                        usuarios = usuarios.OrderByDescending(x => x.Sexo);
+                        break;
+
+                    default:
+                        usuarios = usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        break;
+                }
+            }
+
+            return usuarios.AsQueryable();
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
