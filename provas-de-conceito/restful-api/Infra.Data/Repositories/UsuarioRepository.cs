@@ -8,6 +8,7 @@ using Infra.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data.Repositories
 {
@@ -15,12 +16,12 @@ namespace Infra.Data.Repositories
     {
         private readonly UsuariosContext _context;
 
-        // Usuario
-
         public UsuarioRepository(UsuariosContext context)
         {
             _context = context;
         }
+
+        // Usuario
 
         public void CadastrarUsuario(Usuario usuario)
         {
@@ -54,20 +55,23 @@ namespace Infra.Data.Repositories
 
         public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
-            var usuariosQuery = _context.Usuarios
-                .OrderBy(x => x.Nome)
-                .ThenBy(x => x.Sobrenome)
-                .AsQueryable();
+            var usuariosQuery = AplicaOrdenacaoUsuarios(_context.Usuarios.AsQueryable(), parametros.OrderBy);
+
+            // filtro por sexo
 
             if (parametros.Sexo.HasValue)
                 usuariosQuery = usuariosQuery.Where(x => x.Sexo == parametros.Sexo);
 
+            // filtro por e-mail
+
             if (!string.IsNullOrWhiteSpace(parametros.Email))
                 usuariosQuery = usuariosQuery.Where(x => x.Email.ToLowerInvariant() == parametros.Email.ToLowerInvariant());
 
+            // busca por nome, sobrenome ou e-mail
+
             if (parametros.HasQuery)
             {
-                usuariosQuery = usuariosQuery.Where(x => 
+                usuariosQuery = usuariosQuery.Where(x =>
                     x.Nome.ToLowerInvariant().Contains(parametros.Query) ||
                     x.Sobrenome.ToLowerInvariant().Contains(parametros.Query) ||
                     x.Email.ToLowerInvariant().Contains(parametros.Query)
@@ -96,6 +100,51 @@ namespace Infra.Data.Repositories
         public bool EmailExists(string email, Guid usuarioExceptionId = default(Guid))
         {
             return _context.Usuarios.Any(x => x.Email == email && x.Id != usuarioExceptionId);
+        }
+
+        private IQueryable<Usuario> AplicaOrdenacaoUsuarios(IQueryable<Usuario> usuarios, string orderBy)
+        {
+            // Caso não houver nenhuma ordenação no parametro
+            // aplica a ordenação padrão
+            if (string.IsNullOrWhiteSpace(orderBy))
+                return usuarios.OrderBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+
+            var orderQuery = usuarios.OrderBy(x => 0);
+            foreach (var order in orderBy.Split(','))
+            {
+                switch (order)
+                {
+                    case "nome":
+                        orderQuery = orderQuery.ThenBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        break;
+
+                    case "nome-desc":
+                        orderQuery = orderQuery.ThenByDescending(x => x.Nome).ThenByDescending(x => x.Sobrenome);
+                        break;
+
+                    case "idade":
+                        orderQuery = orderQuery.ThenByDescending(x => x.DataNascimento);
+                        break;
+
+                    case "idade-desc":
+                        orderQuery = orderQuery.ThenBy(x => x.DataNascimento);
+                        break;
+
+                    case "sexo":
+                        orderQuery = orderQuery.ThenBy(x => x.Sexo);
+                        break;
+
+                    case "sexo-desc":
+                        orderQuery = orderQuery.ThenByDescending(x => x.Sexo);
+                        break;
+
+                    default:
+                        orderQuery = orderQuery.ThenBy(x => x.Nome).ThenBy(x => x.Sobrenome);
+                        break;
+                }
+            }
+
+            return orderQuery.AsQueryable();
         }
 
         // Endereco

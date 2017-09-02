@@ -135,7 +135,7 @@ namespace Infra.Data.Context
                 new Usuario
                 {
                     Id = new Guid("cb52e287-a912-4229-ae75-7c31e5ab6d57"),
-                    DataNascimento = new DateTime(1980, 5, 20),
+                    DataNascimento = new DateTime(1996, 5, 20),
                     Email = "marina@email.com",
                     Nome = "Marina",
                     Sobrenome = "Santos",
@@ -144,11 +144,29 @@ namespace Infra.Data.Context
                 new Usuario
                 {
                     Id = new Guid("d1619f4e-9846-410a-a567-fde11aeac32d"),
-                    DataNascimento = new DateTime(1980, 5, 20),
+                    DataNascimento = new DateTime(1952, 5, 20),
                     Email = "rose@email.com",
                     Nome = "Rose",
                     Sobrenome = "Santos",
                     Sexo = SexoType.Feminino,
+                },
+                new Usuario
+                {
+                    Id = new Guid("1184d5fb-6c44-49ed-843c-f9ac82415c14"),
+                    DataNascimento = new DateTime(1976, 5, 2),
+                    Email = "alan@email.com",
+                    Nome = "Alan",
+                    Sobrenome = "Algusto",
+                    Sexo = SexoType.Masculino,
+                },
+                new Usuario
+                {
+                    Id = new Guid("f0902e0c-c9aa-4b07-bba9-e62e148782db"),
+                    DataNascimento = new DateTime(1981, 5, 2),
+                    Email = "alan@email.com",
+                    Nome = "Alan",
+                    Sobrenome = "Santos",
+                    Sexo = SexoType.Masculino,
                 }
             };
 
