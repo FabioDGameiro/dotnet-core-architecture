@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Base;
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
@@ -16,13 +17,15 @@ namespace UsuariosAPI.Controllers.Usuarios
     [Route("api/usuarios")]
     public class UsuarioController : BaseController
     {
-        public readonly IUsuarioRepository _repository;
         public readonly IMapper _mapper;
+        public readonly IUsuarioRepository _repository;
+        public readonly ITypeHelperService _typeHelperService;
 
-        public UsuarioController(IUsuarioRepository repository, IMapper mapper)
+        public UsuarioController(IMapper mapper, IUsuarioRepository repository, ITypeHelperService typeHelperService)
         {
-            _repository = repository;
             _mapper = mapper;
+            _repository = repository;
+            _typeHelperService = typeHelperService;
         }
 
         // GET
@@ -30,8 +33,13 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
-            // TODO : validar se os campoes do parametro Fields são validos
-            // TODO : validar se os campos do parametro Sort
+            // TODO : Validar se os campos do parametro OrderBy são validos (se inválidos, retorna 400 - BadRequest)
+
+            // Validar se os campos do parametro Fields são validos (se inválidos, retorna 400 - BadRequest)
+            if (!_typeHelperService.TypeHasProperties<GetUsuarioModel>(parametros.Fields))
+            {
+                return BadRequest();
+            }
 
             // Retorna usuarios do repositório
             var usuariosPagedList = _repository.RetornaUsuarios(parametros);
@@ -45,11 +53,11 @@ namespace UsuariosAPI.Controllers.Usuarios
                 totalPages = usuariosPagedList.TotalPages
             };
 
-            Response.Headers.Add("Pagination",
-                Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+            Response.Headers.Add("Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosPagedList);
+
             return Ok(usuariosModels.ShapeData(parametros.Fields));
         }
 

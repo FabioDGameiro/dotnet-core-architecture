@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Base;
 using Domain.Usuarios.Repository;
 using Infra.Data.Repositories;
 using Infra.Helpers;
@@ -16,6 +17,9 @@ namespace Infra.IoC
 
             // Repositories
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+            // Services
+            services.AddTransient<ITypeHelperService, TypeHelperService>();
         }
     }
 }
