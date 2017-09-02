@@ -30,6 +30,9 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpGet]
         public IActionResult Get(UsuarioParameters parametros)
         {
+            // TODO : validar se os campoes do parametro Fields são validos
+            // TODO : validar se os campos do parametro Sort
+
             // Retorna usuarios do repositório
             var usuariosPagedList = _repository.RetornaUsuarios(parametros);
 
@@ -47,7 +50,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosPagedList);
-            return Ok(usuariosModels);
+            return Ok(usuariosModels.ShapeData(parametros.Fields));
         }
 
         // GET BY ID

@@ -25,5 +25,7 @@ namespace Domain.Base
         }
 
         public bool HasQuery => !string.IsNullOrWhiteSpace(_query);
+
+        public string Fields { get; set; }
     }
 }
