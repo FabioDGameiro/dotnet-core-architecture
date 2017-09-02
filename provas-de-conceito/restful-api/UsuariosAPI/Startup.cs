@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace UsuariosAPI
 {
@@ -27,6 +28,10 @@ namespace UsuariosAPI
                 // para outros formatos de respostas diferentes dos aceitados.
                 // Obs.: por padrão o único aceitável é (application/json)
                 options.ReturnHttpNotAcceptable = true;
+            })
+            .AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
             services.AddAutoMapper();

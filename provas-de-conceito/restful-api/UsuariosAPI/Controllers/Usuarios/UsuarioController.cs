@@ -28,9 +28,10 @@ namespace UsuariosAPI.Controllers.Usuarios
             _typeHelperService = typeHelperService;
         }
 
-        // GET
+        // GET and HEAD
 
         [HttpGet]
+        [HttpHead]
         public IActionResult Get(UsuarioParameters parametros)
         {
             // TODO : Validar se os campos do parametro OrderBy são validos (se inválidos, retorna 400 - BadRequest)
@@ -64,8 +65,14 @@ namespace UsuariosAPI.Controllers.Usuarios
         // GET BY ID
 
         [HttpGet("{usuarioId:guid}")]
-        public IActionResult Get(Guid usuarioId)
+        public IActionResult Get(Guid usuarioId, [FromQuery] string fields)
         {
+            // Validar se os campos do parametro Fields são validos (se inválidos, retorna 400 - BadRequest)
+            if (!_typeHelperService.TypeHasProperties<GetUsuarioModel>(fields))
+            {
+                return BadRequest();
+            }
+
             // Retorna usuario do repositório
             var usuario = _repository.RetornaUsuario(usuarioId);
 
@@ -74,7 +81,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var usuarioModel = _mapper.Map<GetUsuarioModel>(usuario);
-            return Ok(usuarioModel);
+            return Ok(usuarioModel.ShapeData(fields));
         }
 
         // POST
@@ -225,5 +232,12 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         // OPTIONS
+
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            Response.Headers.Add("Allow", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+            return Ok();
+        }
     }
 }
