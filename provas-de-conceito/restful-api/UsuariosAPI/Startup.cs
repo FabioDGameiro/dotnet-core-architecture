@@ -34,7 +34,19 @@ namespace UsuariosAPI
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            // Adicionando suporte ao AutoMapper;
             services.AddAutoMapper();
+
+            // Adicionando suporte ao Framework de Cache
+            services.AddHttpCacheHeaders(
+                expirationOptions =>
+                {
+                    expirationOptions.MaxAge = 600;
+                },
+                validationOptions =>
+                {
+                    validationOptions.AddMustRevalidate = true;
+                });
 
             services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
@@ -62,6 +74,9 @@ namespace UsuariosAPI
 
             // Reseta o seed do banco de dados a cada vez que a aplicação é iniciada
             usuarioContext.EnsureSeedDataForContext();
+
+            // Utilizando o middleware para supoerte a cache
+            app.UseHttpCacheHeaders();
 
             app.UseMvc();
         }
