@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AspNetCoreRateLimit;
+using AutoMapper;
 using Infra.Data.Context;
 using Infra.IoC;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 
 namespace UsuariosAPI
 {
@@ -48,6 +50,33 @@ namespace UsuariosAPI
                     validationOptions.AddMustRevalidate = true;
                 });
 
+            // Adicionando suporte a Rate Limiting and Throttling
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>(options =>
+            {
+                options.GeneralRules = new List<RateLimitRule>
+                {
+                    new RateLimitRule
+                    {
+                        Endpoint = "*",
+                        Limit = 100, // para testes 100, para produção 1000
+                        Period = "5m"
+                    },
+                    new RateLimitRule
+                    {
+                        Endpoint = "*",
+                        Limit = 20, // para testes 20, para produção 200
+                        Period = "10s"
+                    }
+                };
+            });
+
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+
+            // Adicionando o contexto e os services do negócio
+
             services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
         }
@@ -74,6 +103,10 @@ namespace UsuariosAPI
 
             // Reseta o seed do banco de dados a cada vez que a aplicação é iniciada
             usuarioContext.EnsureSeedDataForContext();
+
+            // Utilizando o middleware para aplicar o suporte a Rate Limiting and Throttling
+
+            app.UseIpRateLimiting();
 
             // Utilizando o middleware para supoerte a cache
             app.UseHttpCacheHeaders();
