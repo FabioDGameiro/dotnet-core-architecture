@@ -60,13 +60,13 @@ namespace UsuariosAPI
                     new RateLimitRule
                     {
                         Endpoint = "*",
-                        Limit = 100, // para testes 100, para produção 1000
+                        Limit = 1000, // para testes 1000
                         Period = "5m"
                     },
                     new RateLimitRule
                     {
                         Endpoint = "*",
-                        Limit = 20, // para testes 20, para produção 200
+                        Limit = 200, // para testes 200
                         Period = "10s"
                     }
                 };

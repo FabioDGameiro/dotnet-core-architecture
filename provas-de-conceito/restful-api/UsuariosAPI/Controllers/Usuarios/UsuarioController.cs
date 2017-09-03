@@ -142,6 +142,9 @@ namespace UsuariosAPI.Controllers.Usuarios
         {
             if (usuarioModel == null) return BadRequest();
 
+            var usuarioEntity = _repository.RetornaUsuario(usuarioId);
+            if (usuarioEntity == null) return NotFound();
+
             // Valida email duplicado
             if (_repository.EmailExists(usuarioModel.Email, usuarioId))
                 ModelState.AddModelError("Email", "O e-mail informado já está sendo utilizado");
@@ -149,9 +152,6 @@ namespace UsuariosAPI.Controllers.Usuarios
             if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             if (!_repository.UsuarioExists(usuarioId)) return NotFound();
-
-            var usuarioEntity = _repository.RetornaUsuario(usuarioId);
-            if (usuarioEntity == null) return NotFound();
 
             _mapper.Map(usuarioModel, usuarioEntity);
 
