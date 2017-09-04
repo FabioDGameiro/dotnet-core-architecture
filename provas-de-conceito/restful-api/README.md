@@ -10,6 +10,10 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 - [ASP.NET Core 2.0][tec-1]
 
+## Postman Tests Collection
+
+- Para testar a API no [Postman](https://www.getpostman.com/), pode utilizar importar [este link](https://www.getpostman.com/collections/bf6cb3dbd1e0b87be447).
+
 ## Referências de Estudos
 
 - [Building a RESTful API with ASP.NET Core][ref-7] - (Mais Recomendado) Curso completo de como se criar uma API restful por Kevin Dockx, um MVP da microsoft.
