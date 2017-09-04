@@ -65,16 +65,16 @@ namespace Infra.Data.Repositories
             // filtro por e-mail
 
             if (!string.IsNullOrWhiteSpace(parametros.Email))
-                usuariosQuery = usuariosQuery.Where(x => x.Email.ToLowerInvariant() == parametros.Email.ToLowerInvariant());
+                usuariosQuery = usuariosQuery.Where(x => x.Email.ToLower() == parametros.Email.ToLower());
 
             // busca por nome, sobrenome ou e-mail
 
             if (parametros.HasQuery)
             {
                 usuariosQuery = usuariosQuery.Where(x =>
-                    x.Nome.ToLowerInvariant().Contains(parametros.Query) ||
-                    x.Sobrenome.ToLowerInvariant().Contains(parametros.Query) ||
-                    x.Email.ToLowerInvariant().Contains(parametros.Query)
+                    x.Nome.ToLower().Contains(parametros.Query.ToLower()) ||
+                    (x.Sobrenome == null || x.Sobrenome.ToLower().Contains(parametros.Query.ToLower())) ||
+                    (x.Email == null || x.Email.ToLower().Contains(parametros.Query.ToLower()))
                     );
             }
 
