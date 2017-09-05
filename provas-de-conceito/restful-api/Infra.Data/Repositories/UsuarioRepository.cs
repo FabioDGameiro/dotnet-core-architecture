@@ -55,7 +55,7 @@ namespace Infra.Data.Repositories
 
         public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
         {
-            var usuariosQuery = AplicaOrdenacaoUsuarios(_context.Usuarios.AsQueryable(), parametros.OrderBy);
+            var usuariosQuery = _context.Usuarios.AsQueryable();
 
             // filtro por sexo
 
@@ -78,10 +78,13 @@ namespace Infra.Data.Repositories
                     );
             }
 
-            return PagedList<Usuario>.Create(
-                usuariosQuery,
-                parametros.Page,
-                parametros.PageSize);
+            // ordenação
+
+            usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, parametros.OrderBy);
+
+            // retorno paginado
+
+            return PagedList<Usuario>.Create(usuariosQuery, parametros.Page, parametros.PageSize);
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
@@ -149,12 +152,48 @@ namespace Infra.Data.Repositories
 
         // Endereco
 
-        public IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId)
+        public IPagedList<UsuarioEndereco> ListarEnderecosPorUsuario(UsuarioEnderecoParameters parametros)
         {
-            return _context.UsuariosEnderecos
-                .Where(x => x.UsuarioId == usuarioId)
-                .OrderBy(x => x.Estado)
-                .ToList();
+            var enderecosQuery = _context.UsuariosEnderecos.Where(x => x.UsuarioId == parametros.UsuarioId);
+
+            // ordenação
+
+            enderecosQuery = AplicaOrdenacaoEnderecosUsuario(enderecosQuery, parametros.OrderBy);
+
+            // retorno paginado
+
+            return PagedList<UsuarioEndereco>.Create(enderecosQuery, parametros.Page, parametros.PageSize);
+        }
+
+        private IQueryable<UsuarioEndereco> AplicaOrdenacaoEnderecosUsuario(IQueryable<UsuarioEndereco> enderecos, string orderBy)
+        {
+            if (string.IsNullOrWhiteSpace(orderBy))
+                return enderecos.OrderBy(x => x.Estado).ThenBy(x => x.Tipo);
+
+            var orderQuery = enderecos.OrderBy(x => 0);
+            foreach (var order in orderBy.Split(','))
+            {
+                switch (order)
+                {
+                    case "tipo":
+                        orderQuery = orderQuery.ThenBy(x => x.Tipo);
+                        break;
+
+                    case "tipo-desc":
+                        orderQuery = orderQuery.ThenByDescending(x => x.Tipo);
+                        break;
+
+                    case "estado":
+                        orderQuery = orderQuery.ThenBy(x => x.Estado);
+                        break;
+
+                    case "estado-desc":
+                        orderQuery = orderQuery.ThenByDescending(x => x.Estado);
+                        break;
+                }
+            }
+
+            return orderQuery.AsQueryable();
         }
 
         public UsuarioEndereco RetornarEndereco(Guid usuarioId, Guid enderecoId)

@@ -17,7 +17,7 @@ namespace Domain.Usuarios.Repository
         bool UsuarioExists(Guid usuarioId);
         bool EmailExists(string email, Guid usuarioExceptionId = default(Guid));
 
-        IEnumerable<UsuarioEndereco> ListarEnderecosPorUsuario(Guid usuarioId);
+        IPagedList<UsuarioEndereco> ListarEnderecosPorUsuario(UsuarioEnderecoParameters parametros);
         UsuarioEndereco RetornarEndereco(Guid usuarioId, Guid enderecoId);
         void CadastrarEnderecoPorUsuario(Guid usuarioId, UsuarioEndereco endereco);
         void RemoveEndereco(UsuarioEndereco endereco);

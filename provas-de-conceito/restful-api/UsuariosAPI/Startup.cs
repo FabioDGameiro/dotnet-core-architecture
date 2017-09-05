@@ -43,7 +43,7 @@ namespace UsuariosAPI
             services.AddHttpCacheHeaders(
                 expirationOptions =>
                 {
-                    expirationOptions.MaxAge = 600;
+                    expirationOptions.MaxAge = 60;
                 },
                 validationOptions =>
                 {
@@ -60,13 +60,13 @@ namespace UsuariosAPI
                     new RateLimitRule
                     {
                         Endpoint = "*",
-                        Limit = 1000, // para testes 1000
+                        Limit = 1000, // para testes colocar 10 e realizar mais que 10 requests em menos de 5 minutos
                         Period = "5m"
                     },
                     new RateLimitRule
                     {
                         Endpoint = "*",
-                        Limit = 200, // para testes 200
+                        Limit = 200, // para testes colocar 2 e realizar mais que 2 requests em menos de 10 segundos
                         Period = "10s"
                     }
                 };

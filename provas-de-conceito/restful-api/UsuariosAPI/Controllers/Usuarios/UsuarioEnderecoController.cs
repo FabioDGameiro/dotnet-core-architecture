@@ -29,16 +29,28 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         // GET ALL
 
         [HttpGet]
-        public IActionResult Get(Guid usuarioId, UsuarioEnderecoParameters parametros)
+        public IActionResult Get(UsuarioEnderecoParameters parametros)
         {
             // Checa se o usuário existe (retorna 404 - NOT FOUND se não existir)
-            if (!_repository.UsuarioExists(usuarioId)) return NotFound();
+            if (!_repository.UsuarioExists(parametros.UsuarioId)) return NotFound();
 
             // Retorna endereços de um usuário pelo repositório
-            var enderecos = _repository.ListarEnderecosPorUsuario(usuarioId);
+            var enderecosPagedList = _repository.ListarEnderecosPorUsuario(parametros);
+
+            // Gera os metadados da paginação e adiciona ao cabeçalho
+
+            var paginationMetadata = new
+            {
+                totalCount = enderecosPagedList.TotalCount,
+                pageSize = enderecosPagedList.PageSize,
+                currentPage = enderecosPagedList.CurrentPage,
+                totalPages = enderecosPagedList.TotalPages
+            };
+
+            Response.Headers.Add("Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
-            var enderecosModels = _mapper.Map<IEnumerable<GetUsuarioEnderecoModel>>(enderecos);
+            var enderecosModels = _mapper.Map<IEnumerable<GetUsuarioEnderecoModel>>(enderecosPagedList);
             return Ok(enderecosModels);
         }
 

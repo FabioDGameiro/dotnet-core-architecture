@@ -34,8 +34,6 @@ namespace UsuariosAPI.Controllers.Usuarios
         [HttpHead]
         public IActionResult Get(UsuarioParameters parametros)
         {
-            // TODO : Validar se os campos do parametro OrderBy são validos (se inválidos, retorna 400 - BadRequest)
-
             // Validar se os campos do parametro Fields são validos (se inválidos, retorna 400 - BadRequest)
             if (!_typeHelperService.TypeHasProperties<GetUsuarioModel>(parametros.Fields))
             {
