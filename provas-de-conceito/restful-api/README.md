@@ -20,7 +20,7 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 | :--------------------------------------- | :-------: |
 | Métodos: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS | Concluído |
 | Content Negotiation e Output Formatters  | Concluído |
-| Success, Server Errors e Client Errors Codes | Concluído |
+| Status Codes | Concluído |
 | Validations e Logging                    | Concluído |
 | Paging, Filtering e Searching            | Concluído |
 | Sorting e Data Shapping                  | Concluído |
