@@ -17,10 +17,13 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 | Métodos verbosos: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS | Concluído |
 | Content Negotiation e Output Formatters  | Concluído |
 | Success, Server Errors e Client Errors Codes | Concluído |
-| Validations e Logging | Concluído |
-| Paging, Filtering e Searching | Concluído |
-| Sorting e Data Shapping | Concluído |
-| Caching e Optimistic Concurrency | Concluído |
+| Validations e Logging                    | Concluído |
+| Paging, Filtering e Searching            | Concluído |
+| Sorting e Data Shapping                  | Concluído |
+| Caching e Optimistic Concurrency         | Concluído |
+| Rate Limiting e Throttling               | Concluído |
+| Criação de registros Pai e Filho         | Concluído |
+| Criação de registros em lote (batch)     | Concluído |
 
 ## Postman Tests Collection
 
