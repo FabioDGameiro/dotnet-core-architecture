@@ -2,13 +2,25 @@
 
 Projeto de uma prova de conceito para criação de uma API Restful, seguindo os padrões de desenvolvimento utilizados no mercado.
 
-## Autores
+## Autor
 
 - **Tiago Felipe dos Santos** - [Github](https://github.com/taigosantos) - [Linkedin](https://www.linkedin.com/in/tiago-santos-36b25341/) - [E-mail](mailto:taigobrasil@gmail.com)
 
 ## Tecnologias de Desenvolvimento
 
 - [ASP.NET Core 2.0][tec-1]
+
+## Funcionalidades
+
+| Funcionalidade                           |  Status   |
+| :--------------------------------------- | :-------: |
+| Métodos verbosos: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS | Concluído |
+| Content Negotiation e Output Formatters  | Concluído |
+| Success, Server Errors e Client Errors Codes | Concluído |
+| Validations e Logging | Concluído |
+| Paging, Filtering e Searching | Concluído |
+| Sorting e Data Shapping | Concluído |
+| Caching e Optimistic Concurrency | Concluído |
 
 ## Postman Tests Collection
 
