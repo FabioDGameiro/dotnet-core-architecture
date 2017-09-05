@@ -10,6 +10,10 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 - [ASP.NET Core 2.0][tec-1]
 
+## Postman Tests Collection
+
+- Para testar a API no [Postman](https://www.getpostman.com/), pode utilizar importar [este link](https://www.getpostman.com/collections/bf6cb3dbd1e0b87be447).
+
 ## Funcionalidades
 
 | Funcionalidade                           |  Status   |
@@ -24,10 +28,6 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 | Rate Limiting e Throttling               | Concluído |
 | Criação de registros Pai e Filho         | Concluído |
 | Criação de registros em lote (batch)     | Concluído |
-
-## Postman Tests Collection
-
-- Para testar a API no [Postman](https://www.getpostman.com/), pode utilizar importar [este link](https://www.getpostman.com/collections/bf6cb3dbd1e0b87be447).
 
 ## Referências de Estudos
 
@@ -48,10 +48,3 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 [ref-5]: https://blog.mwaysolutions.com/2014/06/05/10-best-practices-for-better-restful-api/
 [ref-6]: http://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
 [ref-7]: https://www.pluralsight.com/courses/asp-dot-net-core-restful-api-building
-
-## Referências de APIs Restful Populares
-
-- [Github API](https://developer.github.com/)
-- [Twitter APIs](https://dev.twitter.com/docs)
-- [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/intro)
-- [Google Directions API](https://developers.google.com/maps/documentation/directions/start)
