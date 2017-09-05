@@ -12,7 +12,7 @@ Projeto de uma prova de conceito para criação de uma API Restful, seguindo os 
 
 ## Postman Tests Collection
 
-- Para testar a API no [Postman](https://www.getpostman.com/), pode utilizar importar [este link](https://www.getpostman.com/collections/bf6cb3dbd1e0b87be447).
+- Para testar a API no [Postman](https://www.getpostman.com/), pode importar [este link](https://www.getpostman.com/collections/bf6cb3dbd1e0b87be447).
 
 ## Funcionalidades
 
