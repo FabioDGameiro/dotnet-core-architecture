@@ -35,13 +35,15 @@ namespace Infra.Helpers
             PageSize = pageSize;
             CurrentPage = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            AddRange(items);
+
+            if (items != null) AddRange(items);
         }
 
-        public static PagedList<T> Create(IQueryable<T> source, int pageNumber, int pageSize)
+        public static PagedList<T> Create(IQueryable<T> source, int pageNumber, int pageSize, bool metaOnly)
         {
             var count = source.Count();
-            var items = source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+            var items = (metaOnly) ? null : source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }
     }

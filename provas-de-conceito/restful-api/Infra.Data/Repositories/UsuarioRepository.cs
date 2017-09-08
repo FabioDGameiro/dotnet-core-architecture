@@ -84,7 +84,7 @@ namespace Infra.Data.Repositories
 
             // retorno paginado
 
-            return PagedList<Usuario>.Create(usuariosQuery, parametros.Page, parametros.PageSize);
+            return PagedList<Usuario>.Create(usuariosQuery, parametros.Page, parametros.PageSize, parametros.MetaOnly);
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)
@@ -162,7 +162,7 @@ namespace Infra.Data.Repositories
 
             // retorno paginado
 
-            return PagedList<UsuarioEndereco>.Create(enderecosQuery, parametros.Page, parametros.PageSize);
+            return PagedList<UsuarioEndereco>.Create(enderecosQuery, parametros.Page, parametros.PageSize, parametros.MetaOnly);
         }
 
         private IQueryable<UsuarioEndereco> AplicaOrdenacaoEnderecosUsuario(IQueryable<UsuarioEndereco> enderecos, string orderBy)

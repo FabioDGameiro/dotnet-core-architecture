@@ -34,5 +34,7 @@ namespace Domain.Base
         }
 
         public string Fields { get; set; }
+
+        public bool MetaOnly { get; set; }
     }
 }

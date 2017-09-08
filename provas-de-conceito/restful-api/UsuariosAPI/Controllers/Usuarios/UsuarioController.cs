@@ -40,6 +40,10 @@ namespace UsuariosAPI.Controllers.Usuarios
                 return BadRequest();
             }
 
+            // Define a propriedade 'MetaOnly' como 'true' quando o request for do tipo HEAD
+            // fazendo que o repositório acesse o banco de dados apenas para realizar a contagem de registros
+            parametros.MetaOnly = Request.Method == HttpMethods.Head;
+
             // Retorna usuarios do repositório
             var usuariosPagedList = _repository.RetornaUsuarios(parametros);
 
