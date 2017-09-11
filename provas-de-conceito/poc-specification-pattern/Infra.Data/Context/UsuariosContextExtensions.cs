@@ -67,7 +67,7 @@ namespace Infra.Data.Context
                 new Usuario
                 {
                     Id = new Guid("8f1ff6e5-ed57-4ec1-b01b-7fe6c6624d70"),
-                    DataNascimento = new DateTime(1985, 3, 1),
+                    DataNascimento = new DateTime(2002, 3, 1),
                     Email = "iran@email.com",
                     Nome = "Iran",
                     Sobrenome = "Carvalho",
@@ -96,7 +96,7 @@ namespace Infra.Data.Context
                 new Usuario
                 {
                     Id = new Guid("69abf241-efc7-4e48-8b1a-250e9ca3a47c"),
-                    DataNascimento = new DateTime(1989, 12, 23),
+                    DataNascimento = new DateTime(1998, 12, 23),
                     Email = "pamela@email.com",
                     Nome = "Pamela",
                     Sobrenome = "Consuelo",
@@ -167,6 +167,56 @@ namespace Infra.Data.Context
                     Nome = "Alan",
                     Sobrenome = "Santos",
                     Sexo = SexoType.Masculino,
+                },
+                new Usuario
+                {
+                    Id = new Guid("6818cdef-c1ca-4160-b3b6-e4ce8603bc71"),
+                    DataNascimento = new DateTime(1981, 5, 2),
+                    Email = "cassia@email.com",
+                    Nome = "Cássia",
+                    Sobrenome = "Mello",
+                    Sexo = SexoType.Feminino,
+                    DataExclusao = new DateTime(2017, 3, 2)
+                },
+                new Usuario
+                {
+                    Id = new Guid("387e97e9-0072-46fa-b633-d65ed0f66b3b"),
+                    DataNascimento = new DateTime(1981, 5, 2),
+                    Email = "martin@email.com",
+                    Nome = "Martin",
+                    Sobrenome = "Martinez",
+                    Sexo = SexoType.Masculino,
+                    DataExclusao = new DateTime(2015, 2, 3)
+                },
+                new Usuario
+                {
+                    Id = new Guid("745e3dfb-b365-4d74-bd0f-d8d8b5e4f4b3"),
+                    DataNascimento = new DateTime(1986, 5, 2),
+                    Email = "talita@email.com",
+                    Nome = "Talita",
+                    Sobrenome = "Gimenez",
+                    Sexo = SexoType.Feminino,
+                    DataExclusao = new DateTime(2012, 2, 1)
+                },
+                new Usuario
+                {
+                    Id = new Guid("025851e6-1020-47d2-8350-1d28095a1644"),
+                    DataNascimento = new DateTime(1986, 2, 2),
+                    Email = "julio@email.com",
+                    Nome = "Julio",
+                    Sobrenome = "Cezas",
+                    Sexo = SexoType.Masculino,
+                    DataExclusao = new DateTime(2002, 1, 8)
+                },
+                new Usuario
+                {
+                    Id = new Guid("5457407e-c1f0-4024-9dac-6cf98936863d"),
+                    DataNascimento = new DateTime(2001, 2, 2),
+                    Email = "janaina@email.com",
+                    Nome = "Janaina",
+                    Sobrenome = "Poloni",
+                    Sexo = SexoType.Feminino,
+                    DataExclusao = new DateTime(2002, 1, 8)
                 }
             };
 

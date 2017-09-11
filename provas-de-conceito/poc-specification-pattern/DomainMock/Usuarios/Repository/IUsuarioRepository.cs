@@ -12,7 +12,7 @@ namespace Domain.Usuarios.Repository
         Usuario RetornaUsuario(Guid usuarioId);
         void AtualizaUsuario(Usuario usuario);
         void RemoveUsuario(Usuario usuario);
-        IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros);
+        IPagedList<Usuario> RetornaUsuarios(Specification<Usuario> specification, string orderBy, int page, int pageSize, bool metaOnly);
         IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids);
         bool UsuarioExists(Guid usuarioId);
         bool EmailExists(string email, Guid usuarioExceptionId = default(Guid));

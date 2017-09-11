@@ -81,7 +81,10 @@ namespace UsuariosAPI
             InjectorBootstrapper.RegisterServices(services);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UsuariosContext usuarioContext)
+        public void Configure(
+            IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            UsuariosContext usuarioContext)
         {
             if (env.IsDevelopment())
             {
@@ -102,6 +105,7 @@ namespace UsuariosAPI
             }
 
             // Reseta o seed do banco de dados a cada vez que a aplicação é iniciada
+            usuarioContext.Database.Migrate();
             usuarioContext.EnsureSeedDataForContext();
 
             // Utilizando o middleware para aplicar o suporte a Rate Limiting and Throttling

@@ -6,37 +6,67 @@ using System.Text;
 
 namespace Domain.Usuarios.Specifications
 {
-    // TODO 
-    //public sealed class MaiorDeIdadeSpecification : Specification<Usuario>
-    //{
-    //    public override Expression<Func<Usuario, bool>> ToExpression()
-    //    {
-    //        return Usuario => Usuario.DataNascimento.Value.age <= MpaaRating.PG;
-    //    }
-    //}
+    public sealed class UsuariosPorEmailSpecification : Specification<Usuario>
+    {
+        private readonly string _email;
 
-    //public sealed class AvailableOnCDSpecification : Specification<Usuario>
-    //{
-    //    private const int MonthsBeforeDVDIsOut = 6;
+        public UsuariosPorEmailSpecification(string email)
+        {
+            if (String.IsNullOrWhiteSpace(email))
+                throw new ArgumentNullException(nameof(email));
 
-    //    public override Expression<Func<Usuario, bool>> ToExpression()
-    //    {
-    //        return Usuario => Usuario.ReleaseDate <= DateTime.Now.AddMonths(-MonthsBeforeDVDIsOut);
-    //    }
-    //}
+            _email = email.ToLower();
+        }
 
-    //public sealed class UsuarioDirectedBySpecification : Specification<Usuario>
-    //{
-    //    private readonly string _director;
+        public override Expression<Func<Usuario, bool>> ToExpression()
+        {
+            return Usuario => Usuario.Email.ToLower() == _email;
+        }
+    }
 
-    //    public UsuarioDirectedBySpecification(string director)
-    //    {
-    //        _director = director;
-    //    }
+    public sealed class UsuariosPorSexoSpecification : Specification<Usuario>
+    {
+        private readonly SexoType _sexo;
 
-    //    public override Expression<Func<Usuario, bool>> ToExpression()
-    //    {
-    //        return Usuario => Usuario.Director.Name == _director;
-    //    }
-    //}
+        public UsuariosPorSexoSpecification(SexoType sexo)
+        {
+            _sexo = sexo;
+        }
+
+        public override Expression<Func<Usuario, bool>> ToExpression()
+        {
+            return Usuario => Usuario.Sexo == _sexo;
+        }
+    }
+
+    public sealed class UsuariosMaioresDeIdadeSpecification : Specification<Usuario>
+    {
+        private const int Anos = 18;
+
+        public override Expression<Func<Usuario, bool>> ToExpression()
+        {
+            return Usuario => Usuario.DataNascimento <= DateTime.Now.AddYears(-Anos);
+        }
+    }
+
+    public sealed class UsuariosSearchSpecification : Specification<Usuario>
+    {
+        private readonly string _search;
+
+        public UsuariosSearchSpecification(string search)
+        {
+            if (String.IsNullOrWhiteSpace(search))
+                throw new ArgumentNullException(nameof(search));
+
+            _search = search.ToLower();
+        }
+
+        public override Expression<Func<Usuario, bool>> ToExpression()
+        {
+            return Usuario =>
+                Usuario.Nome.ToLower().Contains(_search) ||
+                (Usuario.Sobrenome == null || Usuario.Sobrenome.ToLower().Contains(_search)) ||
+                (Usuario.Email == null || Usuario.Email.ToLower().Contains(_search));
+        }
+    }
 }

@@ -53,38 +53,18 @@ namespace Infra.Data.Repositories
             _context.Usuarios.Remove(usuario);
         }
 
-        public IPagedList<Usuario> RetornaUsuarios(UsuarioParameters parametros)
+        public IPagedList<Usuario> RetornaUsuarios(Specification<Usuario> specification, string orderBy, int page, int pageSize, bool metaOnly)
         {
-            var usuariosQuery = _context.Usuarios.AsQueryable();
-
-            // filtro por sexo
-
-            if (parametros.Sexo.HasValue)
-                usuariosQuery = usuariosQuery.Where(x => x.Sexo == parametros.Sexo);
-
-            // filtro por e-mail
-
-            if (!string.IsNullOrWhiteSpace(parametros.Email))
-                usuariosQuery = usuariosQuery.Where(x => x.Email.ToLower() == parametros.Email.ToLower());
-
-            // busca por nome, sobrenome ou e-mail
-
-            if (parametros.HasQuery)
-            {
-                usuariosQuery = usuariosQuery.Where(x =>
-                    x.Nome.ToLower().Contains(parametros.Query.ToLower()) ||
-                    (x.Sobrenome == null || x.Sobrenome.ToLower().Contains(parametros.Query.ToLower())) ||
-                    (x.Email == null || x.Email.ToLower().Contains(parametros.Query.ToLower()))
-                    );
-            }
+            var usuariosQuery = _context.Usuarios
+                .Where(specification.ToExpression()).AsQueryable();
 
             // ordenação
 
-            usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, parametros.OrderBy);
+            usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, orderBy);
 
             // retorno paginado
 
-            return PagedList<Usuario>.Create(usuariosQuery, parametros.Page, parametros.PageSize, parametros.MetaOnly);
+            return PagedList<Usuario>.Create(usuariosQuery, page, pageSize, metaOnly);
         }
 
         public IEnumerable<Usuario> RetornaUsuarios(IEnumerable<Guid> ids)

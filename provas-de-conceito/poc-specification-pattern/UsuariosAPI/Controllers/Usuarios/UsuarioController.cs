@@ -3,6 +3,7 @@ using Domain.Base;
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
+using Domain.Usuarios.Specifications;
 using Infra.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -44,8 +45,30 @@ namespace UsuariosAPI.Controllers.Usuarios
             // fazendo que o repositório acesse o banco de dados apenas para realizar a contagem de registros
             parametros.MetaOnly = Request.Method == HttpMethods.Head;
 
+            // Specifications
+
+            var spec = Specification<Usuario>.All;
+
+            if (parametros.Sexo.HasValue)
+                spec = spec.And(new UsuariosPorSexoSpecification(parametros.Sexo.Value));
+
+            if (!String.IsNullOrWhiteSpace(parametros.Email))
+                spec = spec.And(new UsuariosPorEmailSpecification(parametros.Email));
+
+            if (parametros.MaioresDeIdade == true)
+                spec = spec.And(new UsuariosMaioresDeIdadeSpecification());
+
+            if (parametros.Ativos == true)
+                spec = spec.And(new AtivosSpecifications<Usuario>());
+
+            if (parametros.Inativos == true)
+                spec = spec.And(new InativosSpecifications<Usuario>());
+
+            if (parametros.HasQuery)
+                spec = spec.And(new UsuariosSearchSpecification(parametros.Query));
+
             // Retorna usuarios do repositório
-            var usuariosPagedList = _repository.RetornaUsuarios(parametros);
+            var usuariosPagedList = _repository.RetornaUsuarios(spec, parametros.OrderBy, parametros.Page, parametros.PageSize, parametros.MetaOnly);
 
             // Gera os metadados da paginação e adiciona ao cabeçalho
             var paginationMetadata = new

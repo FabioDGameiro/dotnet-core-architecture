@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Domain.Base
 {
-    public abstract class Specification<T>
+    public abstract class Specification<T> where T : Entity
     {
         public static readonly Specification<T> All = new IdentitySpecification<T>();
 
@@ -40,7 +40,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class IdentitySpecification<T> : Specification<T>
+    internal sealed class IdentitySpecification<T> : Specification<T> where T : Entity
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
@@ -48,7 +48,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class AndSpecification<T> : Specification<T>
+    internal sealed class AndSpecification<T> : Specification<T> where T : Entity
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
@@ -70,7 +70,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class OrSpecification<T> : Specification<T>
+    internal sealed class OrSpecification<T> : Specification<T> where T : Entity
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
@@ -92,7 +92,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class NotSpecification<T> : Specification<T>
+    internal sealed class NotSpecification<T> : Specification<T> where T : Entity
     {
         private readonly Specification<T> _specification;
 
@@ -109,37 +109,4 @@ namespace Domain.Base
             return Expression.Lambda<Func<T, bool>>(notExpression, expression.Parameters.Single());
         }
     }
-
-    //public sealed class MovieForKidsSpecification : Specification<Movie>
-    //{
-    //    public override Expression<Func<Movie, bool>> ToExpression()
-    //    {
-    //        return movie => movie.MpaaRating <= MpaaRating.PG;
-    //    }
-    //}
-
-    //public sealed class AvailableOnCDSpecification : Specification<Movie>
-    //{
-    //    private const int MonthsBeforeDVDIsOut = 6;
-
-    //    public override Expression<Func<Movie, bool>> ToExpression()
-    //    {
-    //        return movie => movie.ReleaseDate <= DateTime.Now.AddMonths(-MonthsBeforeDVDIsOut);
-    //    }
-    //}
-
-    //public sealed class MovieDirectedBySpecification : Specification<Movie>
-    //{
-    //    private readonly string _director;
-
-    //    public MovieDirectedBySpecification(string director)
-    //    {
-    //        _director = director;
-    //    }
-
-    //    public override Expression<Func<Movie, bool>> ToExpression()
-    //    {
-    //        return movie => movie.Director.Name == _director;
-    //    }
-    //}
 }
