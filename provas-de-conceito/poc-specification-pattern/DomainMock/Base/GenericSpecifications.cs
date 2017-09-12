@@ -11,7 +11,7 @@ namespace Domain.Base
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
-            return Entity => Entity.DataExclusao == null;
+            return entity => entity.DataExclusao == null;
         }
     }
 
@@ -19,7 +19,7 @@ namespace Domain.Base
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
-            return Entity => Entity.DataExclusao != null;
+            return entity => entity.DataExclusao != null;
         }
     }
 }
