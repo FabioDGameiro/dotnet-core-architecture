@@ -97,7 +97,7 @@ namespace Infra.Data.Repositories
 
             //enderecosQuery = AplicaOrdenacaoEnderecosUsuario(enderecosQuery, parametros.OrderBy);
 
-            enderecosQuery = enderecosQuery.OrderBy(parametros.OrderBy);
+            //enderecosQuery = enderecosQuery.OrderBy(parametros.OrderBy);
 
             // retorno paginado
 
