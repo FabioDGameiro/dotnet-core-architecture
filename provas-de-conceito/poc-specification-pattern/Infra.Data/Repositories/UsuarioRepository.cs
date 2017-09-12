@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Domain.Base;
 using Domain.Usuarios;
 using Domain.Usuarios.Enderecos;
@@ -60,7 +61,8 @@ namespace Infra.Data.Repositories
 
             // ordenação
 
-            usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, orderBy);
+            //usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, orderBy);
+            usuariosQuery = usuariosQuery.OrderBy(orderBy);
 
             // retorno paginado
 
@@ -93,7 +95,9 @@ namespace Infra.Data.Repositories
 
             // ordenação
 
-            enderecosQuery = AplicaOrdenacaoEnderecosUsuario(enderecosQuery, parametros.OrderBy);
+            //enderecosQuery = AplicaOrdenacaoEnderecosUsuario(enderecosQuery, parametros.OrderBy);
+
+            enderecosQuery = enderecosQuery.OrderBy(parametros.OrderBy);
 
             // retorno paginado
 
@@ -210,4 +214,7 @@ namespace Infra.Data.Repositories
             return orderQuery.AsQueryable();
         }
     }
+
+    
+
 }
