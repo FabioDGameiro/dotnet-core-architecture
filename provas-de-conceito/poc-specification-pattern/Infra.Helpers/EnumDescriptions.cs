@@ -1,5 +1,9 @@
-﻿using Domain.Usuarios;
-using Domain.Usuarios.Endereco;
+﻿#region Using
+
+using Domain.Usuarios;
+using Domain.Usuarios.Enderecos;
+
+#endregion
 
 namespace Infra.Helpers
 {

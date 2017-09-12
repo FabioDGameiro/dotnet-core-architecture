@@ -1,9 +1,12 @@
-﻿using AutoMapper;
+﻿#region Using
+
+using AutoMapper;
 using Domain.Base;
 using Domain.Usuarios.Repository;
 using Infra.Data.Repositories;
-using Infra.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Infra.IoC
 {

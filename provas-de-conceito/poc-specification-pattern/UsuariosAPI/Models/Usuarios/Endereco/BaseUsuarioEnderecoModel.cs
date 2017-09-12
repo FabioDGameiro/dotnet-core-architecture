@@ -1,9 +1,9 @@
-﻿using Domain.Usuarios.Endereco;
-using System;
-using System.Collections.Generic;
+﻿#region Using
+
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+using Domain.Usuarios.Enderecos;
+
+#endregion
 
 namespace UsuariosAPI.Models.Usuarios.Endereco
 {

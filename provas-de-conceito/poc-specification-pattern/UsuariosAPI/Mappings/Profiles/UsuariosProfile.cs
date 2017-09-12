@@ -1,10 +1,13 @@
-﻿using System;
+﻿#region Using
+
 using AutoMapper;
 using Domain.Usuarios;
-using Domain.Usuarios.Endereco;
+using Domain.Usuarios.Enderecos;
 using Infra.Helpers;
 using UsuariosAPI.Models.Usuarios;
 using UsuariosAPI.Models.Usuarios.Endereco;
+
+#endregion
 
 namespace UsuariosAPI.Mappings.Profiles
 {
@@ -26,10 +29,13 @@ namespace UsuariosAPI.Mappings.Profiles
                 .ForMember(t => t.NomeCompleto, opt => opt.MapFrom(s => $"{s.Nome} {s.Sobrenome}"))
 
                 // Formatando a Idade do usuário a partir da sua Data de Nascimento
-                .ForMember(t => t.Idade, opt => opt.MapFrom(s => (s.DataNascimento.HasValue) ? s.DataNascimento.Value.GetCurrentAge().ToString() : null))
+                .ForMember(t => t.Idade,
+                    opt => opt.MapFrom(s =>
+                        s.DataNascimento.HasValue ? s.DataNascimento.Value.GetCurrentAge().ToString() : null))
 
                 // Formatando o Sexo do usuário a partir do enum SexoType
-                .ForMember(t => t.Sexo, opt => opt.MapFrom(s => (s.Sexo.HasValue) ? s.Sexo.Value.GetDescription() : null));
+                .ForMember(t => t.Sexo,
+                    opt => opt.MapFrom(s => s.Sexo.HasValue ? s.Sexo.Value.GetDescription() : null));
 
             CreateMap<Usuario, UpdateUsuarioModel>();
 
@@ -59,6 +65,5 @@ namespace UsuariosAPI.Mappings.Profiles
             CreateMap<CreateUsuarioEnderecoModel, UsuarioEndereco>();
             CreateMap<UpdateUsuarioEnderecoModel, UsuarioEndereco>();
         }
-
     }
 }

@@ -1,7 +1,11 @@
-﻿using Domain.Usuarios;
-using Domain.Usuarios.Endereco;
+﻿#region Using
+
 using System;
 using System.Collections.Generic;
+using Domain.Usuarios;
+using Domain.Usuarios.Enderecos;
+
+#endregion
 
 namespace Infra.Data.Context
 {
@@ -12,7 +16,7 @@ namespace Infra.Data.Context
             context.Usuarios.RemoveRange(context.Usuarios);
             context.SaveChanges();
 
-            var usuarios = new List<Usuario>()
+            var usuarios = new List<Usuario>
             {
                 new Usuario
                 {
@@ -130,7 +134,7 @@ namespace Infra.Data.Context
                     Email = "martin@email.com",
                     Nome = "Martin",
                     Sobrenome = "Santos",
-                    Sexo = SexoType.Masculino,
+                    Sexo = SexoType.Masculino
                 },
                 new Usuario
                 {
@@ -139,7 +143,7 @@ namespace Infra.Data.Context
                     Email = "marina@email.com",
                     Nome = "Marina",
                     Sobrenome = "Santos",
-                    Sexo = SexoType.Feminino,
+                    Sexo = SexoType.Feminino
                 },
                 new Usuario
                 {
@@ -148,7 +152,7 @@ namespace Infra.Data.Context
                     Email = "rose@email.com",
                     Nome = "Rose",
                     Sobrenome = "Santos",
-                    Sexo = SexoType.Feminino,
+                    Sexo = SexoType.Feminino
                 },
                 new Usuario
                 {
@@ -157,7 +161,7 @@ namespace Infra.Data.Context
                     Email = "alan@email.com",
                     Nome = "Alan",
                     Sobrenome = "Algusto",
-                    Sexo = SexoType.Masculino,
+                    Sexo = SexoType.Masculino
                 },
                 new Usuario
                 {
@@ -166,7 +170,7 @@ namespace Infra.Data.Context
                     Email = "alan@email.com",
                     Nome = "Alan",
                     Sobrenome = "Santos",
-                    Sexo = SexoType.Masculino,
+                    Sexo = SexoType.Masculino
                 },
                 new Usuario
                 {

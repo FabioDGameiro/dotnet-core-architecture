@@ -1,4 +1,7 @@
-﻿using AspNetCoreRateLimit;
+﻿#region Using
+
+using System.Collections.Generic;
+using AspNetCoreRateLimit;
 using AutoMapper;
 using Infra.Data.Context;
 using Infra.IoC;
@@ -9,7 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
+
+#endregion
 
 namespace UsuariosAPI
 {
@@ -25,30 +29,24 @@ namespace UsuariosAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
-            {
-                // Configura a aplicação para retornar um Status Code 406 - NOT ACCEPTABLE
-                // para outros formatos de respostas diferentes dos aceitados.
-                // Obs.: por padrão o único aceitável é (application/json)
-                options.ReturnHttpNotAcceptable = true;
-            })
-            .AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            });
+                {
+                    // Configura a aplicação para retornar um Status Code 406 - NOT ACCEPTABLE
+                    // para outros formatos de respostas diferentes dos aceitados.
+                    // Obs.: por padrão o único aceitável é (application/json)
+                    options.ReturnHttpNotAcceptable = true;
+                })
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
 
             // Adicionando suporte ao AutoMapper;
             services.AddAutoMapper();
 
             // Adicionando suporte ao Framework de Cache
             services.AddHttpCacheHeaders(
-                expirationOptions =>
-                {
-                    expirationOptions.MaxAge = 60;
-                },
-                validationOptions =>
-                {
-                    validationOptions.AddMustRevalidate = true;
-                });
+                expirationOptions => { expirationOptions.MaxAge = 60; },
+                validationOptions => { validationOptions.AddMustRevalidate = true; });
 
             // Adicionando suporte a Rate Limiting and Throttling
             services.AddMemoryCache();
@@ -77,21 +75,19 @@ namespace UsuariosAPI
 
             // Adicionando o contexto e os services do negócio
 
-            services.AddDbContext<UsuariosContext>(o => o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
+            services.AddDbContext<UsuariosContext>(o =>
+                o.UseSqlServer(Configuration["connectionStrings:defaultConnectionString"]));
             InjectorBootstrapper.RegisterServices(services);
         }
 
         public void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env, 
+            IApplicationBuilder app,
+            IHostingEnvironment env,
             UsuariosContext usuarioContext)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseExceptionHandler(appBuilder =>
                 {
                     // Garante que em ambiente de produção, toda vez que a aplicação der erro,
@@ -102,7 +98,6 @@ namespace UsuariosAPI
                         await context.Response.WriteAsync("An unexpect error happened. Try again later.");
                     });
                 });
-            }
 
             // Reseta o seed do banco de dados a cada vez que a aplicação é iniciada
             usuarioContext.Database.Migrate();

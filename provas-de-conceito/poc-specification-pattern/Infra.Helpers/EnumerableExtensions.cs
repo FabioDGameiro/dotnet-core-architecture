@@ -1,20 +1,22 @@
-﻿using System;
+﻿#region Using
+
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
 
+#endregion
+
 namespace Infra.Helpers
 {
-    public static class IEnumerableExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<ExpandoObject> ShapeData<TSource>(
             this IEnumerable<TSource> source,
             string fields)
         {
             if (source == null)
-            {
                 throw new ArgumentNullException("source");
-            }
 
             // create a list to hold our ExpandoObjects
             var expandoObjectList = new List<ExpandoObject>();
@@ -29,7 +31,7 @@ namespace Infra.Helpers
             {
                 // all public properties should be in the ExpandoObject
                 var propertyInfos = typeof(TSource)
-                        .GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
                 propertyInfoList.AddRange(propertyInfos);
             }
@@ -52,12 +54,11 @@ namespace Infra.Helpers
                     // we need to include public and instance, b/c specifying a binding flag overwrites the
                     // already-existing binding flags.
                     var propertyInfo = typeof(TSource)
-                        .GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        .GetProperty(propertyName,
+                            BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                     if (propertyInfo == null)
-                    {
                         throw new Exception($"Property {propertyName} wasn't found on {typeof(TSource)}");
-                    }
 
                     // add propertyInfo to list 
                     propertyInfoList.Add(propertyInfo);
@@ -65,7 +66,7 @@ namespace Infra.Helpers
             }
 
             // run through the source objects
-            foreach (TSource sourceObject in source)
+            foreach (var sourceObject in source)
             {
                 // create an ExpandoObject that will hold the 
                 // selected properties & values
@@ -79,7 +80,7 @@ namespace Infra.Helpers
                     var propertyValue = propertyInfo.GetValue(sourceObject);
 
                     // add the field to the ExpandoObject
-                    ((IDictionary<string, object>)dataShapedObject).Add(propertyInfo.Name, propertyValue);
+                    ((IDictionary<string, object>) dataShapedObject).Add(propertyInfo.Name, propertyValue);
                 }
 
                 // add the ExpandoObject to the list

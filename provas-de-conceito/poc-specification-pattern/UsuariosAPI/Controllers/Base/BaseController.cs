@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#region Using
+
+using Microsoft.AspNetCore.Mvc;
+
+#endregion
 
 namespace UsuariosAPI.Controllers.Base
 {

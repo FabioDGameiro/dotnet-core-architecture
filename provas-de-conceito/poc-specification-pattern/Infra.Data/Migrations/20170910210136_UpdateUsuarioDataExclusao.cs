@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿#region Using
+
 using System;
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#endregion
 
 namespace Infra.Data.Migrations
 {
@@ -9,17 +12,17 @@ namespace Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
-                name: "DataExclusao",
-                table: "Usuarios",
-                type: "datetime2",
+                "DataExclusao",
+                "Usuarios",
+                "datetime2",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "DataExclusao",
-                table: "Usuarios");
+                "DataExclusao",
+                "Usuarios");
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region Using
+
+using System;
 using System.Linq.Expressions;
-using System.Text;
+
+#endregion
 
 namespace Domain.Base
 {
@@ -9,7 +11,7 @@ namespace Domain.Base
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
-            return Usuario => Usuario.DataExclusao == null;
+            return usuario => usuario.DataExclusao == null;
         }
     }
 
@@ -17,7 +19,7 @@ namespace Domain.Base
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
-            return Usuario => Usuario.DataExclusao != null;
+            return usuario => usuario.DataExclusao != null;
         }
     }
 }

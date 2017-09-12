@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region Using
+
+using System;
 using System.Linq;
 using System.Linq.Expressions;
+
+#endregion
 
 namespace Domain.Base
 {
@@ -10,7 +14,7 @@ namespace Domain.Base
 
         public bool IsSatisfiedBy(T entity)
         {
-            Func<T, bool> predicate = ToExpression().Compile();
+            var predicate = ToExpression().Compile();
             return predicate(entity);
         }
 
@@ -61,10 +65,10 @@ namespace Domain.Base
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            var leftExpression = _left.ToExpression();
+            var rightExpression = _right.ToExpression();
 
-            BinaryExpression andExpression = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
+            var andExpression = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
 
             return Expression.Lambda<Func<T, bool>>(andExpression, leftExpression.Parameters.Single());
         }
@@ -83,10 +87,10 @@ namespace Domain.Base
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            var leftExpression = _left.ToExpression();
+            var rightExpression = _right.ToExpression();
 
-            BinaryExpression orExpression = Expression.OrElse(leftExpression.Body, rightExpression.Body);
+            var orExpression = Expression.OrElse(leftExpression.Body, rightExpression.Body);
 
             return Expression.Lambda<Func<T, bool>>(orExpression, leftExpression.Parameters.Single());
         }
@@ -103,8 +107,8 @@ namespace Domain.Base
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> expression = _specification.ToExpression();
-            UnaryExpression notExpression = Expression.Not(expression.Body);
+            var expression = _specification.ToExpression();
+            var notExpression = Expression.Not(expression.Body);
 
             return Expression.Lambda<Func<T, bool>>(notExpression, expression.Parameters.Single());
         }

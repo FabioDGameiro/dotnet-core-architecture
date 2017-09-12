@@ -1,8 +1,10 @@
-﻿using Domain.Base;
+﻿#region Using
+
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
+using Domain.Base;
+
+#endregion
 
 namespace Domain.Usuarios.Specifications
 {
@@ -12,7 +14,7 @@ namespace Domain.Usuarios.Specifications
 
         public UsuariosPorEmailSpecification(string email)
         {
-            if (String.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentNullException(nameof(email));
 
             _email = email.ToLower();
@@ -20,7 +22,7 @@ namespace Domain.Usuarios.Specifications
 
         public override Expression<Func<Usuario, bool>> ToExpression()
         {
-            return Usuario => Usuario.Email.ToLower() == _email;
+            return usuario => usuario.Email.ToLower() == _email;
         }
     }
 
@@ -35,7 +37,7 @@ namespace Domain.Usuarios.Specifications
 
         public override Expression<Func<Usuario, bool>> ToExpression()
         {
-            return Usuario => Usuario.Sexo == _sexo;
+            return usuario => usuario.Sexo == _sexo;
         }
     }
 
@@ -45,7 +47,7 @@ namespace Domain.Usuarios.Specifications
 
         public override Expression<Func<Usuario, bool>> ToExpression()
         {
-            return Usuario => Usuario.DataNascimento <= DateTime.Now.AddYears(-Anos);
+            return usuario => usuario.DataNascimento <= DateTime.Now.AddYears(-Anos);
         }
     }
 
@@ -55,7 +57,7 @@ namespace Domain.Usuarios.Specifications
 
         public UsuariosSearchSpecification(string search)
         {
-            if (String.IsNullOrWhiteSpace(search))
+            if (string.IsNullOrWhiteSpace(search))
                 throw new ArgumentNullException(nameof(search));
 
             _search = search.ToLower();
@@ -63,10 +65,10 @@ namespace Domain.Usuarios.Specifications
 
         public override Expression<Func<Usuario, bool>> ToExpression()
         {
-            return Usuario =>
-                Usuario.Nome.ToLower().Contains(_search) ||
-                (Usuario.Sobrenome == null || Usuario.Sobrenome.ToLower().Contains(_search)) ||
-                (Usuario.Email == null || Usuario.Email.ToLower().Contains(_search));
+            return usuario =>
+                usuario.Nome.ToLower().Contains(_search) || usuario.Sobrenome == null ||
+                usuario.Sobrenome.ToLower().Contains(_search) || usuario.Email == null ||
+                usuario.Email.ToLower().Contains(_search);
         }
     }
 }

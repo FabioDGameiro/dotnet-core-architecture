@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#region Using
+
+using System;
+
+#endregion
 
 namespace Domain.Base
 {

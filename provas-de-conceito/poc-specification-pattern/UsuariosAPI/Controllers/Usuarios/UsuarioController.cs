@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿#region Using
+
+using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Domain.Base;
 using Domain.Usuarios;
 using Domain.Usuarios.Parameters;
@@ -8,10 +12,11 @@ using Infra.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using UsuariosAPI.Controllers.Base;
 using UsuariosAPI.Models.Usuarios;
+
+#endregion
 
 namespace UsuariosAPI.Controllers.Usuarios
 {
@@ -37,9 +42,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         {
             // Validar se os campos do parametro Fields são validos (se inválidos, retorna 400 - BadRequest)
             if (!_typeHelperService.TypeHasProperties<GetUsuarioModel>(parametros.Fields))
-            {
                 return BadRequest();
-            }
 
             // Define a propriedade 'MetaOnly' como 'true' quando o request for do tipo HEAD
             // fazendo que o repositório acesse o banco de dados apenas para realizar a contagem de registros
@@ -52,23 +55,24 @@ namespace UsuariosAPI.Controllers.Usuarios
             if (parametros.Sexo.HasValue)
                 spec = spec.And(new UsuariosPorSexoSpecification(parametros.Sexo.Value));
 
-            if (!String.IsNullOrWhiteSpace(parametros.Email))
+            if (!string.IsNullOrWhiteSpace(parametros.Email))
                 spec = spec.And(new UsuariosPorEmailSpecification(parametros.Email));
 
-            if (parametros.MaioresDeIdade == true)
+            if (parametros.MaioresDeIdade)
                 spec = spec.And(new UsuariosMaioresDeIdadeSpecification());
 
-            if (parametros.Ativos == true)
+            if (parametros.Ativos)
                 spec = spec.And(new AtivosSpecifications<Usuario>());
 
-            if (parametros.Inativos == true)
+            if (parametros.Inativos)
                 spec = spec.And(new InativosSpecifications<Usuario>());
 
             if (parametros.HasQuery)
                 spec = spec.And(new UsuariosSearchSpecification(parametros.Query));
 
             // Retorna usuarios do repositório
-            var usuariosPagedList = _repository.RetornaUsuarios(spec, parametros.OrderBy, parametros.Page, parametros.PageSize, parametros.MetaOnly);
+            var usuariosPagedList = _repository.RetornaUsuarios(spec, parametros.OrderBy, parametros.Page,
+                parametros.PageSize, parametros.MetaOnly);
 
             // Gera os metadados da paginação e adiciona ao cabeçalho
             var paginationMetadata = new
@@ -79,7 +83,7 @@ namespace UsuariosAPI.Controllers.Usuarios
                 totalPages = usuariosPagedList.TotalPages
             };
 
-            Response.Headers.Add("Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+            Response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationMetadata));
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosPagedList);
@@ -94,9 +98,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         {
             // Validar se os campos do parametro Fields são validos (se inválidos, retorna 400 - BadRequest)
             if (!_typeHelperService.TypeHasProperties<GetUsuarioModel>(fields))
-            {
                 return BadRequest();
-            }
 
             // Retorna usuario do repositório
             var usuario = _repository.RetornaUsuario(usuarioId);
@@ -132,10 +134,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             // Persiste os dados no banco de dados
             if (!_repository.Save())
-            {
-                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao salvar usuário");
-            }
 
             // Cria a URI do local de onde o recurso foi criado
             var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{usuarioEntity.Id}";
@@ -153,9 +152,7 @@ namespace UsuariosAPI.Controllers.Usuarios
         public IActionResult Post(Guid usuarioId)
         {
             if (_repository.UsuarioExists(usuarioId))
-            {
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
-            }
 
             return NotFound();
         }
@@ -183,9 +180,7 @@ namespace UsuariosAPI.Controllers.Usuarios
             _repository.AtualizaUsuario(usuarioEntity);
 
             if (!_repository.Save())
-            {
                 throw new Exception("Ocorreu um erro inesperado ao atualizar o usuário");
-            }
 
             return NoContent();
         }
@@ -222,9 +217,7 @@ namespace UsuariosAPI.Controllers.Usuarios
             _repository.AtualizaUsuario(usuarioEntity);
 
             if (!_repository.Save())
-            {
                 throw new Exception("Ocorreu um erro inesperado ao atualizar o usuário");
-            }
 
             return NoContent();
         }
@@ -248,10 +241,7 @@ namespace UsuariosAPI.Controllers.Usuarios
 
             // Persiste os dados no banco de dados
             if (!_repository.Save())
-            {
-                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao salvar endereço do usuário");
-            }
 
             return NoContent();
         }

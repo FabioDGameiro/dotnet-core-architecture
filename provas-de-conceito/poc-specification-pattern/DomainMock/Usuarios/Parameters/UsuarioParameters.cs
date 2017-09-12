@@ -1,4 +1,8 @@
-﻿using Domain.Base;
+﻿#region Using
+
+using Domain.Base;
+
+#endregion
 
 namespace Domain.Usuarios.Parameters
 {

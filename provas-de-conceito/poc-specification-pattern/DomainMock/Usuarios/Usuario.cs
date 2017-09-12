@@ -1,7 +1,11 @@
-﻿using Domain.Base;
-using Domain.Usuarios.Endereco;
+﻿#region Using
+
 using System;
 using System.Collections.Generic;
+using Domain.Base;
+using Domain.Usuarios.Enderecos;
+
+#endregion
 
 namespace Domain.Usuarios
 {
