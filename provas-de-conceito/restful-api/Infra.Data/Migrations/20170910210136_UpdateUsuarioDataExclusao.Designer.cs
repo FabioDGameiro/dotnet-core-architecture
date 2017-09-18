@@ -12,8 +12,8 @@ using System;
 namespace Infra.Data.Migrations
 {
     [DbContext(typeof(UsuariosContext))]
-    [Migration("20170824011117_Initial")]
-    partial class Initial
+    [Migration("20170910210136_UpdateUsuarioDataExclusao")]
+    partial class UpdateUsuarioDataExclusao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,8 @@ namespace Infra.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("DataExclusao");
 
                     b.Property<DateTime?>("DataNascimento");
 

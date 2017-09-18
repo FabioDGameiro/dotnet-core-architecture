@@ -1,4 +1,8 @@
-﻿using System;
+﻿#region Using
+
+using System;
+
+#endregion
 
 namespace Infra.Helpers
 {
@@ -7,12 +11,10 @@ namespace Infra.Helpers
         public static int GetCurrentAge(this DateTime dateTimeOffset)
         {
             var currentDate = DateTime.UtcNow;
-            int age = currentDate.Year - dateTimeOffset.Year;
+            var age = currentDate.Year - dateTimeOffset.Year;
 
             if (currentDate < dateTimeOffset.AddYears(age))
-            {
                 age--;
-            }
 
             return age;
         }

@@ -1,5 +1,9 @@
-﻿using AutoMapper;
+﻿#region Using
+
+using AutoMapper;
 using UsuariosAPI.Mappings.Profiles;
+
+#endregion
 
 namespace UsuariosAPI.Mappings
 {

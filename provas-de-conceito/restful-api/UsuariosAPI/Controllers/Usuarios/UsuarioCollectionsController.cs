@@ -1,24 +1,25 @@
-﻿using AutoMapper;
-using Domain.Usuarios;
-using Domain.Usuarios.Parameters;
-using Domain.Usuarios.Repository;
-using Infra.Helpers;
-using Library.API.Helpers;
-using Microsoft.AspNetCore.Mvc;
+﻿#region Using
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Domain.Usuarios;
+using Domain.Usuarios.Repository;
+using Infra.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using UsuariosAPI.Controllers.Base;
 using UsuariosAPI.Models.Usuarios;
 
+#endregion
 
 namespace UsuariosAPI.Controllers.Usuarios
 {
     [Route("api/usuarios-collections")]
     public class UsuarioCollectionsController : BaseController
     {
-        public readonly IUsuarioRepository _repository;
-        public readonly IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly IUsuarioRepository _repository;
 
         public UsuarioCollectionsController(IUsuarioRepository repository, IMapper mapper)
         {
@@ -33,26 +34,20 @@ namespace UsuariosAPI.Controllers.Usuarios
         {
             if (usuariosCollections == null) return BadRequest();
 
-            for (int i = 0; i < usuariosCollections.Count(); i++)
-            {
+            for (var i = 0; i < usuariosCollections.Count(); i++)
                 // Valida email duplicado
                 if (_repository.EmailExists(usuariosCollections.ElementAt(i).Email))
                     ModelState.AddModelError($"[{i}].Email", "O e-mail informado já está sendo utilizado");
-            }
 
             if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
             var usuariosEntities = _mapper.Map<IEnumerable<Usuario>>(usuariosCollections);
 
             foreach (var usuario in usuariosEntities)
-            {
                 _repository.CadastrarUsuario(usuario);
-            }
 
             if (!_repository.Save())
-            {
                 throw new Exception("Ocorreu um erro inesperado ao salvar usuário");
-            }
 
             var usuariosModels = _mapper.Map<IEnumerable<GetUsuarioModel>>(usuariosEntities);
 

@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region Using
+
+using System;
 using System.Text;
 
-namespace Domain.Usuarios.Endereco
+#endregion
+
+namespace Domain.Usuarios.Enderecos
 {
     public class UsuarioEndereco
     {
@@ -19,11 +23,10 @@ namespace Domain.Usuarios.Endereco
         {
             var sb = new StringBuilder($"{Logradouro}, {Numero}");
 
-            if (!String.IsNullOrWhiteSpace(Complemento))
+            if (!string.IsNullOrWhiteSpace(Complemento))
                 sb.Append($" - {Complemento}");
 
             return sb.ToString();
-
         }
     }
 

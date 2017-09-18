@@ -1,24 +1,28 @@
-﻿using AutoMapper;
-using Domain.Usuarios.Endereco;
+﻿#region Using
+
+using System;
+using System.Collections.Generic;
+using AutoMapper;
+using Domain.Usuarios.Enderecos;
 using Domain.Usuarios.Parameters;
 using Domain.Usuarios.Repository;
 using Infra.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using UsuariosAPI.Controllers.Base;
-using UsuariosAPI.Models.Usuarios;
 using UsuariosAPI.Models.Usuarios.Endereco;
 
-namespace UsuariosAPI.Controllers.Usuarios.Enderecos
+#endregion
+
+namespace UsuariosAPI.Controllers.Usuarios
 {
     [Route("api/usuarios/{usuarioId:guid}/enderecos")]
     public class UsuarioEnderecoController : BaseController
     {
-        public readonly IUsuarioRepository _repository;
         public readonly IMapper _mapper;
+        public readonly IUsuarioRepository _repository;
 
         public UsuarioEnderecoController(IUsuarioRepository repository, IMapper mapper)
         {
@@ -47,7 +51,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
                 totalPages = enderecosPagedList.TotalPages
             };
 
-            Response.Headers.Add("Pagination", Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+            Response.Headers.Add("Pagination", JsonConvert.SerializeObject(paginationMetadata));
 
             // Mapeia para a model com os dados formatados e retorna 200 - OK
             var enderecosModels = _mapper.Map<IEnumerable<GetUsuarioEnderecoModel>>(enderecosPagedList);
@@ -95,10 +99,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
 
             // Persiste os dados no banco de dados
             if (!_repository.Save())
-            {
-                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao salvar endereço do usuário");
-            }
 
             // Cria a URI do local de onde o recurso foi criado
             var locationUri = $"{Request.Scheme}://{Request.Host}{Request.Path}/{usuarioEnderecoEntity.Id}";
@@ -116,9 +117,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         public IActionResult Post(Guid usuarioId, Guid enderecoId)
         {
             if (_repository.EnderecoExists(usuarioId, enderecoId))
-            {
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
-            }
 
             return NotFound();
         }
@@ -142,9 +141,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             _repository.AtualizaUsuarioEndereco(enderecoEntity);
 
             if (!_repository.Save())
-            {
                 throw new Exception("Ocorreu um erro inesperado ao atualizar endereço do usuário");
-            }
 
             return NoContent();
         }
@@ -152,7 +149,8 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
         // PATCH
 
         [HttpPatch("{enderecoId:guid}")]
-        public IActionResult Patch(Guid usuarioId, Guid enderecoId, [FromBody] JsonPatchDocument<UpdateUsuarioEnderecoModel> patchEnderecoModel)
+        public IActionResult Patch(Guid usuarioId, Guid enderecoId,
+            [FromBody] JsonPatchDocument<UpdateUsuarioEnderecoModel> patchEnderecoModel)
         {
             if (patchEnderecoModel == null) return BadRequest();
 
@@ -179,9 +177,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
             _repository.AtualizaUsuarioEndereco(enderecoEntity);
 
             if (!_repository.Save())
-            {
                 throw new Exception("Ocorreu um erro inesperado ao atualizar endereço do usuário");
-            }
 
             return NoContent();
         }
@@ -205,10 +201,7 @@ namespace UsuariosAPI.Controllers.Usuarios.Enderecos
 
             // Persiste os dados no banco de dados
             if (!_repository.Save())
-            {
-                // Joga uma exceção se der algum erro ao salvar
                 throw new Exception("Ocorreu um erro inesperado ao salvar endereço do usuário");
-            }
 
             return NoContent();
         }

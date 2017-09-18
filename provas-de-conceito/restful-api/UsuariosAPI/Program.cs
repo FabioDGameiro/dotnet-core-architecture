@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿#region Using
+
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+
+#endregion
 
 namespace UsuariosAPI
 {
@@ -10,9 +14,11 @@ namespace UsuariosAPI
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+        }
     }
 }

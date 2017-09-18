@@ -1,12 +1,16 @@
-﻿using Domain.Usuarios.Endereco;
+﻿#region Using
+
 using System;
 using System.Collections.Generic;
+using Domain.Base;
+using Domain.Usuarios.Enderecos;
+
+#endregion
 
 namespace Domain.Usuarios
 {
-    public class Usuario
+    public class Usuario : Entity
     {
-        public Guid Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Email { get; set; }

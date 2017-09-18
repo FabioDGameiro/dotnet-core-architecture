@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿#region Using
+
+using System.Reflection;
+
+#endregion
 
 namespace Domain.Base
 {
@@ -7,9 +11,7 @@ namespace Domain.Base
         public bool TypeHasProperties<T>(string fields)
         {
             if (string.IsNullOrWhiteSpace(fields))
-            {
                 return true;
-            }
 
             // the field are separated by ",", so we split it.
             var fieldsAfterSplit = fields.Split(',');
@@ -29,9 +31,7 @@ namespace Domain.Base
 
                 // it can't be found, return false
                 if (propertyInfo == null)
-                {
                     return false;
-                }
             }
 
             // all checks out, return true

@@ -1,7 +1,12 @@
-﻿using System;
+﻿#region Using
+
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Reflection;
+
+#endregion
+
 namespace Infra.Helpers
 {
     public static class ObjectExtensions
@@ -9,9 +14,7 @@ namespace Infra.Helpers
         public static ExpandoObject ShapeData<TSource>(this TSource source, string fields)
         {
             if (source == null)
-            {
                 throw new ArgumentNullException("source");
-            }
 
             var dataShapedObject = new ExpandoObject();
 
@@ -19,7 +22,7 @@ namespace Infra.Helpers
             {
                 // all public properties should be in the ExpandoObject 
                 var propertyInfos = typeof(TSource)
-                        .GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    .GetProperties(BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 foreach (var propertyInfo in propertyInfos)
                 {
@@ -27,7 +30,7 @@ namespace Infra.Helpers
                     var propertyValue = propertyInfo.GetValue(source);
 
                     // add the field to the ExpandoObject
-                    ((IDictionary<string, object>)dataShapedObject).Add(propertyInfo.Name, propertyValue);
+                    ((IDictionary<string, object>) dataShapedObject).Add(propertyInfo.Name, propertyValue);
                 }
 
                 return dataShapedObject;
@@ -50,20 +53,17 @@ namespace Infra.Helpers
                     .GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
 
                 if (propertyInfo == null)
-                {
                     throw new Exception($"Property {propertyName} wasn't found on {typeof(TSource)}");
-                }
 
                 // get the value of the property on the source object
                 var propertyValue = propertyInfo.GetValue(source);
 
                 // add the field to the ExpandoObject
-                ((IDictionary<string, object>)dataShapedObject).Add(propertyInfo.Name, propertyValue);
+                ((IDictionary<string, object>) dataShapedObject).Add(propertyInfo.Name, propertyValue);
             }
 
             // return
             return dataShapedObject;
         }
-
     }
 }
