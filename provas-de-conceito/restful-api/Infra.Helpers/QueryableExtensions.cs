@@ -10,7 +10,7 @@ namespace Infra.Helpers
 {
     public static class QueryableExtensions
     {
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string sortCollection) where T : Entity
+        public static IQueryable<T> ApplyOrdering<T>(this IQueryable<T> source, string sortCollection) where T : Entity
         {
             if (String.IsNullOrWhiteSpace(sortCollection))
                 return source;

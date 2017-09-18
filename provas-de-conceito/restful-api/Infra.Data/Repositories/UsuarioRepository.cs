@@ -62,7 +62,7 @@ namespace Infra.Data.Repositories
             // ordenação
 
             //usuariosQuery = AplicaOrdenacaoUsuarios(usuariosQuery, orderBy);
-            usuariosQuery = usuariosQuery.OrderBy(orderBy);
+            usuariosQuery = usuariosQuery.ApplyOrdering(orderBy);
 
             // retorno paginado
 
