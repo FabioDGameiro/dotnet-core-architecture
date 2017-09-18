@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Domain.Base
 {
-    public abstract class Specification<T> where T : Entity
+    public abstract class Specification<T>
     {
         public static readonly Specification<T> All = new IdentitySpecification<T>();
 
@@ -44,7 +44,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class IdentitySpecification<T> : Specification<T> where T : Entity
+    internal sealed class IdentitySpecification<T> : Specification<T>
     {
         public override Expression<Func<T, bool>> ToExpression()
         {
@@ -52,7 +52,7 @@ namespace Domain.Base
         }
     }
 
-    internal sealed class AndSpecification<T> : Specification<T> where T : Entity
+    internal sealed class AndSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
@@ -68,13 +68,13 @@ namespace Domain.Base
             var leftExpression = _left.ToExpression();
             var rightExpression = _right.ToExpression();
 
-            var andExpression = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
+            var andExpression = Expression.AndAlso(leftExpression.Body, Expression.Invoke(rightExpression, leftExpression.Parameters[0]));
 
             return Expression.Lambda<Func<T, bool>>(andExpression, leftExpression.Parameters.Single());
         }
     }
 
-    internal sealed class OrSpecification<T> : Specification<T> where T : Entity
+    internal sealed class OrSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
@@ -90,13 +90,13 @@ namespace Domain.Base
             var leftExpression = _left.ToExpression();
             var rightExpression = _right.ToExpression();
 
-            var orExpression = Expression.OrElse(leftExpression.Body, rightExpression.Body);
+            var orExpression = Expression.OrElse(leftExpression.Body, Expression.Invoke(rightExpression, leftExpression.Parameters[0]));
 
             return Expression.Lambda<Func<T, bool>>(orExpression, leftExpression.Parameters.Single());
         }
     }
 
-    internal sealed class NotSpecification<T> : Specification<T> where T : Entity
+    internal sealed class NotSpecification<T> : Specification<T>
     {
         private readonly Specification<T> _specification;
 
