@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CrossCutting.Reports\Infra.CrossCutting.Reports.csproj" />
     <ProjectReference Include="..\DomainMock\Domain.csproj" />
     <ProjectReference Include="..\Infra.Data\Infra.Data.csproj" />
   </ItemGroup>

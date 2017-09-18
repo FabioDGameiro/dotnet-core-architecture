@@ -3,6 +3,7 @@
 using AutoMapper;
 using Domain.Base;
 using Domain.Usuarios.Repository;
+using Infra.CrossCutting.Reports.UsuariosReports.Repository;
 using Infra.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,9 @@ namespace Infra.IoC
 
             // Services
             services.AddTransient<ITypeHelperService, TypeHelperService>();
+
+            // Reports
+            services.AddScoped<IUsuarioReportService, UsuarioReportService>();
         }
     }
 }
