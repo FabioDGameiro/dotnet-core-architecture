@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using UsuariosAPI.Controllers.Base;
 using UsuariosAPI.Models.Usuarios;
+using Domain.Base.GenericSpecifications;
 
 #endregion
 

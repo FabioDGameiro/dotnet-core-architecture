@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 #endregion
 
-namespace Domain.Base
+namespace Domain.Base.GenericSpecifications
 {
     public sealed class AtivosSpecifications<T> : Specification<T> where T : Entity
     {
