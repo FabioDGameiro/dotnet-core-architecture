@@ -15,9 +15,16 @@ namespace UsuariosAPI.Controllers.Usuarios
         }
 
         [HttpGet("usuarios-com-endereco")]
-        public IActionResult Get()
+        public IActionResult GetUsuariosComEndereco()
         {
             var usuariosComEnderecoModel = _service.RetornaUsuariosComEndereco();
+            return Ok(usuariosComEnderecoModel);
+        }
+
+        [HttpGet("usuarios-sem-endereco")]
+        public IActionResult GetUsuariosSemEndereco()
+        {
+            var usuariosComEnderecoModel = _service.RetornaUsuariosSemEndereco();
             return Ok(usuariosComEnderecoModel);
         }
     }
