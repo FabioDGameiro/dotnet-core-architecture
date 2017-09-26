@@ -16,3 +16,9 @@ Projeto de uma prova de conceito para utilização do Pattern Specification, um 
 ## Referências de Estudos
 
 - [Securing ASP.NET Core with OAuth2 and OpenID Connect (by Kevin Dockx)](https://app.pluralsight.com/library/courses/asp-dotnet-core-oauth2-openid-connect-securing/table-of-contents)
+
+## Informações Importantes
+
+Endereço das Configurações do OpenID:
+http://localhost:5000/.well-known/openid-configuration
+
