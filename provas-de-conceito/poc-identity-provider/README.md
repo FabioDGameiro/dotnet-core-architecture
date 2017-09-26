@@ -16,6 +16,12 @@ Projeto de uma prova de conceito para utilização do Pattern Specification, um 
 ## Referências de Estudos
 
 - [Securing ASP.NET Core with OAuth2 and OpenID Connect (by Kevin Dockx)](https://app.pluralsight.com/library/courses/asp-dotnet-core-oauth2-openid-connect-securing/table-of-contents)
+- [Identity Server 4 Samples](https://github.com/IdentityServer/IdentityServer4.Samples)
+- [IdentityServer4 in ASP.NET Core  - Javascript Client configuration](https://medium.com/@jorge.cotillo/identityserver4-in-asp-net-core-javascript-client-configuration-42ed4874a979)
+- [Testing your ASP.NET Core WebApi secured with IdentityServer4 in Postman](https://medium.com/all-technology-feeds/testing-your-asp-net-core-webapi-secured-with-identityserver4-in-postman-97eee976aa16)
+- [ASP.NET Core & Angular2 + OpenID Connect using Visual Studio Code](https://medium.com/@jorge.cotillo/asp-net-core-angular2-openid-connect-using-visual-studio-code-ed10327bb31a)
+- [ASP.NET Core Authentication with IdentityServer4](https://blogs.msdn.microsoft.com/webdev/2017/01/23/asp-net-core-authentication-with-identityserver4/)
+- ​
 
 ## Informações Importantes
 

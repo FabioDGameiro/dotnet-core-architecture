@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityModel;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,8 @@ namespace Project.IdentityProvider.Api.Data
 
                     Claims = new List<Claim>
                     {
-                        new Claim("given_name", "Tiago"),
-                        new Claim("family_name", "Santos")
+                        new Claim(JwtClaimTypes.GivenName, "Tiago"),
+                        new Claim(JwtClaimTypes.FamilyName, "Santos")
                     }
                 },
                 new TestUser
@@ -38,8 +39,8 @@ namespace Project.IdentityProvider.Api.Data
 
                     Claims = new List<Claim>
                     {
-                        new Claim("given_name", "Iran"),
-                        new Claim("family_name", "Nunes")
+                        new Claim(JwtClaimTypes.GivenName, "Iran"),
+                        new Claim(JwtClaimTypes.FamilyName, "Nunes")
                     }
                 }
             };
