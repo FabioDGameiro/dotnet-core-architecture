@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Project.IdentityProvider.Api.Data;
 
 namespace Project.IdentityProvider.Api
 {
@@ -22,15 +23,30 @@ namespace Project.IdentityProvider.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configurando Identity Server
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddTestUsers(InMemoryData.GetUsers())
+                .AddInMemoryIdentityResources(InMemoryData.GetIdentityResources())
+                .AddInMemoryClients(InMemoryData.GetClients());
+
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole();
+            loggerFactory.AddDebug();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // Configurando Identity Server
+
+            app.UseIdentityServer();
 
             app.UseMvc();
         }
