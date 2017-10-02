@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ClientMvcApp.Controllers
 {
@@ -15,18 +18,16 @@ namespace ClientMvcApp.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> CallApiUsingUserAccessToken()
         {
-            ViewData["Message"] = "Your application description page.";
+            var accessToken = await HttpContext.Authentication.GetTokenAsync("access_token");
 
-            return View();
-        }
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var content = await client.GetStringAsync("http://localhost:5001/identity");
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            ViewBag.Json = JArray.Parse(content).ToString();
+            return View("json");
         }
 
         public IActionResult Error()

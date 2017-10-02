@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Authentication
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -12,3 +14,11 @@
         <dd>@claim.Value</dd>
     }
 </dl>
+
+<dt>access token</dt>
+<dd>@await ViewContext.HttpContext.Authentication.GetTokenAsync("access_token")</dd>
+
+<br />
+
+<dt>refresh token</dt>
+<dd>@await ViewContext.HttpContext.Authentication.GetTokenAsync("refresh_token")</dd>
