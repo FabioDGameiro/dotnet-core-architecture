@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{6A91D484-B8DE-4D28-B65C-ABBECE778648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServerQuickStart", "IdentityServerQuickStart\IdentityServerQuickStart.csproj", "{F3E3F763-5A3D-433D-A7F4-C6289C6722EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServerQuickStart\IdentityServer.csproj", "{F3E3F763-5A3D-433D-A7F4-C6289C6722EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcesApi", "ResourcesApi\ResourcesApi.csproj", "{8DCE1093-54B0-46C4-9CFD-AC7FBEBF3839}"
 EndProject
