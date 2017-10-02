@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static IdentityServer4.IdentityServerConstants;
 
-namespace Project.IdentityProvider.Api.Data
+namespace Project.IdentityProvider.Api.Configurations
 {
     // Classe apenas para testes, deve ser removida em produção
 
-    public static class InMemoryData
+    public static class Config
     {
-        // Retorna os usuários com acesso ao Identity Provider
-
         public static List<TestUser> GetUsers()
         {
             return new List<TestUser>
@@ -22,7 +21,7 @@ namespace Project.IdentityProvider.Api.Data
                 new TestUser
                 {
                     SubjectId = "588fdc73-8b30-4b6e-ba0d-705b63d9f425",
-                    Username = "Tiago",
+                    Username = "tiago",
                     Password = "password",
 
                     Claims = new List<Claim>
@@ -34,7 +33,7 @@ namespace Project.IdentityProvider.Api.Data
                 new TestUser
                 {
                     SubjectId = "e70c711f-160d-440f-8392-1bfbf5ce6213",
-                    Username = "Iran",
+                    Username = "iran",
                     Password = "password",
 
                     Claims = new List<Claim>
@@ -46,8 +45,6 @@ namespace Project.IdentityProvider.Api.Data
             };
         }
 
-        // Retorna o escopo de informações do Identity
-
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
@@ -56,8 +53,6 @@ namespace Project.IdentityProvider.Api.Data
                 new IdentityResources.Profile()
             };
         }
-
-        // Retorna os Clients que tem acesso ao Identity Provider
 
         public static IEnumerable<Client> GetClients()
         {
