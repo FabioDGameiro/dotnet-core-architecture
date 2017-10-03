@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,13 +19,26 @@ namespace Project.MvcApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie()
+                .AddOpenIdConnect(options =>
+                {
+                    //options.AuthentitationScheme = "oidc";
+                    options.Authority = "https://localhost:44373/";
+                    options.RequireHttpsMetadata = true;
+                    options.ClientId = "task-app-mvc";
+                    //options.Scope = { "openid", "profile" }
+                    options.ResponseType = "code id_token";
+                    options.SignInScheme = "Cookies";
+                    options.SaveTokens = true;
+                });
+
+
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -37,7 +51,12 @@ namespace Project.MvcApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseAuthentication();
+
             app.UseStaticFiles();
+
+
+            app.UseOpenIdConnectAuthentication()
 
             app.UseMvc(routes =>
             {

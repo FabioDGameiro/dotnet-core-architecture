@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using IdentityServer4;
 
 namespace Project.IdentityProvider.Api.Configurations
 {
@@ -22,7 +23,21 @@ namespace Project.IdentityProvider.Api.Configurations
         {
             return new List<Client>
             {
-                
+                new Client
+                {
+                    ClientName = "Task App (MVC)",
+                    ClientId = "task-app-mvc",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new List<string>
+                    {
+                        "https://localhost:44382/signin-oidc"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
+                }
             };
         }
     }
