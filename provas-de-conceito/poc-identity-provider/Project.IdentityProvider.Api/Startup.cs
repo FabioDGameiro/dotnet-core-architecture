@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Project.IdentityProvider.Api.Configurations;
 
 namespace Project.IdentityProvider.Api
@@ -23,11 +18,9 @@ namespace Project.IdentityProvider.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Configurando Identity Server
-
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddTestUsers(Config.GetUsers())
+                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
+                .AddTestUsers(TestUsers.Users)
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients());
 
@@ -44,11 +37,9 @@ namespace Project.IdentityProvider.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            // Configurando Identity Server
-
+            app.UseStaticFiles();
             app.UseIdentityServer();
-
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
