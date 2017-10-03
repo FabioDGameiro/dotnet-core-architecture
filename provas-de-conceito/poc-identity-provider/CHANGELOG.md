@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+- Integração dos Clientes `MVC` e `JavaScript` com a API de Recursos (protegida). 
+
 ## 0.2.0
 
 - Adição do cliente `taskmvc` na classe `Config.js` do projeto `IdentityProvider`. Configuração exclusiva para o cliente `MvcApp`, utilizando o tipo de credencial `HybridAndClientCredentials`

@@ -19,11 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "Identit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcesApi", "ResourcesApi\ResourcesApi.csproj", "{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcClient", "MvcClient\MvcClient.csproj", "{043D376F-74D7-466C-850A-9CD8DACAB42C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "MvcClient\MvcClient.csproj", "{043D376F-74D7-466C-850A-9CD8DACAB42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScriptClient", "JavaScriptClient\JavaScriptClient.csproj", "{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{C3DE1690-0A90-496F-B18D-09599D3A6783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaScriptClient", "JavaScriptClient\JavaScriptClient.csproj", "{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +45,6 @@ Global
 		{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3DE1690-0A90-496F-B18D-09599D3A6783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3DE1690-0A90-496F-B18D-09599D3A6783}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3DE1690-0A90-496F-B18D-09599D3A6783}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3DE1690-0A90-496F-B18D-09599D3A6783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,7 +56,6 @@ Global
 		{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB} = {E90A6403-3EA7-4B1D-9EF6-388B0873EEDF}
 		{043D376F-74D7-466C-850A-9CD8DACAB42C} = {9DF371EB-38D0-4593-8463-0FB2704E2B97}
 		{A5F6EA5C-64DE-4786-989B-1CA1436A45C8} = {9DF371EB-38D0-4593-8463-0FB2704E2B97}
-		{C3DE1690-0A90-496F-B18D-09599D3A6783} = {9DF371EB-38D0-4593-8463-0FB2704E2B97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {176B855E-0BD2-4B8B-AB40-567BF052F27F}
