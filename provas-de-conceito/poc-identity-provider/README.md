@@ -22,6 +22,7 @@ Projeto de uma prova de conceito para utilização do Pattern Specification, um 
 - [ASP.NET Core Authentication with IdentityServer4](https://blogs.msdn.microsoft.com/webdev/2017/01/23/asp-net-core-authentication-with-identityserver4/)
 - https://github.com/leastprivilege/AspNetCoreSecuritySamples
 - https://github.com/IdentityModel/oidc-client-js
+- https://www.codeproject.com/Articles/1205745/Identity-Server-with-ASP-NET-Core
 
 ## Informações Importantes
 

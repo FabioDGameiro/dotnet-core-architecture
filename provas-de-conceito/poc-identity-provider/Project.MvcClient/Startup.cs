@@ -44,6 +44,7 @@ namespace Project.MvcClient
                     options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
+                    options.Scope.Add("api1");
                 });
         }
 

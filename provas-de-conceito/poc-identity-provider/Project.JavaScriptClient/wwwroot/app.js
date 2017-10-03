@@ -7,7 +7,7 @@ var config = {
     client_id: "taskjs",
     redirect_uri: "http://localhost:5002/callback.html",
     response_type: "id_token token",
-    scope: "openid profile",
+    scope: "openid profile api1",
     post_logout_redirect_uri: "http://localhost:5002/index.html",
 };
 var mgr = new Oidc.UserManager(config);
@@ -41,7 +41,7 @@ function login() {
 
 function api() {
     mgr.getUser().then(function (user) {
-        var url = "http://localhost:5001/identity";
+        var url = "http://localhost:3000/identity";
 
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);

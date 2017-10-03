@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
 namespace Project.MvcApp.Controllers
 {
@@ -20,6 +22,18 @@ namespace Project.MvcApp.Controllers
             };
 
             return Challenge(props, "oidc");
+        }
+
+        public async Task<IActionResult> CallApiUsingUserAccessToken()
+        {
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+
+            var client = new HttpClient();
+            client.SetBearerToken(accessToken);
+            var content = await client.GetStringAsync("http://localhost:3000/identity");
+
+            ViewBag.Json = JArray.Parse(content).ToString();
+            return View();
         }
 
         public IActionResult Denied(string returnUrl = null)

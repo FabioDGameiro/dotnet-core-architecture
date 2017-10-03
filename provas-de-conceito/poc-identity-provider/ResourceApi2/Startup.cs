@@ -8,10 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using IdentityServer4.AccessTokenValidation;
 
-namespace Project.Resources.Api
+namespace ResourceApi2
 {
     public class Startup
     {
@@ -24,28 +23,15 @@ namespace Project.Resources.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("default", policy =>
-                {
-                    policy.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
-
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = "https://localhost:44373";
                     options.RequireHttpsMetadata = false;
                     options.ApiName = "api1";
-                    options.ApiSecret = "secret";
                 });
 
-            services.AddMvcCore()
-                .AddAuthorization()
-                .AddJsonFormatters();
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -56,8 +42,7 @@ namespace Project.Resources.Api
             }
 
             app.UseAuthentication();
-            app.UseCors("default");
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

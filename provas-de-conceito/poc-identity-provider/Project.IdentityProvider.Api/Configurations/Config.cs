@@ -19,10 +19,32 @@ namespace Project.IdentityProvider.Api.Configurations
             };
         }
 
+        public static IEnumerable<ApiResource> GetApiResources()
+        {
+            return new List<ApiResource>
+            {
+                new ApiResource("api1", "Resources API")
+            };
+        }
+
+
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
             {
+                // API Client
+
+                new Client
+                {
+                    ClientId = "client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = { "api1" }
+                },
+
                 // MVC Client
 
                 new Client
@@ -42,7 +64,8 @@ namespace Project.IdentityProvider.Api.Configurations
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
                     },
                     AllowOfflineAccess = true
                 },
@@ -63,7 +86,8 @@ namespace Project.IdentityProvider.Api.Configurations
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1"
                     }
                 }
             };

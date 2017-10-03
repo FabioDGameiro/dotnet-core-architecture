@@ -21,6 +21,7 @@ namespace Project.IdentityProvider.Api
             services.AddIdentityServer()
                 .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
                 .AddTestUsers(TestUsers.Users)
+                .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients());
 
