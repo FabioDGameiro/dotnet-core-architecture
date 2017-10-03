@@ -23,6 +23,8 @@ namespace Project.IdentityProvider.Api.Configurations
         {
             return new List<Client>
             {
+                // MVC Client
+
                 new Client
                 {
                     ClientId = "taskmvc",
@@ -43,6 +45,26 @@ namespace Project.IdentityProvider.Api.Configurations
                         IdentityServerConstants.StandardScopes.Profile
                     },
                     AllowOfflineAccess = true
+                },
+
+                // JavaScript Client
+
+                new Client
+                {
+                    ClientId = "taskjs",
+                    ClientName = "JavaScript Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris =           { "http://localhost:5002/callback.html" },
+                    PostLogoutRedirectUris = { "http://localhost:5002/index.html" },
+                    AllowedCorsOrigins =     { "http://localhost:5002" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }
