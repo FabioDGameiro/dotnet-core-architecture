@@ -2,6 +2,24 @@
 document.getElementById("api").addEventListener("click", api, false);
 document.getElementById("logout").addEventListener("click", logout, false);
 
+var config = {
+    authority: "https://localhost:44373",
+    client_id: "taskjs",
+    redirect_uri: "http://localhost:5002/callback.html",
+    response_type: "id_token token",
+    scope: "openid profile",
+    post_logout_redirect_uri: "http://localhost:5002/index.html",
+};
+var mgr = new Oidc.UserManager(config);
+
+mgr.getUser().then(function (user) {
+    if (user) {
+        log("User logged in", user.profile);
+    }
+    else {
+        log("User not logged in");
+    }
+});
 
 function log() {
     document.getElementById('results').innerText = '';
@@ -38,22 +56,3 @@ function api() {
 function logout() {
     mgr.signoutRedirect();
 }
-
-var config = {
-    authority: "https://localhost:44373",
-    client_id: "taskjs",
-    redirect_uri: "http://localhost:5002/callback.html",
-    response_type: "id_token token",
-    scope: "openid profile",
-    post_logout_redirect_uri: "http://localhost:5002/index.html",
-};
-var mgr = new Oidc.UserManager(config);
-
-mgr.getUser().then(function (user) {
-    if (user) {
-        log("User logged in", user.profile);
-    }
-    else {
-        log("User not logged in");
-    }
-});

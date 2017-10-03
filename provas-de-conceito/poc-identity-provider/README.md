@@ -21,6 +21,7 @@ Projeto de uma prova de conceito para utilização do Pattern Specification, um 
 - [ASP.NET Core & Angular2 + OpenID Connect using Visual Studio Code](https://medium.com/@jorge.cotillo/asp-net-core-angular2-openid-connect-using-visual-studio-code-ed10327bb31a)
 - [ASP.NET Core Authentication with IdentityServer4](https://blogs.msdn.microsoft.com/webdev/2017/01/23/asp-net-core-authentication-with-identityserver4/)
 - https://github.com/leastprivilege/AspNetCoreSecuritySamples
+- https://github.com/IdentityModel/oidc-client-js
 
 ## Informações Importantes
 
