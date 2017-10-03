@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,18 +22,24 @@ namespace Project.MvcApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie()
-                .AddOpenIdConnect(options =>
+            services.AddAuthentication(options =>
                 {
-                    //options.AuthentitationScheme = "oidc";
+                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+                {
                     options.Authority = "https://localhost:44373/";
                     options.RequireHttpsMetadata = true;
                     options.ClientId = "task-app-mvc";
-                    //options.Scope = { "openid", "profile" }
                     options.ResponseType = "code id_token";
                     options.SignInScheme = "Cookies";
                     options.SaveTokens = true;
+
+                    options.Scope.Clear();
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
                 });
 
 
@@ -51,19 +58,9 @@ namespace Project.MvcApp
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseAuthentication();
-
             app.UseStaticFiles();
-
-
-            app.UseOpenIdConnectAuthentication()
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
