@@ -34,8 +34,8 @@ namespace Project.IdentityProvider.Api.Configurations
                         new Secret("secret".Sha256())
                     },
 
-                    RedirectUris           = { "https://localhost:44340/signin-oidc" },
-                    PostLogoutRedirectUris = { "https://localhost:44340/signout-callback-oidc" },
+                    RedirectUris           = { "http://localhost:5001/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:5001/signout-callback-oidc" },
 
                     AllowedScopes =
                     {
