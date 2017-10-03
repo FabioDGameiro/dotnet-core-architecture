@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Project.MvcApp
 {
@@ -22,28 +23,31 @@ namespace Project.MvcApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(options =>
+            services.AddMvc();
+
+            services.AddAuthentication("Cookies")
+                .AddCookie("Cookies", options =>
                 {
-                    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    options.LoginPath = "/account/login";
+                    options.AccessDeniedPath = "/account/denied";
                 })
-                .AddCookie()
-                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+                .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "https://localhost:44373/";
-                    options.RequireHttpsMetadata = true;
-                    options.ClientId = "task-app-mvc";
-                    options.ResponseType = "code id_token";
                     options.SignInScheme = "Cookies";
+
+                    options.Authority = "https://localhost:44373";
+                    options.RequireHttpsMetadata = true;
+                    options.ClientId = "taskmvc";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code id_token";
+
                     options.SaveTokens = true;
+                    options.GetClaimsFromUserInfoEndpoint = true;
 
                     options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                 });
-
-
-            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

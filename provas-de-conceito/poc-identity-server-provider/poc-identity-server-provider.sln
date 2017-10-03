@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9067600-1287-4792-AE15-236F21AA78C1}"
 	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -14,11 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Presentation", "01 - P
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Services", "02 - Services", "{E90A6403-3EA7-4B1D-9EF6-388B0873EEDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.IdentityProvider.Api", "Project.IdentityProvider.Api\Project.IdentityProvider.Api.csproj", "{6C4BA606-BF43-46A0-98EB-22E18A0849BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.IdentityProvider.Api", "Project.IdentityProvider.Api\Project.IdentityProvider.Api.csproj", "{6C4BA606-BF43-46A0-98EB-22E18A0849BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Resources.Api", "Project.Resources.Api\Project.Resources.Api.csproj", "{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Resources.Api", "Project.Resources.Api\Project.Resources.Api.csproj", "{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.MvcApp", "Project.MvcApp\Project.MvcApp.csproj", "{F52A9AD6-138D-4AE4-AB8B-FDABD7564EF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.MvcApp", "Project.MvcApp\Project.MvcApp.csproj", "{F52A9AD6-138D-4AE4-AB8B-FDABD7564EF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

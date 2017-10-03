@@ -25,18 +25,24 @@ namespace Project.IdentityProvider.Api.Configurations
             {
                 new Client
                 {
-                    ClientName = "Task App (MVC)",
-                    ClientId = "task-app-mvc",
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    RedirectUris = new List<string>
+                    ClientId = "taskmvc",
+                    ClientName = "MVC Task App",
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+
+                    ClientSecrets =
                     {
-                        "https://localhost:44382/signin-oidc"
+                        new Secret("secret".Sha256())
                     },
+
+                    RedirectUris           = { "https://localhost:44340/signin-oidc" },
+                    PostLogoutRedirectUris = { "https://localhost:44340/signout-callback-oidc" },
+
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
-                    }
+                    },
+                    AllowOfflineAccess = true
                 }
             };
         }

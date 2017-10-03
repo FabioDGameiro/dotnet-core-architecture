@@ -9,10 +9,15 @@ using Project.MvcApp.Models;
 
 namespace Project.MvcApp.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Secure()
         {
             return View();
         }
