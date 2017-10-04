@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0
+
+- Configuração da classe `AccountOptions` para realizar Logout automaticamente, sem a necessidade de clicar no link para redirecionar de volta para a aplicação cliente.
+
 ## 0.3.0
 
 - Integração dos Clientes `MVC` e `JavaScript` com a API de Recursos (protegida). 
