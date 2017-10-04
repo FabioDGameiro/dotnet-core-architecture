@@ -4,6 +4,10 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using IdentityModel.Client;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System;
+using System.Security.Claims;
 
 namespace MvcClient.Controllers
 {
@@ -22,7 +26,6 @@ namespace MvcClient.Controllers
             return Challenge(props, "oidc");
         }
 
-
         [Authorize]
         public IActionResult Secure()
         {
@@ -32,7 +35,7 @@ namespace MvcClient.Controllers
         [Authorize]
         public async Task<IActionResult> GetApiClaims()
         {
-            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
             var client = new HttpClient();
             client.SetBearerToken(accessToken);
@@ -40,6 +43,24 @@ namespace MvcClient.Controllers
 
             ViewBag.Json = JArray.Parse(content).ToString();
             return View();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var discoverClient = new DiscoveryClient("https://localhost:44373/");
+            var metaDataResponse = await discoverClient.GetAsync();
+
+            var userInfoClient = new UserInfoClient(metaDataResponse.UserInfoEndpoint);
+
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            var response = await userInfoClient.GetAsync(accessToken);
+
+            if (response.IsError)
+                throw new Exception("Problem accessing the UserInfo endpoint", response.Exception);
+            
+            return View(response.Claims);
         }
 
         public IActionResult Denied(string returnUrl = null)
