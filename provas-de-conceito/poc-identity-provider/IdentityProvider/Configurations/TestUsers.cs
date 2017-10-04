@@ -7,7 +7,7 @@ using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Test;
 
-namespace Project.IdentityProvider.Api.Configurations
+namespace IdentityProvider.Configurations
 {
     public class TestUsers
     {

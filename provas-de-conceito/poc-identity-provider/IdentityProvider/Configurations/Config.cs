@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentityServer4.Models;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using System.Collections.Generic;
 using IdentityServer4;
+using IdentityServer4.Models;
 
-namespace Project.IdentityProvider.Api.Configurations
+namespace IdentityProvider.Configurations
 {
     public static class Config
     {

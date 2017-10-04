@@ -10,7 +10,7 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Project.IdentityProvider.Api.Quickstart.Grants
+namespace IdentityProvider.Controllers.Grants
 {
     /// <summary>
     /// This sample controller allows a user to revoke grants given to clients

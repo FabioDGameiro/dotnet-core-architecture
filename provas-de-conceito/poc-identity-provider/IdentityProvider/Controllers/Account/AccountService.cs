@@ -11,7 +11,7 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
-namespace Project.IdentityProvider.Api.Quickstart.Account
+namespace IdentityProvider.Controllers.Account
 {
     public class AccountService
     {

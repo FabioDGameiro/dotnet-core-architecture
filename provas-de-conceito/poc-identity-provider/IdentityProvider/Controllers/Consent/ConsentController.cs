@@ -8,7 +8,7 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Project.IdentityProvider.Api.Quickstart.Consent
+namespace IdentityProvider.Controllers.Consent
 {
     /// <summary>
     /// This controller processes the consent UI

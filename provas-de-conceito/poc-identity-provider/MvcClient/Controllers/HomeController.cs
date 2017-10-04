@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Project.MvcApp.Models;
+using MvcClient.Models;
 
-namespace Project.MvcApp.Controllers
+namespace MvcClient.Controllers
 {
     public class HomeController : Controller
     {

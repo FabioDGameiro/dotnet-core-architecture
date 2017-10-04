@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Project.IdentityProvider.Api.Quickstart.Consent
+namespace IdentityProvider.Controllers.Consent
 {
     public class ConsentViewModel : ConsentInputModel
     {

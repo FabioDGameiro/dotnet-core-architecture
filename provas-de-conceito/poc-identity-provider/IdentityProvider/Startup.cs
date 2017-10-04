@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using IdentityProvider.Configurations;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Project.IdentityProvider.Api.Configurations;
 
-namespace Project.IdentityProvider.Api
+namespace IdentityProvider
 {
     public class Startup
     {

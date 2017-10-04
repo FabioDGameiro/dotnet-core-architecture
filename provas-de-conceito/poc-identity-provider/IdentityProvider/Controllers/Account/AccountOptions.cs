@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Project.IdentityProvider.Api.Quickstart.Account
+namespace IdentityProvider.Controllers.Account
 {
     public class AccountOptions
     {

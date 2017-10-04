@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project.IdentityProvider.Api.Quickstart.Grants
+namespace IdentityProvider.Controllers.Grants
 {
     public class GrantsViewModel
     {
