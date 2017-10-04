@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +46,28 @@ namespace MvcClient
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("api1");
+
+                    options.Events = new OpenIdConnectEvents
+                    {
+                        // Evento que ocorre após o token ser validado
+                        OnTokenValidated = context =>
+                        {
+                            //var identity = context.Principal.Identity as ClaimsIdentity;
+                            //var subjectClaim = identity?.Claims.FirstOrDefault(c => c.Type == "sub");
+
+                            //var newClaimsIdentity = new ClaimsIdentity(context.Scheme.DisplayName, "given_name", "role");
+                            //newClaimsIdentity.AddClaim(subjectClaim);
+
+                            //context.Principal = new ClaimsPrincipal(newClaimsIdentity);
+                            //context.Success();
+
+                            return Task.FromResult(0);
+                        },
+                        OnTokenResponseReceived = tokenResponseReceivedContext =>
+                        {
+                            return Task.FromResult(0);
+                        }
+                    };
                 });
         }
 
@@ -55,6 +82,8 @@ namespace MvcClient
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             app.UseStaticFiles();
             app.UseAuthentication();
