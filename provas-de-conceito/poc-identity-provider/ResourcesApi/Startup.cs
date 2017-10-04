@@ -38,7 +38,7 @@ namespace Project.Resources.Api
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.Authority = "https://localhost:44373";
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = true;
                     options.ApiName = "api1";
                     options.ApiSecret = "secret";
                 });
