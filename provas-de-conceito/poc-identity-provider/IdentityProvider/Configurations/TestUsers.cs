@@ -26,7 +26,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "tiago@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://tiago.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Rua Antonieta de Morais, 639', 'locality': 'Vila Matilde', 'postal_code': 03517000, 'country': 'Brasil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                    new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289 - SP")
                 }
             },
 
@@ -43,7 +43,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "mercia@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://mercia.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Felici Pepe,563', 'locality': 'Grajau', 'postal_code': 01252000, 'country': 'Brasil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+                    new Claim(JwtClaimTypes.Address, "Rua Maresias, 49 - SP")
                 }
             },
 
@@ -60,7 +60,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "iran@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://iran.com"),
-                    new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Rua Das Cachoeiras,685', 'locality': 'Tatuape', 'postal_code': 02452060, 'country': 'Brasil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+                    new Claim(JwtClaimTypes.Address, "Av Carrão, 8549 - SP")
                 }
             }
         };

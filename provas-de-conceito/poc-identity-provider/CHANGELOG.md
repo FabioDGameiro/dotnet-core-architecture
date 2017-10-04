@@ -3,6 +3,7 @@
 ## 0.3.0
 
 - Integração dos Clientes `MVC` e `JavaScript` com a API de Recursos (protegida). 
+- Adição do scope "address", assim o cliente `MVC` pode ler o endereço das Claims do Usuário logado.
 
 ## 0.2.0
 

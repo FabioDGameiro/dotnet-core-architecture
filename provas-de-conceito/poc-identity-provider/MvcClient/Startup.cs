@@ -46,6 +46,7 @@ namespace MvcClient
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("api1");
+                    options.Scope.Add("address");
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -63,7 +64,7 @@ namespace MvcClient
 
                             return Task.FromResult(0);
                         },
-                        OnTokenResponseReceived = tokenResponseReceivedContext =>
+                        OnUserInformationReceived = context =>
                         {
                             return Task.FromResult(0);
                         }
