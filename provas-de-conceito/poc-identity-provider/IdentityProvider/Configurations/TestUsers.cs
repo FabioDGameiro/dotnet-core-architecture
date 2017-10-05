@@ -27,8 +27,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "tiago@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://tiago.com"),
-                    new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289 - SP"),
-                    new Claim(JwtClaimTypes.Role, "FreeUser")
+                    new Claim("address", "Antonieta de Morais, 289 - SP"),
+                    new Claim("role", "FreeUser")
                 }
             },
 
@@ -46,8 +46,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "mercia@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://mercia.com"),
-                    new Claim(JwtClaimTypes.Address, "Rua Maresias, 49 - SP"),
-                    new Claim(JwtClaimTypes.Role, "Subscriber")
+                    new Claim("address", "Rua Maresias, 49 - SP"),
+                    new Claim("role", "Subscriber")
                 }
             },
 
@@ -65,8 +65,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "iran@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://iran.com"),
-                    new Claim(JwtClaimTypes.Address, "Av Carrão, 8549 - SP"),
-                    new Claim(JwtClaimTypes.Role, "Admin")
+                    new Claim("address", "Av Carrão, 8549 - SP"),
+                    new Claim("role", "Admin")
                 }
             }
         };

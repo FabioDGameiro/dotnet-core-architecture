@@ -47,12 +47,13 @@ namespace MvcClient
                     options.SaveTokens = true;
                     options.GetClaimsFromUserInfoEndpoint = true;
 
-                    options.Scope.Clear
+                    options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("api1");
                     options.Scope.Add("address");
                     options.Scope.Add("roles");
+                    options.Scope.Add("email");
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -67,6 +68,13 @@ namespace MvcClient
 
                             context.Principal = new ClaimsPrincipal(newClaimsIdentity);
 
+                            return Task.FromResult(0);
+                        },
+
+                        OnUserInformationReceived = context =>
+                        {
+                            
+                            //userInformationReceivedContext.User.Remove("address");
                             return Task.FromResult(0);
                         }
                     };

@@ -14,6 +14,7 @@ namespace IdentityProvider.Configurations
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Address(),
+                new IdentityResources.Email(),
                 new IdentityResource("roles", "Yours Role(s)", new List<string>{ "role" })
             };
         }
@@ -44,6 +45,8 @@ namespace IdentityProvider.Configurations
                     AllowedScopes = { "api1" }
                 },
 
+                // Mvc Client
+
                 new Client
                 {
                     ClientId = "taskmvc",
@@ -63,6 +66,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Email,
                         "api1",
                         "roles"
                     },
@@ -86,6 +90,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
+                        IdentityServerConstants.StandardScopes.Email,
                         "api1",
                         "roles"
                     }
