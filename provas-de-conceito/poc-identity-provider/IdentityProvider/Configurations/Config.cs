@@ -13,9 +13,7 @@ namespace IdentityProvider.Configurations
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Address(),
-                new IdentityResources.Email(),
-                new IdentityResource("roles", "Yours Role(s)", new List<string>{ "role" })
+                new IdentityResources.Email()
             };
         }
 
@@ -65,10 +63,8 @@ namespace IdentityProvider.Configurations
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Address,
                         IdentityServerConstants.StandardScopes.Email,
-                        "api1",
-                        "roles"
+                        "api1"
                     },
                 },
 
@@ -89,10 +85,8 @@ namespace IdentityProvider.Configurations
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Address,
                         IdentityServerConstants.StandardScopes.Email,
-                        "api1",
-                        "roles"
+                        "api1"
                     }
                 }
             };
