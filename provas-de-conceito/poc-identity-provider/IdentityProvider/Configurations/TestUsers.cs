@@ -18,6 +18,7 @@ namespace IdentityProvider.Configurations
                 SubjectId = "b07761f1-2a3e-42d8-9051-707ce2c98dbc",
                 Username = "tiago",
                 Password = "tiago", 
+
                 Claims = 
                 {
                     new Claim(JwtClaimTypes.Name, "Tiago Santos"),
@@ -26,7 +27,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "tiago@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://tiago.com"),
-                    new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289 - SP")
+                    new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289 - SP"),
+                    new Claim(JwtClaimTypes.Role, "FreeUser")
                 }
             },
 
@@ -35,6 +37,7 @@ namespace IdentityProvider.Configurations
                 SubjectId = "aab263d7-b2ac-43d5-bbc2-fc812ce658d3",
                 Username = "mercia",
                 Password = "mercia", 
+
                 Claims = 
                 {
                     new Claim(JwtClaimTypes.Name, "Mercia Mello"),
@@ -43,7 +46,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "mercia@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://mercia.com"),
-                    new Claim(JwtClaimTypes.Address, "Rua Maresias, 49 - SP")
+                    new Claim(JwtClaimTypes.Address, "Rua Maresias, 49 - SP"),
+                    new Claim(JwtClaimTypes.Role, "Subscriber")
                 }
             },
 
@@ -52,6 +56,7 @@ namespace IdentityProvider.Configurations
                 SubjectId = "56639436-0465-471f-ba19-54259a399cd5",
                 Username = "iran",
                 Password = "iran",
+
                 Claims =
                 {
                     new Claim(JwtClaimTypes.Name, "Iran Nunes"),
@@ -60,7 +65,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "iran@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://iran.com"),
-                    new Claim(JwtClaimTypes.Address, "Av Carrão, 8549 - SP")
+                    new Claim(JwtClaimTypes.Address, "Av Carrão, 8549 - SP"),
+                    new Claim(JwtClaimTypes.Role, "Admin")
                 }
             }
         };

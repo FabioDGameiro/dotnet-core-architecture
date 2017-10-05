@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
+using IdentityModel;
 
 namespace IdentityProvider.Configurations
 {
@@ -12,7 +13,8 @@ namespace IdentityProvider.Configurations
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Address()
+                new IdentityResources.Address(),
+                new IdentityResource("roles", "Yours Role(s)", new List<string>{ "role" })
             };
         }
 
@@ -42,8 +44,6 @@ namespace IdentityProvider.Configurations
                     AllowedScopes = { "api1" }
                 },
 
-                // MVC Client
-
                 new Client
                 {
                     ClientId = "taskmvc",
@@ -63,9 +63,9 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Address,
-                        "api1"
+                        "api1",
+                        "roles"
                     },
-                    AllowOfflineAccess = true
                 },
 
                 // JavaScript Client
@@ -85,7 +85,9 @@ namespace IdentityProvider.Configurations
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        IdentityServerConstants.StandardScopes.Address,
+                        "api1",
+                        "roles"
                     }
                 }
             };
