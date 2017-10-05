@@ -52,6 +52,8 @@ namespace MvcClient
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
                     options.Scope.Add("api1");
+                    options.Scope.Add("address");
+                    options.Scope.Add("website");
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -71,10 +73,17 @@ namespace MvcClient
 
                         OnUserInformationReceived = context =>
                         {
+                            // ADICIONANDO TODAS AS CLAIMS DO USUARIO 
                             
-                            //userInformationReceivedContext.User.Remove("address");
+                            //var newClaimsIdentity = new ClaimsIdentity(context.Scheme.Name, "given_name", "role");
+                            //foreach (var item in context.User)
+                            //    newClaimsIdentity.AddClaim(new Claim(item.Key, item.Value.ToString()));
+
+                            //context.Principal = new ClaimsPrincipal(newClaimsIdentity);
+
                             return Task.FromResult(0);
                         }
+
                     };
                 });
         }

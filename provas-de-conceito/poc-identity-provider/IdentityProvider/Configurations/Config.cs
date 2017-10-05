@@ -13,7 +13,9 @@ namespace IdentityProvider.Configurations
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResources.Email()
+                new IdentityResources.Email(),
+                new IdentityResources.Address(),
+                new IdentityResource("website","Your website", new[] { "website" })
             };
         }
 
@@ -64,6 +66,8 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "website",
                         "api1"
                     },
                 },
@@ -86,6 +90,8 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "website",
                         "api1"
                     }
                 }

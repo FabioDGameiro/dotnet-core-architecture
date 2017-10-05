@@ -27,7 +27,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "tiago@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://tiago.com"),
-                    new Claim("address", "Antonieta de Morais, 289"),
+                    new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289"),
                     new Claim("role", "FreeUser")
                 }
             },
@@ -46,7 +46,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "mercia@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://mercia.com"),
-                    new Claim("address", "Rua Maresias, 49"),
+                    new Claim(JwtClaimTypes.Address, "Rua Maresias, 49"),
                     new Claim("role", "Subscriber")
                 }
             },
@@ -65,7 +65,7 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.Email, "iran@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://iran.com"),
-                    new Claim("address", "Av Carrão, 8549"),
+                    new Claim(JwtClaimTypes.Address, "Av Carrão, 8549"),
                     new Claim("role", "Admin")
                 }
             }
