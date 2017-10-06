@@ -7,6 +7,8 @@
 ## 0.3.0
 
 - Integração dos Clientes `MVC` e `JavaScript` com a API de Recursos (protegida). 
+- Adição do scope "address", assim o cliente `MVC` pode ler o endereço das Claims do Usuário logado.
+- Adição da seção `GetUserInfo` no cliente `MVC` para realizar a chamada manual do endpoint `GetUserInfo` e retornar todas as clains do usuário logado para a página.
 
 ## 0.2.0
 

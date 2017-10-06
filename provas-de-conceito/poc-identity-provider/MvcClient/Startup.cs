@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
 
 namespace MvcClient
 {
@@ -22,6 +23,10 @@ namespace MvcClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication("Cookies")
                 .AddCookie("Cookies", options =>
@@ -45,28 +50,40 @@ namespace MvcClient
                     options.Scope.Clear();
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
+                    options.Scope.Add("email");
                     options.Scope.Add("api1");
+                    options.Scope.Add("address");
+                    options.Scope.Add("website");
 
                     options.Events = new OpenIdConnectEvents
                     {
                         // Evento que ocorre após o token ser validado
                         OnTokenValidated = context =>
                         {
-                            //var identity = context.Principal.Identity as ClaimsIdentity;
-                            //var subjectClaim = identity?.Claims.FirstOrDefault(c => c.Type == "sub");
+                            var identity = context.Principal.Identity as ClaimsIdentity;
+                            var subjectClaim = identity?.Claims.FirstOrDefault(c => c.Type == "sub");
 
-                            //var newClaimsIdentity = new ClaimsIdentity(context.Scheme.DisplayName, "given_name", "role");
-                            //newClaimsIdentity.AddClaim(subjectClaim);
+                            var newClaimsIdentity = new ClaimsIdentity(context.Scheme.Name, "given_name", "role");
+                            newClaimsIdentity.AddClaim(subjectClaim);
 
-                            //context.Principal = new ClaimsPrincipal(newClaimsIdentity);
-                            //context.Success();
+                            context.Principal = new ClaimsPrincipal(newClaimsIdentity);
 
                             return Task.FromResult(0);
                         },
-                        OnTokenResponseReceived = tokenResponseReceivedContext =>
+
+                        OnUserInformationReceived = context =>
                         {
+                            // ADICIONANDO TODAS AS CLAIMS DO USUARIO 
+                            
+                            //var newClaimsIdentity = new ClaimsIdentity(context.Scheme.Name, "given_name", "role");
+                            //foreach (var item in context.User)
+                            //    newClaimsIdentity.AddClaim(new Claim(item.Key, item.Value.ToString()));
+
+                            //context.Principal = new ClaimsPrincipal(newClaimsIdentity);
+
                             return Task.FromResult(0);
                         }
+
                     };
                 });
         }
@@ -83,7 +100,6 @@ namespace MvcClient
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             app.UseStaticFiles();
             app.UseAuthentication();

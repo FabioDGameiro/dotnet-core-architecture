@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
+using IdentityModel;
 
 namespace IdentityProvider.Configurations
 {
@@ -11,7 +12,10 @@ namespace IdentityProvider.Configurations
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email(),
+                new IdentityResources.Address(),
+                new IdentityResource("website","Your website", new[] { "website" })
             };
         }
 
@@ -41,7 +45,7 @@ namespace IdentityProvider.Configurations
                     AllowedScopes = { "api1" }
                 },
 
-                // MVC Client
+                // Mvc Client
 
                 new Client
                 {
@@ -61,9 +65,11 @@ namespace IdentityProvider.Configurations
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "website",
                         "api1"
                     },
-                    AllowOfflineAccess = true
                 },
 
                 // JavaScript Client
@@ -83,6 +89,9 @@ namespace IdentityProvider.Configurations
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "website",
                         "api1"
                     }
                 }
