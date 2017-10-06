@@ -15,7 +15,8 @@ namespace IdentityProvider.Configurations
                 new IdentityResources.Profile(),
                 new IdentityResources.Email(),
                 new IdentityResources.Address(),
-                new IdentityResource("website","Your website", new[] { "website" })
+                new IdentityResource("roles", "Your Roles", new[] { "role" }),
+                new IdentityResource("website", "Your website", new[] { "website" })
             };
         }
 
@@ -67,6 +68,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.Address,
+                        "roles",
                         "website",
                         "api1"
                     },
@@ -91,6 +93,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.Address,
+                        "roles",
                         "website",
                         "api1"
                     }
