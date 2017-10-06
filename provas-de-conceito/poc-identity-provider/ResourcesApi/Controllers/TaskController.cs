@@ -18,5 +18,21 @@ namespace ResourcesApi.Controllers
             var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value);
             return Ok(TaskRepository.List(userId));
         }
+
+        [HttpPost("finish/{id:guid}")]
+        public IActionResult Put(Guid id)
+        {
+            var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value);
+
+            if (!TaskRepository.IsOwnerOfTask(id, userId))
+                return Forbid();
+
+            var updatedTask = TaskRepository.GetById(id);
+            updatedTask.IsFinished = true;
+
+            TaskRepository.Update(updatedTask);
+
+            return Ok();
+        }
     }
 }

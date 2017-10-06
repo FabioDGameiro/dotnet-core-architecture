@@ -62,5 +62,10 @@ namespace ResourcesApi.Domain
         {
             return _taskList.Where(x => x.UserId == userId);
         }
+
+        public bool IsOwnerOfTask(Guid id, Guid userId)
+        {
+            return _taskList.Any(x => x.Id == id && x.UserId == userId);
+        }
     }
 }
