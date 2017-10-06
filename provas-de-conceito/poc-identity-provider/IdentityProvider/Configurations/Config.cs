@@ -24,7 +24,13 @@ namespace IdentityProvider.Configurations
         {
             return new List<ApiResource>
             {
-                new ApiResource("resourcesapi", "Resources API")
+                new ApiResource(
+                    "resourcesapi",
+                    "Resources API",
+                    new List<string>
+                    {
+                        "role"
+                    })
             };
         }
 

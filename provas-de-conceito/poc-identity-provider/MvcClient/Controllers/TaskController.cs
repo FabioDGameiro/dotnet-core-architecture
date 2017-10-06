@@ -40,6 +40,7 @@ namespace MvcClient.Controllers
             throw new Exception($"Problema ao acessar a API: {response.ReasonPhrase}");
         }
 
+        [Authorize(Roles = "Subscriber")]
         public async Task<IActionResult> Finish(Guid id)
         {
             var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
