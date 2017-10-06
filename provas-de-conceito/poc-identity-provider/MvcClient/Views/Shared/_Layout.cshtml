@@ -34,6 +34,7 @@
                <li><a asp-area="" asp-controller="Account" asp-action="Secure">Secure</a></li>
                <li><a asp-area="" asp-controller="Account" asp-action="GetApiClaims">Get Claims (API)</a></li>
                <li><a asp-area="" asp-controller="Account" asp-action="GetUserInfo">Get User Info (IDP)</a></li>
+               <li><a asp-area="" asp-controller="Task" asp-action="MyTasks">My Tasks</a></li>
                
                @if (User.IsInRole("Subscriber") || User.IsInRole("Admin"))
                {

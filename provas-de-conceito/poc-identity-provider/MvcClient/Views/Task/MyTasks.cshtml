@@ -1,0 +1,18 @@
+﻿@model System.Collections.Generic.List<MvcClient.Models.TaskViewModel>
+
+@{
+    ViewData["Title"] = "My Tasks";
+}
+
+<h2>My Tasks</h2>
+
+<dl>
+    @foreach (var task in Model)
+    {
+        <dt>Description</dt>
+        <dd>@task.Description</dd>
+
+        <dt>Finished?</dt>
+        <dd>@task.IsFinished</dd>
+    }
+</dl>
