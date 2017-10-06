@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using IdentityModel.Client;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
+using System.Net;
 using System.Security.Claims;
 
 namespace MvcClient.Controllers
@@ -39,10 +40,22 @@ namespace MvcClient.Controllers
 
             var client = new HttpClient();
             client.SetBearerToken(accessToken);
-            var content = await client.GetStringAsync("http://localhost:3000/identity");
+            var response = await client.GetAsync("http://localhost:3000/identity").ConfigureAwait(false);
 
-            ViewBag.Json = JArray.Parse(content).ToString();
-            return View();
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                ViewBag.Json = JArray.Parse(content).ToString();
+                return View();
+            }
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                return RedirectToAction("Denied");
+            }
+
+            throw new Exception($"Problema ao acessar a API: {response.ReasonPhrase}");
         }
 
         [Authorize]
@@ -59,7 +72,7 @@ namespace MvcClient.Controllers
 
             if (response.IsError)
                 throw new Exception("Problem accessing the UserInfo endpoint", response.Exception);
-            
+
             return View(response.Claims);
         }
 

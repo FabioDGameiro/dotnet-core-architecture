@@ -24,7 +24,7 @@ namespace IdentityProvider.Configurations
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "Resources API")
+                new ApiResource("resourcesapi", "Resources API")
             };
         }
 
@@ -43,7 +43,7 @@ namespace IdentityProvider.Configurations
                     {
                         new Secret("secret".Sha256())
                     },
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "resourcesapi" }
                 },
 
                 // Mvc Client
@@ -70,7 +70,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
                         "website",
-                        "api1"
+                        "resourcesapi"
                     },
                 },
 
@@ -95,7 +95,7 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
                         "website",
-                        "api1"
+                        "resourcesapi"
                     }
                 }
             };

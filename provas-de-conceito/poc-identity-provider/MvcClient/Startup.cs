@@ -51,7 +51,7 @@ namespace MvcClient
                     options.Scope.Add("openid");
                     options.Scope.Add("profile");
                     options.Scope.Add("email");
-                    options.Scope.Add("api1");
+                    options.Scope.Add("resourcesapi");
                     options.Scope.Add("address");
                     options.Scope.Add("website");
                     options.Scope.Add("roles");

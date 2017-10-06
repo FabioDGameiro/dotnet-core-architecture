@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0
+
+- **Mvc Client** Redireciona para a tela de Acesso Negado quando o acesso à alguma página ou a alguma API não for concedido.
+
 ## 0.4.0
 
 - Configuração da classe `AccountOptions` para realizar Logout automaticamente, sem a necessidade de clicar no link para redirecionar de volta para a aplicação cliente.

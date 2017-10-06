@@ -32,7 +32,7 @@ namespace ResourcesApi
                 {
                     options.Authority = "https://localhost:44373";
                     options.RequireHttpsMetadata = true;
-                    options.ApiName = "api1";
+                    options.ApiName = "resourcesapi";
                     options.ApiSecret = "secret";
                 });
 
