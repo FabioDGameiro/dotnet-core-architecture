@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using MvcClient.Services;
 
 namespace MvcClient
 {
@@ -59,6 +60,7 @@ namespace MvcClient
                     options.Scope.Add("roles");
                     options.Scope.Add("subscriptionlevel");
                     options.Scope.Add("country");
+                    options.Scope.Add("offline_access");
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -105,6 +107,13 @@ namespace MvcClient
                     });
 
             });
+
+            // register an IHttpContextAccessor so we can access the current
+            // HttpContext in services by injecting it
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // register an IResourcesHttpClient
+            services.AddScoped<IResourcesHttpClient, ResourcesHttpClient>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

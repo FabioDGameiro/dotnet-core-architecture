@@ -11,18 +11,23 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using MvcClient.Services;
 
 namespace MvcClient.Controllers
 {
     [Authorize]
     public class TaskController : Controller
     {
+        private readonly IResourcesHttpClient _resourcesHttpClient;
+
+        public TaskController(IResourcesHttpClient resourcesHttpClient)
+        {
+            _resourcesHttpClient = resourcesHttpClient;
+        }
+
         public async Task<IActionResult> MyTasks()
         {
-            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-
-            var client = new HttpClient();
-            client.SetBearerToken(accessToken);
+            var client = await _resourcesHttpClient.GetClient();
             var response = await client.GetAsync("http://localhost:3000/tasks").ConfigureAwait(false);
 
             if (response.IsSuccessStatusCode)

@@ -5,6 +5,7 @@
 - **Mvc Client** Redireciona para a tela de Acesso Negado quando o acesso à alguma página ou a alguma API não for concedido.
 - Restringidos alguns métodos da API para algumas roles apenas.
 - Atualização das autorizações baseadas em roles, substituição das **roles** por **policies**.
+- Adição das configurações de **offline_access** para que a aplicação possa renovar os tokens de acesso através de um **refresh token** toda as vezes que o token de acesso expirar.
 
 ## 0.4.0
 

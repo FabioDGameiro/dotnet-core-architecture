@@ -62,6 +62,13 @@ namespace IdentityProvider.Configurations
                     ClientName = "MVC Task App",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
+                    // IdentityTokenLifetime = 300, // 5 minutes
+                    // AuthorizationCodeLifetime = 300 // 5 minutes
+                    AccessTokenLifetime = 120, // 2 minutes
+
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    AllowOfflineAccess = true,
+
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
