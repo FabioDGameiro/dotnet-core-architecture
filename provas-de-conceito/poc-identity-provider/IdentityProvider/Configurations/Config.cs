@@ -16,7 +16,9 @@ namespace IdentityProvider.Configurations
                 new IdentityResources.Email(),
                 new IdentityResources.Address(),
                 new IdentityResource("roles", "Your Roles", new[] { "role" }),
-                new IdentityResource("website", "Your website", new[] { "website" })
+                new IdentityResource("website", "Your website", new[] { "website" }),
+                new IdentityResource("country", "Your Country", new[] { "country" }),
+                new IdentityResource("subscriptionlevel", "Your Subscription Level", new[] { "subscriptionlevel" }),
             };
         }
 
@@ -76,7 +78,9 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
                         "website",
-                        "resourcesapi"
+                        "resourcesapi",
+                        "subscriptionlevel",
+                        "country"
                     },
                 },
 

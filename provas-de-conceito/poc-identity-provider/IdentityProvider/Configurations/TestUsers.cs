@@ -28,6 +28,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://tiago.com"),
                     new Claim(JwtClaimTypes.Address, "Antonieta de Morais, 289"),
+                    new Claim("country", "Brasil"),
+                    new Claim("subscriptionlevel", "FreeUser"),
                     new Claim("role", "FreeUser")
                 }
             },
@@ -47,6 +49,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://mercia.com"),
                     new Claim(JwtClaimTypes.Address, "Rua Maresias, 49"),
+                    new Claim("country", "Brasil"),
+                    new Claim("subscriptionlevel", "Subscriber"),
                     new Claim("role", "Subscriber")
                 }
             },
@@ -66,7 +70,8 @@ namespace IdentityProvider.Configurations
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://iran.com"),
                     new Claim(JwtClaimTypes.Address, "Av Carrão, 8549"),
-                    new Claim("role", "Admin")
+                    new Claim("country", "Japao"),
+                    new Claim("role", "Subscriber")
                 }
             }
         };

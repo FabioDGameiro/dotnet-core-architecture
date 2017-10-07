@@ -9,7 +9,7 @@ namespace MvcClient.Controllers
 {
     public class PayAreaController : Controller
     {
-        [Authorize(Roles = "Subscriber, Admin")]
+        [Authorize(Policy = "CanAccessPayArea")]
         public IActionResult Index()
         {
             return View();

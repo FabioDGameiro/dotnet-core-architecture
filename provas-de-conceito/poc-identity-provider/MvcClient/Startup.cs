@@ -29,11 +29,13 @@ namespace MvcClient
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication("Cookies")
+                
                 .AddCookie("Cookies", options =>
                 {
                     options.LoginPath = "/account/login";
                     options.AccessDeniedPath = "/account/denied";
                 })
+                
                 .AddOpenIdConnect("oidc", options =>
                 {
                     options.SignInScheme = "Cookies";
@@ -55,6 +57,8 @@ namespace MvcClient
                     options.Scope.Add("address");
                     options.Scope.Add("website");
                     options.Scope.Add("roles");
+                    options.Scope.Add("subscriptionlevel");
+                    options.Scope.Add("country");
 
                     options.Events = new OpenIdConnectEvents
                     {
@@ -87,6 +91,20 @@ namespace MvcClient
 
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+                // Exemplo de uma policy simples
+
+                options.AddPolicy(
+                    "CanAccessPayArea",
+                    builder =>
+                    {
+                        builder.RequireAuthenticatedUser();
+                        builder.RequireClaim("subscriptionlevel", "Subscriber");
+                    });
+
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

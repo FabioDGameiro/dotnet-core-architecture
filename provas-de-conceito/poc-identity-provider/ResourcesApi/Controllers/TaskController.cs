@@ -20,12 +20,15 @@ namespace ResourcesApi.Controllers
         }
 
         [HttpPost("finish/{id:guid}")]
+        [Authorize("MustBeOwnerOfTask")]
         public IActionResult Put(Guid id)
         {
-            var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value);
+            // O código abaixo não é mais necessário pois está implementado na Policy "MustBeOwnerOfTask"
 
-            if (!TaskRepository.IsOwnerOfTask(id, userId))
-                return Forbid();
+            //var userId = Guid.Parse(User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value);
+
+            //if (!TaskRepository.IsOwnerOfTask(id, userId))
+            //    return Forbid();
 
             var updatedTask = TaskRepository.GetById(id);
             updatedTask.IsFinished = true;

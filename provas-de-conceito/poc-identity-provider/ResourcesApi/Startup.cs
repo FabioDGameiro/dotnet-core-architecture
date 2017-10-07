@@ -1,8 +1,10 @@
 ﻿using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ResourcesApi.Authorization;
 
 namespace ResourcesApi
 {
@@ -35,6 +37,19 @@ namespace ResourcesApi
                     options.ApiName = "resourcesapi";
                     options.ApiSecret = "secret";
                 });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "MustBeOwnerOfTask",
+                    builder =>
+                    {
+                        builder.RequireAuthenticatedUser();
+                        builder.AddRequirements(new MustBeOwnerOfTask());
+                    });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, MustBeOwnerOfTaskHandler>();
 
             services.AddMvcCore()
                 .AddAuthorization()

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ResourcesApi.Domain
 {
-    public class Task
+    public class TaskEntity
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
