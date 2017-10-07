@@ -46,7 +46,7 @@ namespace IdentityProvider.Controllers.Account
             IUserRepository userRepository)
         {
             // if the TestUserStore is not in DI, then we'll just use the global users collection
-            //_users = users ?? new TestUserStore(TestUsers.Users);
+            //_users = new TestUserStore(TestUsers.Users);
             _interaction = interaction;
             _events = events;
             _userRepository = userRepository;

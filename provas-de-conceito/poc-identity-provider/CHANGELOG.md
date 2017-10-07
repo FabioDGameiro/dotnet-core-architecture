@@ -4,6 +4,7 @@
 
 - Adição das entidades, contexto e repositórios no projeto `IdentityProvider` para trabalhar com usuários no banco de dados.
 - Substituição da configuração `AddTestUsers(...)` para `AddUserStore()` para utilizar os usuários cadastrados no banco de dados
+- Adição da funcionalidade **Registrar Usuário**. Sendo assim o Provider permite registrar novos usuários.
 
 ## 0.6.0
 
