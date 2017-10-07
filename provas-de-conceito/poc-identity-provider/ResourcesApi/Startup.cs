@@ -35,7 +35,7 @@ namespace ResourcesApi
                     options.Authority = "https://localhost:44373";
                     options.RequireHttpsMetadata = true;
                     options.ApiName = "resourcesapi";
-                    options.ApiSecret = "secret";
+                    options.ApiSecret = "resourcesapisecret";
                 });
 
             services.AddAuthorization(options =>

@@ -42,7 +42,6 @@ namespace MvcClient.Services
                 accessToken = await currentContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
             }
 
-
             if (!string.IsNullOrWhiteSpace(accessToken))
             {
                 _httpClient.SetBearerToken(accessToken);

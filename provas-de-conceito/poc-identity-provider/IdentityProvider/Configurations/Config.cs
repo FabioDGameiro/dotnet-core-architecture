@@ -33,6 +33,9 @@ namespace IdentityProvider.Configurations
                     {
                         "role"
                     })
+                {
+                    ApiSecrets = { new Secret("resourcesapisecret".Sha256()) }
+                }
             };
         }
 
@@ -62,8 +65,7 @@ namespace IdentityProvider.Configurations
                     ClientName = "MVC Task App",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
-                    // IdentityTokenLifetime = 300, // 5 minutes
-                    // AuthorizationCodeLifetime = 300 // 5 minutes
+                    AccessTokenType = AccessTokenType.Reference,
                     AccessTokenLifetime = 120, // 2 minutes
 
                     UpdateAccessTokenClaimsOnRefresh = true,
