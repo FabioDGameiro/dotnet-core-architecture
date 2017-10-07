@@ -57,6 +57,20 @@ namespace IdentityProvider.Controllers.Account
                     AuthenticationScheme = x.Name
                 }).ToList();
 
+            if (AccountOptions.WindowsAuthenticationEnabled)
+            {
+                // this is needed to handle windows auth schemes
+                var windowsSchemes = schemes.Where(s => s.Name == AccountOptions.WindowsAuthenticationSchemeName);
+                if (windowsSchemes.Any())
+                {
+                    providers.Add(new ExternalProvider
+                    {
+                        AuthenticationScheme = AccountOptions.WindowsAuthenticationSchemeName,
+                        DisplayName = AccountOptions.WindowsAuthenticationSchemeName
+                    });
+                }
+            }
+
             var allowLocal = true;
             if (context?.ClientId != null)
             {
