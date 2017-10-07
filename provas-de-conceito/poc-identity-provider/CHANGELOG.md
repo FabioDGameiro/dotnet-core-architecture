@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.7.0
+
+- Adição das entidades, contexto e repositórios no projeto `IdentityProvider` para trabalhar com usuários no banco de dados.
+- Substituição da configuração `AddTestUsers(...)` para `AddUserStore()` para utilizar os usuários cadastrados no banco de dados
+
 ## 0.6.0
 
 - Adição das configurações de **offline_access** para que a aplicação possa renovar os tokens de acesso através de um **refresh token** toda as vezes que o token de acesso expirar.

@@ -23,6 +23,7 @@ namespace IdentityProvider.Database.Context
                     SubjectId = "b07761f1-2a3e-42d8-9051-707ce2c98dbc",
                     Username = "tiago",
                     Password = "tiago",
+                    IsActive = true,
 
                     Claims =
                     {
@@ -44,6 +45,7 @@ namespace IdentityProvider.Database.Context
                     SubjectId = "aab263d7-b2ac-43d5-bbc2-fc812ce658d3",
                     Username = "mercia",
                     Password = "mercia",
+                    IsActive = true,
 
                     Claims =
                     {
@@ -65,6 +67,7 @@ namespace IdentityProvider.Database.Context
                     SubjectId = "56639436-0465-471f-ba19-54259a399cd5",
                     Username = "iran",
                     Password = "iran",
+                    IsActive = true,
 
                     Claims =
                     {
