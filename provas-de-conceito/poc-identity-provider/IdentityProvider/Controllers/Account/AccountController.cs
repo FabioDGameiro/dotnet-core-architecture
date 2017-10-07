@@ -31,7 +31,6 @@ namespace IdentityProvider.Controllers.Account
     [SecurityHeaders]
     public class AccountController : Controller
     {
-        private readonly TestUserStore _users;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEventService _events;
         private readonly IUserRepository _userRepository;
@@ -234,12 +233,15 @@ namespace IdentityProvider.Controllers.Account
             // external provider's authentication result, and provision the user as you see fit.
             // 
             // check if the external user is already provisioned
-            var user = _users.FindByExternalProvider(provider, userId);
+            var user = _userRepository.GetUserByProvider(provider, userId);
             if (user == null)
             {
-                // this sample simply auto-provisions new external user
-                // another common approach is to start a registrations workflow first
-                user = _users.AutoProvisionUser(provider, userId, claims);
+                var returnUrlAfterRegistration = Url.Action("ExternalLoginCallback", new { returnUrl = returnUrl });
+
+                var continueWithUrl = Url.Action("RegisterUser", "UserRegistration",
+                    new { returnUrl = returnUrlAfterRegistration, provider = provider, providerUserId = userId });
+
+                return Redirect(continueWithUrl);
             }
 
             var additionalClaims = new List<Claim>();

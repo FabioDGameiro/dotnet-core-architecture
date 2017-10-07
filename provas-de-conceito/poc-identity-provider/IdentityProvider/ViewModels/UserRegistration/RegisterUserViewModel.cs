@@ -33,6 +33,12 @@ namespace IdentityProvider.ViewModels.UserRegistration
         [MaxLength(50)]
         public string Country { get; set; }
 
+        public string Provider { get; set; }
+
+        public string ProviderUserId { get; set; }
+
+        public bool IsProvisioningFromExternal => Provider != null;
+
         public SelectList CountryCodes { get; set; } =
             new SelectList(
                 new[] {
