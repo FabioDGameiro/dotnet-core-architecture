@@ -64,6 +64,7 @@ namespace IdentityProvider.Configurations
                     ClientId = "taskmvc",
                     ClientName = "MVC Task App",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    RequireConsent = false,
 
                     AccessTokenType = AccessTokenType.Reference,
                     AccessTokenLifetime = 120, // 2 minutes
