@@ -1,11 +1,15 @@
 # CHANGELOG
 
+## 0.6.0
+
+- Adição das configurações de **offline_access** para que a aplicação possa renovar os tokens de acesso através de um **refresh token** toda as vezes que o token de acesso expirar.
+- Substituição do tipo de **Access Token** de *JWT Token* para *Reference Token*, tendo assim, maior controle sobre o tempo de expiração do token e possibilitando também a vantagem de poder revogar um Token.
+
 ## 0.5.0
 
 - **Mvc Client** Redireciona para a tela de Acesso Negado quando o acesso à alguma página ou a alguma API não for concedido.
 - Restringidos alguns métodos da API para algumas roles apenas.
 - Atualização das autorizações baseadas em roles, substituição das **roles** por **policies**.
-- Adição das configurações de **offline_access** para que a aplicação possa renovar os tokens de acesso através de um **refresh token** toda as vezes que o token de acesso expirar.
 
 ## 0.4.0
 
