@@ -236,6 +236,34 @@ namespace IdentityProvider.Controllers.Account
             var user = _userRepository.GetUserByProvider(provider, userId);
             if (user == null)
             {
+                // user wasn't found by provider, but maybe one exists with the same email address?  
+                if (provider == "Facebook")
+                {
+                    // email claim from Facebook
+                    var email = claims.FirstOrDefault(c =>
+                        c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress");
+                    if (email != null)
+                    {
+                        var userByEmail = _userRepository.GetUserByEmail(email.Value);
+                        if (userByEmail != null)
+                        {
+                            // add Facebook as a provider for this user
+                            _userRepository.AddUserLogin(userByEmail.SubjectId, provider, userId);
+
+                            if (!_userRepository.Save())
+                            {
+                                throw new Exception($"Adding a login for a user failed.");
+                            }
+
+                            // redirect to ExternalLoginCallback
+                            var continueWithUrlAfterAddingUserLogin =
+                                Url.Action("ExternalLoginCallback", new { returnUrl = returnUrl });
+
+                            return Redirect(continueWithUrlAfterAddingUserLogin);
+                        }
+                    }
+                }
+
                 var returnUrlAfterRegistration = Url.Action("ExternalLoginCallback", new { returnUrl = returnUrl });
 
                 var continueWithUrl = Url.Action("RegisterUser", "UserRegistration",

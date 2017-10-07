@@ -1,6 +1,7 @@
 ﻿using IdentityProvider.Configurations;
 using IdentityProvider.Database.Context;
 using IdentityProvider.Repositories;
+using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -40,12 +41,22 @@ namespace IdentityProvider
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients());
 
+            // Registando o Provider do Facebook
+
+            services.AddAuthentication()
+                .AddFacebook("Facebook", "Facebook", options =>
+                  {
+                      options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                      options.AppId = "1682895991744536";
+                      options.AppSecret = "0fad88f633e751f99c5016a5cd059390";
+                  });
+
             services.AddMvc();
         }
 
         public void Configure(
-            IApplicationBuilder app, 
-            IHostingEnvironment env, 
+            IApplicationBuilder app,
+            IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             UserContext userContext)
         {
@@ -64,6 +75,7 @@ namespace IdentityProvider
 
             app.UseStaticFiles();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
         }
     }

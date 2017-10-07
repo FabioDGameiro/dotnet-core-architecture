@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.8.0
+
+- Adição do suporte a login externo com através do provider **Windows Authentication**
+- Adição do suporte a login externo com através do provider **Facebook Authentication**
+
 ## 0.7.0
 
 - Adição das entidades, contexto e repositórios no projeto `IdentityProvider` para trabalhar com usuários no banco de dados.
