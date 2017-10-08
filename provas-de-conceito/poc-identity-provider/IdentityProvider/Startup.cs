@@ -2,8 +2,11 @@
 using IdentityProvider.Database.Context;
 using IdentityProvider.Repositories;
 using IdentityServer4;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.OData.Query.SemanticAst;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,12 +47,17 @@ namespace IdentityProvider
             // Registando o Provider do Facebook
 
             services.AddAuthentication()
+                .AddCookie("idsrv.2FA", options =>
+                {
+                    // AutomaticAuthenticate = false,
+                    // AutomaticChallenge = false,
+                })
                 .AddFacebook("Facebook", "Facebook", options =>
-                  {
-                      options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-                      options.AppId = "1682895991744536";
-                      options.AppSecret = "0fad88f633e751f99c5016a5cd059390";
-                  });
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.AppId = "1682895991744536";
+                    options.AppSecret = "0fad88f633e751f99c5016a5cd059390";
+                });
 
             services.AddMvc();
         }

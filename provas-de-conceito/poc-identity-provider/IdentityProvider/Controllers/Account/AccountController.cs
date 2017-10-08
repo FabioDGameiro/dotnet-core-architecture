@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using IdentityModel;
 using IdentityProvider.Configurations;
 using IdentityProvider.Repositories;
+using IdentityProvider.ViewModels.UserRegistration;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
@@ -104,29 +105,53 @@ namespace IdentityProvider.Controllers.Account
                 if (_userRepository.AreUserCredentialsValid(model.Username, model.Password))
                 {
                     var user = _userRepository.GetUserByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
 
-                    // only set explicit expiration here if user chooses "remember me". 
-                    // otherwise we rely upon expiration configured in cookie middleware.
-                    AuthenticationProperties props = null;
-                    if (AccountOptions.AllowRememberLogin && model.RememberLogin)
-                    {
-                        props = new AuthenticationProperties
-                        {
-                            IsPersistent = true,
-                            ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
-                        };
-                    };
-                    // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+                    var id = new ClaimsIdentity();
+                    id.AddClaim(new Claim(JwtClaimTypes.Subject, user.SubjectId));
 
-                    // make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
+                    await HttpContext.SignInAsync("idsrv.2FA", new ClaimsPrincipal(id));
+
+                    // send code...
+
+                    var redirectToAdditionalFactorUrl =
+                        Url.Action("AdditionalAuthenticationFactor",
+                            new
+                            {
+                                returnUrl = model.ReturnUrl,
+                                rememberLogin = model.RememberLogin
+                            });
+
                     if (_interaction.IsValidReturnUrl(model.ReturnUrl) || Url.IsLocalUrl(model.ReturnUrl))
                     {
-                        return Redirect(model.ReturnUrl);
+                        return Redirect(redirectToAdditionalFactorUrl);
                     }
 
                     return Redirect("~/");
+
+                    //var user = _userRepository.GetUserByUsername(model.Username);
+                    //await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
+
+                    //// only set explicit expiration here if user chooses "remember me". 
+                    //// otherwise we rely upon expiration configured in cookie middleware.
+                    //AuthenticationProperties props = null;
+                    //if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+                    //{
+                    //    props = new AuthenticationProperties
+                    //    {
+                    //        IsPersistent = true,
+                    //        ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                    //    };
+                    //};
+                    //// issue authentication cookie with subject ID and username
+                    //await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+
+                    //// make sure the returnUrl is still valid, and if so redirect back to authorize endpoint or a local page
+                    //if (_interaction.IsValidReturnUrl(model.ReturnUrl) || Url.IsLocalUrl(model.ReturnUrl))
+                    //{
+                    //    return Redirect(model.ReturnUrl);
+                    //}
+
+                    //return Redirect("~/");
                 }
 
                 await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
@@ -137,6 +162,74 @@ namespace IdentityProvider.Controllers.Account
             // something went wrong, show form with error
             var vm = await _account.BuildLoginViewModelAsync(model);
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult AdditionalAuthenticationFactor(string returnUrl, bool rememberLogin)
+        {
+            // create VM
+            var vm = new AdditionalAuthenticationFactorViewModel()
+            {
+                RememberLogin = rememberLogin,
+                ReturnUrl = returnUrl
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdditionalAuthenticationFactor(
+            AdditionalAuthenticationFactorViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // read identity from the temporary cookie
+                var info = await HttpContext.AuthenticateAsync("idsrv.2FA");
+                var tempUser = info?.Principal;
+                if (tempUser == null)
+                {
+                    throw new Exception("2FA error");
+                }
+
+                var user = _userRepository.GetUserBySubjectId(tempUser.GetSubjectId());
+
+                // ... check code for user
+                if (model.Code != "123")
+                {
+                    ModelState.AddModelError("code", "2FA code is invalid.");
+                    return View(model);
+                }
+
+                // login the user
+                AuthenticationProperties props = null;
+                if (AccountOptions.AllowRememberLogin && model.RememberLogin)
+                {
+                    props = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                    };
+                };
+
+                // issue authentication cookie for user
+                await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username));
+                await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+
+                // delete temporary cookie used for 2FA
+                await HttpContext.SignOutAsync("idsrv.2FA");
+
+                if (_interaction.IsValidReturnUrl(model.ReturnUrl) || Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    return Redirect(model.ReturnUrl);
+                }
+
+                return Redirect("~/");
+
+            }
+
+            // something went wrong, show an error            
+            return View(model);
         }
 
         /// <summary>
@@ -284,11 +377,11 @@ namespace IdentityProvider.Controllers.Account
 
             // if the external provider issued an id_token, we'll keep it for signout
             AuthenticationProperties props = null;
-            var id_token = result.Properties.GetTokenValue("id_token");
-            if (id_token != null)
+            var idToken = result.Properties.GetTokenValue("id_token");
+            if (idToken != null)
             {
                 props = new AuthenticationProperties();
-                props.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = id_token } });
+                props.StoreTokens(new[] { new AuthenticationToken { Name = "id_token", Value = idToken } });
             }
 
             // issue authentication cookie for user
