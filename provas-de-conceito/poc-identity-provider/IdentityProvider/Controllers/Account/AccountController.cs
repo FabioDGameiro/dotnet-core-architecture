@@ -179,8 +179,7 @@ namespace IdentityProvider.Controllers.Account
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdditionalAuthenticationFactor(
-            AdditionalAuthenticationFactorViewModel model)
+        public async Task<IActionResult> AdditionalAuthenticationFactor(AdditionalAuthenticationFactorViewModel model)
         {
             if (ModelState.IsValid)
             {
