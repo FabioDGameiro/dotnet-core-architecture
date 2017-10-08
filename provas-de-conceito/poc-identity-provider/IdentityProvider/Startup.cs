@@ -44,14 +44,10 @@ namespace IdentityProvider
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients());
 
-            // Registando o Provider do Facebook
+            // Registando o Provider do Facebook e 2FA
 
             services.AddAuthentication()
-                .AddCookie("idsrv.2FA", options =>
-                {
-                    // AutomaticAuthenticate = false,
-                    // AutomaticChallenge = false,
-                })
+                .AddCookie("idsrv.2FA")
                 .AddFacebook("Facebook", "Facebook", options =>
                 {
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
