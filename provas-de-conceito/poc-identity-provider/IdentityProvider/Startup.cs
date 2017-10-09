@@ -55,12 +55,22 @@ namespace IdentityProvider
 
                 // production config
                 .AddUserStore()
+                .AddSigningCredential(LoadCertificateFromStore())
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
                         builder.UseSqlServer(identityServerConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
                 })
-                .AddSigningCredential(LoadCertificateFromStore());
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(identityServerConnectionString,
+                            sql => sql.MigrationsAssembly(migrationsAssembly));
+
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                    options.TokenCleanupInterval = 30;
+                });
 
             // Registando o Provider do Facebook e 2FA
 
@@ -81,7 +91,8 @@ namespace IdentityProvider
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
             UserContext userContext,
-            ConfigurationDbContext configurationDbContext)
+            ConfigurationDbContext configurationDbContext,
+            PersistedGrantDbContext persistedGrantDbContext)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
@@ -100,6 +111,9 @@ namespace IdentityProvider
             // e o Seed será executado
             configurationDbContext.Database.Migrate();
             configurationDbContext.EnsureSeedDataForContext();
+
+            // Garantindo que o contexto de configurações executara o Migrations
+            persistedGrantDbContext.Database.Migrate();
 
             app.UseStaticFiles();
             app.UseIdentityServer();
