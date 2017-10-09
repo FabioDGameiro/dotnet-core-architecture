@@ -1,9 +1,16 @@
 # CHANGELOG
 
+## 0.9.0
+
+- Preparação da solução para produção.
+- Adição de um certificado digital válido na aplicação
+- Adição dos contextos e migrations necessários para os dados de configurações e os dados operacionais do Identity Server.
+
 ## 0.8.0
 
 - Adição do suporte a login externo com através do provider **Windows Authentication**
 - Adição do suporte a login externo com através do provider **Facebook Authentication**
+- Adição do suporte à **Autenticação em 2 Fatores (2FA)**
 
 ## 0.7.0
 
