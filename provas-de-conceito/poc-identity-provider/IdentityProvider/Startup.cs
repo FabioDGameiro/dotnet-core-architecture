@@ -1,4 +1,6 @@
-﻿using IdentityProvider.Configurations;
+﻿using System;
+using System.Security.Cryptography.X509Certificates;
+using IdentityProvider.Configurations;
 using IdentityProvider.Database.Context;
 using IdentityProvider.Repositories;
 using IdentityServer4;
@@ -37,12 +39,18 @@ namespace IdentityProvider
             // Registrando o IsentityServer
 
             services.AddIdentityServer()
-                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
+                
+                // desenv config
+                
+                //.AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
                 //.AddTestUsers(TestUsers.Users)
                 .AddUserStore()
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryClients(Config.GetClients());
+                .AddInMemoryClients(Config.GetClients())
+                
+                // production config
+                .AddSigningCredential(LoadCertificateFromStore());
 
             // Registando o Provider do Facebook e 2FA
 
@@ -81,6 +89,22 @@ namespace IdentityProvider
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
+        }
+
+        public X509Certificate2 LoadCertificateFromStore()
+        {
+            const string thumbPrint = "34FE0A35D4757DC8979FC8211A6352A034F73346";
+
+            using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+            {
+                store.Open(OpenFlags.ReadOnly);
+                var certCollection = store.Certificates.Find(X509FindType.FindByThumbprint, thumbPrint, true);
+                if (certCollection.Count == 0)
+                {
+                    throw new Exception("The specified certificate wasn't found.");
+                }
+                return certCollection[0];
+            }
         }
     }
 }
