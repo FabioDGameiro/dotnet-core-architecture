@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using IdentityProvider.Configurations;
 using IdentityProvider.Database.Context;
 using IdentityProvider.Repositories;
 using IdentityServer4;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -29,8 +31,8 @@ namespace IdentityProvider
         {
             // Registrando o contexto dos usuários Identity Server
 
-            var connectionString = Configuration["connectionStrings:defaultConnectionString"];
-            services.AddDbContext<UserContext>(options => options.UseSqlServer(connectionString));
+            var identityUsersConnectionString = Configuration["connectionStrings:identityUsersConnectionString"];
+            services.AddDbContext<UserContext>(options => options.UseSqlServer(identityUsersConnectionString));
 
             // Registrando os repositórios
 
@@ -38,18 +40,26 @@ namespace IdentityProvider
 
             // Registrando o IsentityServer
 
+            var identityServerConnectionString = Configuration["connectionStrings:identityServerConnectionString"];
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddIdentityServer()
-                
+
                 // desenv config
-                
+
                 //.AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
                 //.AddTestUsers(TestUsers.Users)
-                .AddUserStore()
-                .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryIdentityResources(Config.GetIdentityResources())
-                .AddInMemoryClients(Config.GetClients())
-                
+                //.AddInMemoryApiResources(Config.GetApiResources())
+                //.AddInMemoryIdentityResources(Config.GetIdentityResources())
+                //.AddInMemoryClients(Config.GetClients())
+
                 // production config
+                .AddUserStore()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                        builder.UseSqlServer(identityServerConnectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
                 .AddSigningCredential(LoadCertificateFromStore());
 
             // Registando o Provider do Facebook e 2FA
@@ -70,7 +80,8 @@ namespace IdentityProvider
             IApplicationBuilder app,
             IHostingEnvironment env,
             ILoggerFactory loggerFactory,
-            UserContext userContext)
+            UserContext userContext,
+            ConfigurationDbContext configurationDbContext)
         {
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
@@ -80,10 +91,15 @@ namespace IdentityProvider
                 app.UseDeveloperExceptionPage();
             }
 
-            // Garantindo que o contexto executara o Migrations
+            // Garantindo que o contexto dos usuarios executara o Migrations
             // e o Seed será executado
             userContext.Database.Migrate();
             userContext.EnsureSeedDataForContext();
+
+            // Garantindo que o contexto de configurações executara o Migrations
+            // e o Seed será executado
+            configurationDbContext.Database.Migrate();
+            configurationDbContext.EnsureSeedDataForContext();
 
             app.UseStaticFiles();
             app.UseIdentityServer();
