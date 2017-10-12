@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - Presentation", "01 - P
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Services", "02 - Services", "{E90A6403-3EA7-4B1D-9EF6-388B0873EEDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "IdentityProvider\IdentityProvider.csproj", "{6C4BA606-BF43-46A0-98EB-22E18A0849BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityProvider", "src\Services\IdentityProvider\IdentityProvider.csproj", "{6C4BA606-BF43-46A0-98EB-22E18A0849BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcesApi", "ResourcesApi\ResourcesApi.csproj", "{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourcesApi", "src\Services\ResourcesApi\ResourcesApi.csproj", "{5C9A3D33-8A99-45E3-82FB-7CA8AA0765AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "MvcClient\MvcClient.csproj", "{043D376F-74D7-466C-850A-9CD8DACAB42C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcClient", "src\Clients\MvcClient\MvcClient.csproj", "{043D376F-74D7-466C-850A-9CD8DACAB42C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaScriptClient", "JavaScriptClient\JavaScriptClient.csproj", "{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaScriptClient", "src\Clients\JavaScriptClient\JavaScriptClient.csproj", "{A5F6EA5C-64DE-4786-989B-1CA1436A45C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

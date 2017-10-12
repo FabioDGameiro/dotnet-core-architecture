@@ -47,7 +47,7 @@ namespace IdentityProvider
 
                 // desenv config
 
-                //.AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
+                .AddSigningCredential(IdentityServerBuilderExtensionsCrypto.CreateRsaSecurityKey())
                 //.AddTestUsers(TestUsers.Users)
                 //.AddInMemoryApiResources(Config.GetApiResources())
                 //.AddInMemoryIdentityResources(Config.GetIdentityResources())
@@ -55,7 +55,7 @@ namespace IdentityProvider
 
                 // production config
                 .AddUserStore()
-                .AddSigningCredential(LoadCertificateFromStore())
+                //.AddSigningCredential(LoadCertificateFromStore())
                 .AddConfigurationStore(options =>
                 {
                     options.ConfigureDbContext = builder =>
