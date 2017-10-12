@@ -115,7 +115,36 @@ namespace IdentityProvider.Configurations
                         IdentityServerConstants.StandardScopes.Address,
                         "roles",
                         "website",
-                        "resourcesapi"
+                        "resourcesapi",
+                        "subscriptionlevel",
+                        "country"
+                    }
+                },
+
+                // Angular Client
+
+                new Client
+                {
+                    ClientId = "angularclient",
+                    ClientName = "Angular Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+
+                    RedirectUris =           { "http://localhost:4200/auth-callback" },
+                    PostLogoutRedirectUris = { "http://localhost:4200/" },
+                    AllowedCorsOrigins =     { "http://localhost:4200" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "roles",
+                        "website",
+                        "resourcesapi",
+                        "subscriptionlevel",
+                        "country"
                     }
                 }
             };

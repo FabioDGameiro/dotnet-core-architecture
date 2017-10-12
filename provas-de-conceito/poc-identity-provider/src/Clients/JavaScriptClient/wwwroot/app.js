@@ -7,7 +7,7 @@ var config = {
     client_id: "taskjs",
     redirect_uri: "http://localhost:5002/callback.html",
     response_type: "id_token token",
-    scope: "openid profile api1",
+    scope: "openid profile email address roles website resourcesapi subscriptionlevel country",
     post_logout_redirect_uri: "http://localhost:5002/index.html",
 };
 var mgr = new Oidc.UserManager(config);
