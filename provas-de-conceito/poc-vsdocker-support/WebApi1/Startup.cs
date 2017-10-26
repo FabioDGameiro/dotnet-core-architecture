@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace poc_aspnet_docker
+namespace WebApi1
 {
     public class Startup
     {

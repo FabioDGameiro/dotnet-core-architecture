@@ -3,9 +3,32 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{C62E0371-64D4-40C2-8251-BCF6BBCA6479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi1", "WebApi1\WebApi1.csproj", "{203A2288-A393-45B6-9F43-1AF6DBE4684D}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0322C9AB-D5ED-4946-9CD6-51715E31B12F}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{203A2288-A393-45B6-9F43-1AF6DBE4684D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{203A2288-A393-45B6-9F43-1AF6DBE4684D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{203A2288-A393-45B6-9F43-1AF6DBE4684D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{203A2288-A393-45B6-9F43-1AF6DBE4684D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0322C9AB-D5ED-4946-9CD6-51715E31B12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0322C9AB-D5ED-4946-9CD6-51715E31B12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0322C9AB-D5ED-4946-9CD6-51715E31B12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0322C9AB-D5ED-4946-9CD6-51715E31B12F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{203A2288-A393-45B6-9F43-1AF6DBE4684D} = {C62E0371-64D4-40C2-8251-BCF6BBCA6479}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F1B60DA1-F7AF-4593-8918-9214962158D8}
