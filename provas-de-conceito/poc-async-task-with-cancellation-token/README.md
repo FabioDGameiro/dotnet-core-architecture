@@ -17,4 +17,5 @@ Projeto de uma prova de conceito com um exemplo de um método de uma API que pod
 ## Referências de Estudos
 
 - [Using CancellationTokens in ASP.NET Core MVC controllers](https://andrewlock.net/using-cancellationtokens-in-asp-net-core-mvc-controllers/)
+- [CancellationToken Boas Práticas](https://blogs.msdn.microsoft.com/andrewarnottms/2014/03/19/recommended-patterns-for-cancellationtoken/)
 
