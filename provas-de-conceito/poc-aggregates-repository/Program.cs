@@ -6,6 +6,20 @@ namespace poc_aggregates_repository
 {
     class Program
     {
+        // REGRA DE NEGÓCIO =)
+
+        // Criar uma representação de um usuário (Usando boas práticas do DDD) onde:
+
+        // 1. Este usuário deverá possuir as propriedades (Id, Name).
+        // 2. Este usuário deverá possuir uma lista de e-mails com as propriedades (Id, UserId, Email).
+        // 3. Este usuário deverá possuir de endereços com as propriedades (Id, UserId, Address, Number).
+
+        // 4. O usuário deverá ter no mínimo 1 ou no máximo 3 e-mails cadastrados.
+        // 5. O usuário deverá ter 1 e somente 1 e-mail definido como principal.
+        
+        // 6. O usuário deverá ter no mínimo 1 ou no máximo 2 endereços cadastrados.
+        // 7. O usuário deverá ter 1 e somente 1 endereço definido como principal.
+
         static void Main(string[] args)
         {
             //CreateUser();
@@ -18,6 +32,7 @@ namespace poc_aggregates_repository
         static void CreateUser()
         {
             var user = new User("Tiago Santos");
+
             user.AddEmail("tiagosantos@outlook.com");
             user.AddEmail("taigobrasil@gmail.com");
 
