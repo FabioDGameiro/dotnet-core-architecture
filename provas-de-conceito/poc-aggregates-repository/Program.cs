@@ -4,7 +4,7 @@ using poc_aggregates_repository.Data;
 
 namespace poc_aggregates_repository
 {
-    class Program
+    internal class Program
     {
         // REGRA DE NEGÓCIO =)
 
@@ -12,7 +12,7 @@ namespace poc_aggregates_repository
 
         // 1. Este usuário deverá possuir as propriedades (Id, Name).
         // 2. Este usuário deverá possuir uma lista de e-mails com as propriedades (Id, UserId, Email).
-        // 3. Este usuário deverá possuir de endereços com as propriedades (Id, UserId, Address, Number).
+        // 3. Este usuário deverá possuir de endereços com as propriedades (Id, UserId, Place, Number).
 
         // 4. O usuário deverá ter no mínimo 1 ou no máximo 3 e-mails cadastrados.
         // 5. O usuário deverá ter 1 e somente 1 e-mail definido como principal.
@@ -20,7 +20,7 @@ namespace poc_aggregates_repository
         // 6. O usuário deverá ter no mínimo 1 ou no máximo 2 endereços cadastrados.
         // 7. O usuário deverá ter 1 e somente 1 endereço definido como principal.
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             //CreateUser();
             //UpdateUser();
@@ -29,9 +29,9 @@ namespace poc_aggregates_repository
             //RemoveEmailForExistingUser();
         }
 
-        static void CreateUser()
+        private static void CreateUser()
         {
-            var user = new User("Tiago Santos");
+            var user = new User();
 
             user.AddEmail("tiagosantos@outlook.com");
             user.AddEmail("taigobrasil@gmail.com");
@@ -47,7 +47,7 @@ namespace poc_aggregates_repository
             }
         }
 
-        static void UpdateUser()
+        private static void UpdateUser()
         {
             using(var repository = new UserRepository())
             {
@@ -68,7 +68,7 @@ namespace poc_aggregates_repository
             }
         }
 
-        static void AddEmailForExistingUser()
+        private static void AddEmailForExistingUser()
         {
             var userId = new Guid("f0cd6e3e-b95b-4dab-bb0b-7e6c6e1b0855");
 
@@ -93,7 +93,7 @@ namespace poc_aggregates_repository
             }
         }
 
-        static void UpdateEmailForExistingUser()
+        private static void UpdateEmailForExistingUser()
         {
             var userId = new Guid("f0cd6e3e-b95b-4dab-bb0b-7e6c6e1b0855");
             var emailId = new Guid("804aff75-8e48-4f53-b55d-8d3ca76a2df9");
@@ -119,7 +119,7 @@ namespace poc_aggregates_repository
             }
         }
 
-        static void RemoveEmailForExistingUser()
+        private static void RemoveEmailForExistingUser()
         {
             var emailId = new Guid("b520c665-02d7-45a0-b18d-1ec1ca59438d");
             using(var repository = new UserRepository())

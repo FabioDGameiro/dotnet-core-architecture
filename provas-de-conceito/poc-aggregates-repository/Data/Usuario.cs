@@ -11,6 +11,13 @@ namespace poc_aggregates_repository.Data
 
         private readonly List<UserEmail> _emails;
 
+        // CONSTRUCTORS
+
+        private User()
+        {
+            _emails = new List<UserEmail>();
+        }
+
         // PROPERTIES
 
         public Guid Id { get; private set; }
@@ -25,9 +32,9 @@ namespace poc_aggregates_repository.Data
         public static User Create(string name)
         {
             return Create(
-                id: Guid.NewGuid(), 
-                name: name
-                );
+                Guid.NewGuid(),
+                name
+            );
         }
 
         public static User Create(Guid id, string name)
@@ -35,7 +42,7 @@ namespace poc_aggregates_repository.Data
             var user = new User
             {
                 Id = id,
-                Name = name,
+                Name = name
             };
 
             // apply validations
@@ -65,7 +72,7 @@ namespace poc_aggregates_repository.Data
         public void UpdateEmail(Guid emailId, string email)
         {
             var usuarioEmail = _emails.FirstOrDefault(x => x.Id == emailId);
-            if(usuarioEmail == null) return;
+            if (usuarioEmail == null) return;
 
             usuarioEmail.Update(email);
         }
@@ -73,7 +80,7 @@ namespace poc_aggregates_repository.Data
         public void RemoveEmail(Guid emailId)
         {
             var usuarioEmail = _emails.FirstOrDefault(x => x.Id == emailId);
-            if(usuarioEmail == null) return;
+            if (usuarioEmail == null) return;
 
             _emails.Remove(usuarioEmail);
         }
@@ -96,9 +103,9 @@ namespace poc_aggregates_repository.Data
         public static UserEmail Create(Guid userId, string email)
         {
             return Create(
-                id: Guid.NewGuid(),
-                userId: userId,
-                email: email
+                Guid.NewGuid(),
+                userId,
+                email
             );
         }
 
@@ -121,6 +128,55 @@ namespace poc_aggregates_repository.Data
         public void Update(string email)
         {
             Email = email;
+        }
+    }
+
+    public class UserAddress
+    {
+        // PROPERTIES
+
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public string Place { get; private set; }
+        public string Number { get; private set; }
+
+        // NAVIGATION PROPERTIES
+
+        public virtual User User { get; set; }
+
+        // FACTORIES
+
+        public static UserAddress Create(Guid userId, string place, string number)
+        {
+            return Create(
+                id: Guid.NewGuid(),
+                userId: userId,
+                place: place,
+                number:number
+            );
+        }
+
+        public static UserAddress Create(Guid id, Guid userId, string place, string number)
+        {
+            var userAddress = new UserAddress
+            {
+                Id = id,
+                UserId = userId,
+                Place = place,
+                Number = number
+            };
+
+            // apply validations
+
+            return userAddress;
+        }
+
+        // PUBLIC METHODS
+
+        public void Update(string place, string number)
+        {
+            Place = place;
+            Number = number;
         }
     }
 }
