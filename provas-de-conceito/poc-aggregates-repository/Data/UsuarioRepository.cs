@@ -26,7 +26,7 @@ namespace poc_aggregates_repository.Data
         public User GetUserById(Guid usuarioId)
         {
             return _context.Users.AsNoTracking()
-                .Include(x => x.Emails)
+                .Include(x => x.Emails).AsNoTracking()
                 .FirstOrDefault(x => x.Id == usuarioId);
         }
 

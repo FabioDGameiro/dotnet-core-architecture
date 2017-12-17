@@ -59,7 +59,7 @@ namespace poc_aggregates_repository.Data
 
         public void AddEmail(string email)
         {
-            var usuarioEmail = UserEmail.Create(userId: Id, email: email);
+            var usuarioEmail = UserEmail.Create(Id, email);
 
             // TODO: checar se o e-mail é válido e só adicionar se for realmente valido
             // if(!usuarioEmail.IsValid()) return;
@@ -102,18 +102,8 @@ namespace poc_aggregates_repository.Data
 
         public static UserEmail Create(Guid userId, string email)
         {
-            return Create(
-                Guid.NewGuid(),
-                userId,
-                email
-            );
-        }
-
-        public static UserEmail Create(Guid id, Guid userId, string email)
-        {
             var userEmail = new UserEmail
             {
-                Id = id,
                 UserId = userId,
                 Email = email
             };

@@ -30,6 +30,9 @@ namespace poc_aggregates_repository.Data
                 .HasKey(x => x.Id);
 
             modelBuilder.Entity<User>()
+                .Metadata.FindNavigation(nameof(User.Emails)).SetPropertyAccessMode(PropertyAccessMode.Field);
+
+            modelBuilder.Entity<User>()
                 .Property(x => x.Name)
                 .HasColumnType("varchar(20)")
                 .IsRequired();
