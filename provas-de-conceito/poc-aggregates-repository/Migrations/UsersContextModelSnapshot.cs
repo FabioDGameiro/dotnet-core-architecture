@@ -25,7 +25,7 @@ namespace pocaggregatesrepository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 

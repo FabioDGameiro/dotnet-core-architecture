@@ -26,12 +26,27 @@ namespace poc_aggregates_repository.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().HasKey(x => x.Id);
-            modelBuilder.Entity<User>().Property(x => x.Nome).IsRequired().HasColumnType("varchar(20)");
+            modelBuilder.Entity<User>()
+                .HasKey(x => x.Id);
 
-            modelBuilder.Entity<UserEmail>().HasKey(x => x.Id);
-            modelBuilder.Entity<UserEmail>().Property(x => x.Email).IsRequired().HasColumnType("varchar(100)");
-            modelBuilder.Entity<UserEmail>().HasOne(x => x.User).WithMany(x => x.Emails).HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<User>()
+                .Property(x => x.Name)
+                .HasColumnType("varchar(20)")
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasMany(x => x.Emails)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<UserEmail>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<UserEmail>().
+                Property(x => x.Email)
+                .HasColumnType("varchar(100)")
+                .IsRequired();
         }
     }
 }

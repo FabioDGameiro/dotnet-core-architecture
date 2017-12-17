@@ -13,7 +13,7 @@ namespace pocaggregatesrepository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nome = table.Column<string>(type: "varchar(20)", nullable: false)
+                    Name = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {

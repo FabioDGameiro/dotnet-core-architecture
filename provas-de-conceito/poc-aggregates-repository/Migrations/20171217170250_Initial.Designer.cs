@@ -11,7 +11,7 @@ using System;
 namespace pocaggregatesrepository.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20171212170546_Initial")]
+    [Migration("20171217170250_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace pocaggregatesrepository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 

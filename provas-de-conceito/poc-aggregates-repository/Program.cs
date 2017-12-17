@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using poc_aggregates_repository.Data;
 
@@ -31,7 +32,7 @@ namespace poc_aggregates_repository
 
         private static void CreateUser()
         {
-            var user = new User();
+            var user = User.Create("Tiago");
 
             user.AddEmail("tiagosantos@outlook.com");
             user.AddEmail("taigobrasil@gmail.com");
@@ -43,7 +44,7 @@ namespace poc_aggregates_repository
                 if (repository.Save() > 0)
                 {
                     Console.WriteLine("User created!");
-                };
+                }
             }
         }
 
@@ -59,7 +60,7 @@ namespace poc_aggregates_repository
                     return;
                 }
 
-                user.Update(nome: "Tiago Santos (upd3)");
+                user.Update("Tiago Santos (upd3)");
 
                 if (repository.Save() > 0)
                 {

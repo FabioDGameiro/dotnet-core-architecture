@@ -25,7 +25,7 @@ namespace poc_aggregates_repository.Data
 
         // NAVIGATION PROPERTIES
 
-        public virtual ReadOnlyCollection<UserEmail> Emails => _emails.AsReadOnly();
+        public IReadOnlyCollection<UserEmail> Emails => _emails.AsReadOnly();
 
         // FACTORIES
 
@@ -59,7 +59,7 @@ namespace poc_aggregates_repository.Data
 
         public void AddEmail(string email)
         {
-            var usuarioEmail = new UserEmail(usuarioId: Id, email: email);
+            var usuarioEmail = UserEmail.Create(userId: Id, email: email);
 
             // TODO: checar se o e-mail é válido e só adicionar se for realmente valido
             // if(!usuarioEmail.IsValid()) return;
@@ -152,7 +152,7 @@ namespace poc_aggregates_repository.Data
                 id: Guid.NewGuid(),
                 userId: userId,
                 place: place,
-                number:number
+                number: number
             );
         }
 

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "poc-aggregates-repository", "poc-aggregates-repository.csproj", "{AA36F87C-0A3A-4A24-96C6-C2BBBE708F74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA36F87C-0A3A-4A24-96C6-C2BBBE708F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA36F87C-0A3A-4A24-96C6-C2BBBE708F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA36F87C-0A3A-4A24-96C6-C2BBBE708F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA36F87C-0A3A-4A24-96C6-C2BBBE708F74}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FBC33348-F236-4B58-9335-F9BA469A52AE}
+	EndGlobalSection
+EndGlobal
