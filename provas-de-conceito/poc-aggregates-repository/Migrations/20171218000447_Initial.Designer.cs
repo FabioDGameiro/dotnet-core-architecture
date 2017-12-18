@@ -11,7 +11,7 @@ using System;
 namespace pocaggregatesrepository.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20171217170250_Initial")]
+    [Migration("20171218000447_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

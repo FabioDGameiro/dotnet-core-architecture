@@ -20,6 +20,9 @@ namespace poc_aggregates_repository.Data
 
         public void UpdateUser(User usuario)
         {
+            foreach (var userEmail in usuario.Emails.Where(x => x.IsRemoved()))
+                _context.UsersEmails.Remove(userEmail);
+
             _context.Users.Update(usuario);
         }
 

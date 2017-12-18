@@ -21,18 +21,20 @@ namespace poc_aggregates_repository
         // 6. O usuário deverá ter no mínimo 1 ou no máximo 2 endereços cadastrados.
         // 7. O usuário deverá ter 1 e somente 1 endereço definido como principal.
 
+        private static readonly Guid UserId = new Guid("e6e84909-c57a-4d68-8edf-b858cdd0634d");
+
         private static void Main(string[] args)
         {
-            // CreateUser();
+             //CreateUser();
             // UpdateUser();
-            AddEmailForExistingUser();
+            //AddEmailForExistingUser();
             // UpdateEmailForExistingUser();
-            // RemoveEmailForExistingUser();
+            RemoveEmailForExistingUser(new Guid("64D6F516-FB95-4A62-6B46-08D545B359D7"));
         }
 
         private static void CreateUser()
         {
-            var user = User.Create("Tiago");
+            var user = User.Create(UserId, "Tiago");
 
             user.AddEmail("tiagosantos@outlook.com");
             user.AddEmail("taigobrasil@gmail.com");
@@ -52,7 +54,7 @@ namespace poc_aggregates_repository
         {
             using (var repository = new UserRepository())
             {
-                var user = repository.GetUserById(new Guid("e6e84909-c57a-4d68-8edf-b858cdd0634d"));
+                var user = repository.GetUserById(UserId);
 
                 if (user == null)
                 {
@@ -73,11 +75,9 @@ namespace poc_aggregates_repository
 
         private static void AddEmailForExistingUser()
         {
-            var userId = new Guid("e6e84909-c57a-4d68-8edf-b858cdd0634d");
-
             using (var repository = new UserRepository())
             {
-                var user = repository.GetUserById(userId);
+                var user = repository.GetUserById(UserId);
 
                 if (user == null)
                 {
@@ -98,12 +98,11 @@ namespace poc_aggregates_repository
 
         private static void UpdateEmailForExistingUser()
         {
-            var userId = new Guid("f0cd6e3e-b95b-4dab-bb0b-7e6c6e1b0855");
-            var emailId = new Guid("804aff75-8e48-4f53-b55d-8d3ca76a2df9");
+            var emailId = new Guid("3d23b922-ee11-46ca-791f-08d54592f5dd");
 
             using (var repository = new UserRepository())
             {
-                var user = repository.GetUserById(userId);
+                var user = repository.GetUserById(UserId);
 
                 if (user == null)
                 {
@@ -122,12 +121,11 @@ namespace poc_aggregates_repository
             }
         }
 
-        private static void RemoveEmailForExistingUser()
+        private static void RemoveEmailForExistingUser(Guid emailId)
         {
-            var emailId = new Guid("b520c665-02d7-45a0-b18d-1ec1ca59438d");
             using (var repository = new UserRepository())
             {
-                var user = repository.GetUserById(new Guid("4d862c56-bd77-4093-a818-4546390fba83"));
+                var user = repository.GetUserById(UserId);
 
                 if (user == null)
                 {
@@ -136,6 +134,8 @@ namespace poc_aggregates_repository
                 }
 
                 user.RemoveEmail(emailId);
+
+                repository.UpdateUser(user);
 
                 if (repository.Save() > 0)
                 {

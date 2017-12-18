@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace poc_aggregates_repository.Data
 {
-    public class User
+    public class User : Entity
     {
         // FIELDS
 
-        private readonly List<UserEmail> _emails;
+        private List<UserEmail> _emails;
 
         // CONSTRUCTORS
 
@@ -74,19 +75,20 @@ namespace poc_aggregates_repository.Data
             var usuarioEmail = _emails.FirstOrDefault(x => x.Id == emailId);
             if (usuarioEmail == null) return;
 
-            usuarioEmail.Update(email);
+            usuarioEmail.Update(new Email(email));
         }
 
         public void RemoveEmail(Guid emailId)
         {
-            var usuarioEmail = _emails.FirstOrDefault(x => x.Id == emailId);
-            if (usuarioEmail == null) return;
+            var email = _emails.FirstOrDefault(x => x.Id == emailId);
+            if (email == null) return;
 
-            _emails.Remove(usuarioEmail);
+            email.Remove();
+            //_emails.Remove(email);
         }
     }
 
-    public class UserEmail
+    public class UserEmail : Entity
     {
         // PROPERTIES
 
@@ -115,13 +117,13 @@ namespace poc_aggregates_repository.Data
 
         // PUBLIC METHODS
 
-        public void Update(string email)
+        public void Update(Email email)
         {
-            Email = email;
+            Email = email.Address;
         }
     }
 
-    public class UserAddress
+    public class UserAddress : Entity
     {
         // PROPERTIES
 
@@ -167,6 +169,32 @@ namespace poc_aggregates_repository.Data
         {
             Place = place;
             Number = number;
+        }
+    }
+
+    public class Email : Entity
+    {
+        public string Address { get; private set; }
+
+        public Email(string address)
+        {
+            Address = address;
+        }
+    }
+
+
+    public class Entity
+    {
+        private bool _removed;
+
+        public void Remove()
+        {
+            _removed = true;
+        }
+
+        public bool IsRemoved()
+        {
+            return _removed;
         }
     }
 }

@@ -46,10 +46,17 @@ namespace poc_aggregates_repository.Data
             modelBuilder.Entity<UserEmail>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<UserEmail>().
-                Property(x => x.Email)
+            modelBuilder.Entity<UserEmail>()
+                .Property(x=>x.Email)
                 .HasColumnType("varchar(100)")
                 .IsRequired();
+
+            //modelBuilder.Entity<UserEmail>().OwnsOne(x => x.Email, cb =>
+            //{
+            //    cb.Property(x => x.Address)
+            //        .HasColumnType("varchar(100)")
+            //        .IsRequired();
+            //});
         }
     }
 }
