@@ -25,11 +25,11 @@ namespace poc_aggregates_repository
 
         private static void Main(string[] args)
         {
-             //CreateUser();
-            //UpdateUser();
-            //AddEmailForExistingUser();
-             //UpdateEmailForExistingUser(new Guid("8C9A4627-6A7A-4EAD-EB2B-08D545B76152"));
-            RemoveEmailForExistingUser(new Guid("3C1D1312-8C66-46C3-0A35-08D545BD61AD"));
+            // CreateUser();
+             //UpdateUser();
+            // AddEmailForExistingUser();
+             //UpdateEmailForExistingUser(new Guid("03166814-BCBB-439B-CFAA-08D545C1EE1D"));
+             RemoveEmailForExistingUser(new Guid("AACAE020-E996-48E0-4A58-08D545C1D4F6"));
         }
 
         private static void CreateUser()

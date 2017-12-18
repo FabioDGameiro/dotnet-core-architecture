@@ -26,7 +26,7 @@ namespace pocaggregatesrepository.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Email_Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Email = table.Column<string>(type: "varchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {

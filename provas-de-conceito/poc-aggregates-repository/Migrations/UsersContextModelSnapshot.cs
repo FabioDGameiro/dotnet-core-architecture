@@ -59,7 +59,10 @@ namespace pocaggregatesrepository.Migrations
                         {
                             b1.Property<Guid>("UserEmailId");
 
-                            b1.Property<string>("Address");
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasColumnName("Email")
+                                .HasColumnType("varchar(100)");
 
                             b1.ToTable("UsersEmails");
 

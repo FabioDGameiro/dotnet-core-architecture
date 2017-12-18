@@ -45,17 +45,14 @@ namespace poc_aggregates_repository.Data
                 .IsRequired();
 
             modelBuilder.Entity<UserEmail>()
-                .OwnsOne(x => x.Email);
-
-            //modelBuilder.Entity<UserEmail>()
-            //    .OwnsOne(x => x.Email, cb =>
-            //    {
-            //        cb.Property(x => x.Address)
-            //            .HasColumnName("Email")
-            //            .HasColumnType("varchar(100)")
-            //            .IsRequired();
-            //    })
-            //    .ToTable("UsersEmails");
+                .OwnsOne(x => x.Email, cb =>
+                {
+                    cb.Property(x => x.Address)
+                        .HasColumnName("Email")
+                        .HasColumnType("varchar(100)")
+                        .IsRequired();
+                })
+                .ToTable("UsersEmails");
         }
     }
 }
