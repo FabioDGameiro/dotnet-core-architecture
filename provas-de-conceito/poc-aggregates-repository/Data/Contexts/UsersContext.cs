@@ -20,6 +20,7 @@ namespace poc_aggregates_repository.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=UsersDB;Trusted_Connection=True;");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,19 +45,17 @@ namespace poc_aggregates_repository.Data
                 .IsRequired();
 
             modelBuilder.Entity<UserEmail>()
-                .HasKey(x => x.Id);
+                .OwnsOne(x => x.Email);
 
-            modelBuilder.Entity<UserEmail>()
-                .Property(x=>x.Email)
-                .HasColumnType("varchar(100)")
-                .IsRequired();
-
-            //modelBuilder.Entity<UserEmail>().OwnsOne(x => x.Email, cb =>
-            //{
-            //    cb.Property(x => x.Address)
-            //        .HasColumnType("varchar(100)")
-            //        .IsRequired();
-            //});
+            //modelBuilder.Entity<UserEmail>()
+            //    .OwnsOne(x => x.Email, cb =>
+            //    {
+            //        cb.Property(x => x.Address)
+            //            .HasColumnName("Email")
+            //            .HasColumnType("varchar(100)")
+            //            .IsRequired();
+            //    })
+            //    .ToTable("UsersEmails");
         }
     }
 }

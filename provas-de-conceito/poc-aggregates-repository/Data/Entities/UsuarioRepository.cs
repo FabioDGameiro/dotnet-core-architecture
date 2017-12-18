@@ -21,7 +21,9 @@ namespace poc_aggregates_repository.Data
         public void UpdateUser(User usuario)
         {
             foreach (var userEmail in usuario.Emails.Where(x => x.IsRemoved()))
+            {
                 _context.UsersEmails.Remove(userEmail);
+            }
 
             _context.Users.Update(usuario);
         }
@@ -29,7 +31,7 @@ namespace poc_aggregates_repository.Data
         public User GetUserById(Guid usuarioId)
         {
             return _context.Users.AsNoTracking()
-                .Include(x => x.Emails).AsNoTracking()
+                .Include(x => x.Emails).ThenInclude(x => x.Email).AsNoTracking()
                 .FirstOrDefault(x => x.Id == usuarioId);
         }
 

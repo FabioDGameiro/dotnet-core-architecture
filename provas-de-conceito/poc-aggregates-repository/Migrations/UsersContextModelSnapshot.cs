@@ -39,10 +39,6 @@ namespace pocaggregatesrepository.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
-
                     b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
@@ -58,6 +54,20 @@ namespace pocaggregatesrepository.Migrations
                         .WithMany("Emails")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("poc_aggregates_repository.Data.Email", "Email", b1 =>
+                        {
+                            b1.Property<Guid>("UserEmailId");
+
+                            b1.Property<string>("Address");
+
+                            b1.ToTable("UsersEmails");
+
+                            b1.HasOne("poc_aggregates_repository.Data.UserEmail")
+                                .WithOne("Email")
+                                .HasForeignKey("poc_aggregates_repository.Data.Email", "UserEmailId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 #pragma warning restore 612, 618
         }

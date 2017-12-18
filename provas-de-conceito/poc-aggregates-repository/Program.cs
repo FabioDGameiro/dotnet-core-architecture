@@ -26,10 +26,10 @@ namespace poc_aggregates_repository
         private static void Main(string[] args)
         {
              //CreateUser();
-            // UpdateUser();
+            //UpdateUser();
             //AddEmailForExistingUser();
-            // UpdateEmailForExistingUser();
-            RemoveEmailForExistingUser(new Guid("64D6F516-FB95-4A62-6B46-08D545B359D7"));
+             //UpdateEmailForExistingUser(new Guid("8C9A4627-6A7A-4EAD-EB2B-08D545B76152"));
+            RemoveEmailForExistingUser(new Guid("3C1D1312-8C66-46C3-0A35-08D545BD61AD"));
         }
 
         private static void CreateUser()
@@ -96,10 +96,8 @@ namespace poc_aggregates_repository
             }
         }
 
-        private static void UpdateEmailForExistingUser()
+        private static void UpdateEmailForExistingUser(Guid emailId)
         {
-            var emailId = new Guid("3d23b922-ee11-46ca-791f-08d54592f5dd");
-
             using (var repository = new UserRepository())
             {
                 var user = repository.GetUserById(UserId);
