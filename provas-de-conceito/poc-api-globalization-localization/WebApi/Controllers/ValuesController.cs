@@ -26,7 +26,7 @@ namespace WebApi.Controllers
                 Date = DateTime.Now.ToString("D"),
                 Number = (1234567.89).ToString("n"),
                 Currency = (4452.24).ToString("C"),
-                BundaLocalized = _localizer["Hello"].Value
+                LocalizedMessage = string.Format(_localizer["Hello"].Value, "Tiago")
             };
 
             return Ok(result);
