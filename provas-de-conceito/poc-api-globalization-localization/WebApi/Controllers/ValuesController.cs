@@ -9,13 +9,11 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-        private readonly IStringLocalizer _localizer;
+        private readonly IStringLocalizer<MessagesResource> _localizer;
 
-        public ValuesController(IStringLocalizerFactory factory)
+        public ValuesController(IStringLocalizer<MessagesResource> localizer)
         {
-            var type = typeof(MessagesResource);
-            var assemblyName = new AssemblyName(type.GetTypeInfo().Assembly.FullName);
-            _localizer = factory.Create("MessagesResource", assemblyName.Name);
+            _localizer = localizer;
         }
 
         [HttpGet]
