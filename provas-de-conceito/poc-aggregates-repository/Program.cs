@@ -34,7 +34,7 @@ namespace poc_aggregates_repository
 
         private static void CreateUser()
         {
-            var user = User.Create(UserId, "Tiago");
+            var user = new User(UserId, "Tiago");
 
             user.AddEmail("tiagosantos@outlook.com");
             user.AddEmail("taigobrasil@gmail.com");

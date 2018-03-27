@@ -14,6 +14,18 @@ namespace poc_aggregates_repository.Data
 
         // CONSTRUCTORS
 
+        public User(string name)
+            : this(Guid.NewGuid(), name)
+        {
+        }
+
+        public User(Guid id, string name)
+            : this()
+        {
+            Id = id;
+            Name = name;
+        }
+
         private User()
         {
             _emails = new List<UserEmail>();
@@ -28,28 +40,7 @@ namespace poc_aggregates_repository.Data
 
         public IReadOnlyCollection<UserEmail> Emails => _emails.AsReadOnly();
 
-        // FACTORIES
 
-        public static User Create(string name)
-        {
-            return Create(
-                Guid.NewGuid(),
-                name
-            );
-        }
-
-        public static User Create(Guid id, string name)
-        {
-            var user = new User
-            {
-                Id = id,
-                Name = name
-            };
-
-            // apply validations
-
-            return user;
-        }
 
         // PUBLIC METHODS
 
@@ -60,7 +51,7 @@ namespace poc_aggregates_repository.Data
 
         public void AddEmail(string email)
         {
-            var usuarioEmail = UserEmail.Create(Id, new Email(email));
+            var usuarioEmail = new UserEmail(Id, new Email(email));
 
             // TODO: checar se o e-mail é válido e só adicionar se for realmente valido
             // if(!usuarioEmail.IsValid()) return;
@@ -84,7 +75,6 @@ namespace poc_aggregates_repository.Data
             if (email == null) return;
 
             email.Remove();
-            //_emails.Remove(email);
         }
     }
 }

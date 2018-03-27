@@ -14,19 +14,12 @@ namespace poc_aggregates_repository.Data
 
         public virtual User User { get; private set; }
 
-        // FACTORIES
+        // CONSTRUCTORS
 
-        public static UserEmail Create(Guid userId, Email email)
+        public UserEmail(Guid userId, Email email)
         {
-            var userEmail = new UserEmail
-            {
-                UserId = userId,
-                Email = email
-            };
-
-            // apply validations
-
-            return userEmail;
+            UserId = userId;
+            Email = email;
         }
 
         // PUBLIC METHODS

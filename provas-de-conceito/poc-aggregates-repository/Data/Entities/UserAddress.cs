@@ -15,31 +15,19 @@ namespace poc_aggregates_repository.Data
 
         public virtual User User { get; set; }
 
-        // FACTORIES
+        // CONSTRUCTORS
 
-        public static UserAddress Create(Guid userId, string place, string number)
+        public UserAddress(Guid userId, string place, string number)
+            : this(Guid.NewGuid(), userId, place, number)
         {
-            return Create(
-                id: Guid.NewGuid(),
-                userId: userId,
-                place: place,
-                number: number
-            );
         }
 
-        public static UserAddress Create(Guid id, Guid userId, string place, string number)
+        public UserAddress(Guid id, Guid userId, string place, string number)
         {
-            var userAddress = new UserAddress
-            {
-                Id = id,
-                UserId = userId,
-                Place = place,
-                Number = number
-            };
-
-            // apply validations
-
-            return userAddress;
+            Id = id;
+            UserId = userId;
+            Place = place;
+            Number = number;
         }
 
         // PUBLIC METHODS
