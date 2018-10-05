@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LinqSpecs;
 using poc_specification_pattern.Users;
+using poc_specification_pattern.Users.Models;
 using poc_specification_pattern.Users.Specifications;
 
 namespace poc_specification_pattern
@@ -10,6 +11,27 @@ namespace poc_specification_pattern
     class Program
     {
         static void Main(string[] args)
+        {
+            // StaticSpecifications();
+            DinamicSpecifications();
+        }
+
+        static void DinamicSpecifications()
+        {
+            var parameters = new UserParameters();
+
+            parameters.CountryId = 1;
+            parameters.Gender = GenderType.Male;
+
+            var filteredUsers = FindUsers(parameters.ToSpecification());
+
+            foreach (var user in filteredUsers)
+            {
+                Console.WriteLine(user);
+            }
+        }
+
+        static void StaticSpecifications()
         {
             // Specifications
             var usersFromBrasil = new UsersFromCountry(2);
