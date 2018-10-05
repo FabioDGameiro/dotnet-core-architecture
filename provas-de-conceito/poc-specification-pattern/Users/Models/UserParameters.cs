@@ -25,6 +25,11 @@ namespace poc_specification_pattern.Users.Models
                 spec &= new UsersFromGender(Gender.Value);
             }
 
+            if (!string.IsNullOrWhiteSpace(Query))
+            {
+                spec &= new UsersFromQuery(Query);
+            }
+
             return spec;
         }
     }

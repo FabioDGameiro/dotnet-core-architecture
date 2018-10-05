@@ -1,15 +1,17 @@
+using poc_specification_pattern.Shared;
+
 namespace poc_specification_pattern.Users
 {
-    public class User
+    public class User : Entity
     {
-        public int Id { get; set; }
         public GenderType Gender { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public int CountryId { get; set; }
 
         public override string ToString()
         {
-            return $"{Name} - {Gender} - Country ({CountryId})";
+            return $"{Name} - {Email} - {Gender} - Country ({CountryId})";
         }
     }
 
