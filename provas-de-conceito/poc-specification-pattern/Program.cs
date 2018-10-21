@@ -17,7 +17,7 @@ namespace poc_specification_pattern
             DinamicSpecifications();
         }
 
-        static void DinamicSpecifications()
+        private static void DinamicSpecifications()
         {
             var parameters = new UserParameters();
 
@@ -33,7 +33,7 @@ namespace poc_specification_pattern
             }
         }
 
-        static void StaticSpecifications()
+        private static void StaticSpecifications()
         {
             var usersFromBrasil = new UsersFromCountry(2);
             var femaleUsers = new UsersFromGender(GenderType.Female);
@@ -46,7 +46,7 @@ namespace poc_specification_pattern
             }
         }
 
-        static IEnumerable<User> FindUsers(Specification<User> specifications) 
+        private static IEnumerable<User> FindUsers(Specification<User> specifications) 
         { 
             var activeRegisters = new ActiveRegisters<User>();
             var users = GetUsers();
@@ -58,7 +58,7 @@ namespace poc_specification_pattern
                 .ToList();
         }
 
-        static IEnumerable<User> GetUsers()
+        private static IEnumerable<User> GetUsers()
         {
             var users = new List<User>
             {
