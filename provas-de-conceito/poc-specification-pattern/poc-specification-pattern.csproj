@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LinqSpecs" Version="3.0.0" />
+    <None Include="LinqSpecs\LinqSpecs.csproj" />
   </ItemGroup>
 
 </Project>

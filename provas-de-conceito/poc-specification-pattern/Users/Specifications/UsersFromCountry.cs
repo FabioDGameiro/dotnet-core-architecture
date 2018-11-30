@@ -1,7 +1,7 @@
 using poc_specification_pattern.Users;
-using LinqSpecs;
 using System;
 using System.Linq.Expressions;
+using LinqSpecs;
 
 namespace poc_specification_pattern.Users.Specifications
 {

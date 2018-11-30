@@ -13,8 +13,8 @@ namespace poc_specification_pattern
     {
         static void Main(string[] args)
         {
-            // StaticSpecifications();
-            DinamicSpecifications();
+            StaticSpecifications();
+            //DinamicSpecifications();
         }
 
         private static void DinamicSpecifications()
